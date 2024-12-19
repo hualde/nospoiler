@@ -80,4 +80,12 @@ dependencies {
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp3.logging)
+    
+    // Coil para cargar imágenes
+    implementation(libs.coil.compose)
 }

@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.nospoilerapk.navigation.Screen
 import com.example.nospoilerapk.ui.screens.*
 
@@ -38,11 +40,23 @@ fun MainScreen() {
             composable(Screen.Home.route) { 
                 HomeScreen(navController)
             }
+            composable(
+                route = Screen.RangeSelector.route,
+                arguments = listOf(
+                    navArgument(Screen.RangeSelector.MEDIA_ID) { 
+                        type = NavType.StringType
+                        nullable = false
+                    }
+                )
+            ) { backStackEntry ->
+                val mediaId = requireNotNull(backStackEntry.arguments?.getString(Screen.RangeSelector.MEDIA_ID))
+                RangeSelectorScreen(
+                    navController = navController,
+                    mediaId = mediaId
+                )
+            }
             composable(Screen.SearchResults.route) { 
                 SearchResultsScreen(navController)
-            }
-            composable(Screen.RangeSelector.route) { 
-                RangeSelectorScreen(navController)
             }
             composable(Screen.Summary.route) { 
                 SummaryScreen(navController)
