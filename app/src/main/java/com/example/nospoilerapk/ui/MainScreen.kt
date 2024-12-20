@@ -76,6 +76,21 @@ fun MainScreen() {
             composable(Screen.Settings.route) { 
                 SettingsScreen(navController)
             }
+            composable(
+                route = Screen.Timeline.route,
+                arguments = listOf(
+                    navArgument(Screen.Timeline.MEDIA_ID) { type = NavType.StringType },
+                    navArgument(Screen.Timeline.RANGE_START) { type = NavType.IntType },
+                    navArgument(Screen.Timeline.RANGE_END) { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                TimelineScreen(
+                    navController = navController,
+                    mediaId = backStackEntry.arguments?.getString(Screen.Timeline.MEDIA_ID) ?: "",
+                    rangeStart = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_START) ?: 1,
+                    rangeEnd = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_END) ?: 1
+                )
+            }
         }
     }
 } 

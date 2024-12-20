@@ -298,7 +298,15 @@ fun RangeSelectorScreen(
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Button(
-                                    onClick = { /* Sin funcionalidad por ahora */ },
+                                    onClick = { 
+                                        navController.navigate(
+                                            Screen.Timeline.createRoute(
+                                                mediaId = state.media.imdbID,
+                                                rangeStart = startRange,
+                                                rangeEnd = endRange
+                                            )
+                                        )
+                                    },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
                                     Text("View Timeline")

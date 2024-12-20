@@ -18,4 +18,11 @@ sealed class Screen(val route: String) {
             "summary/$mediaId/$rangeStart/$rangeEnd"
     }
     object Settings : Screen("settings")
+    object Timeline : Screen("timeline/{mediaId}/{rangeStart}/{rangeEnd}") {
+        const val MEDIA_ID = "mediaId"
+        const val RANGE_START = "rangeStart"
+        const val RANGE_END = "rangeEnd"
+        fun createRoute(mediaId: String, rangeStart: Int, rangeEnd: Int) = 
+            "timeline/$mediaId/$rangeStart/$rangeEnd"
+    }
 } 
