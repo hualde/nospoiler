@@ -17,6 +17,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.nospoilerapk.ui.viewmodels.RangeSelectorViewModel
 import com.example.nospoilerapk.data.model.MediaInfo
 import kotlin.math.roundToInt
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
+import com.example.nospoilerapk.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,6 +31,7 @@ fun RangeSelectorScreen(
     val mediaState by viewModel.mediaState.collectAsState()
     var startRange by remember { mutableStateOf(1) }
     var endRange by remember { mutableStateOf(1) }
+    val context = LocalContext.current
 
     LaunchedEffect(mediaId) {
         if (mediaId.isNotBlank()) {
@@ -279,12 +283,16 @@ fun RangeSelectorScreen(
                                 Button(
                                     onClick = {
                                         navController.navigate(
-                                            "summary/${state.media.imdbID}/$startRange/$endRange"
+                                            Screen.Summary.createRoute(
+                                                mediaId = state.media.imdbID,
+                                                rangeStart = startRange,
+                                                rangeEnd = endRange
+                                            )
                                         )
                                     },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Text("Generate Summary")
+                                    Text("Get Summary")
                                 }
 
                                 Spacer(modifier = Modifier.height(8.dp))

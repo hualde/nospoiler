@@ -58,8 +58,20 @@ fun MainScreen() {
             composable(Screen.SearchResults.route) { 
                 SearchResultsScreen(navController)
             }
-            composable(Screen.Summary.route) { 
-                SummaryScreen(navController)
+            composable(
+                route = Screen.Summary.route,
+                arguments = listOf(
+                    navArgument(Screen.Summary.MEDIA_ID) { type = NavType.StringType },
+                    navArgument(Screen.Summary.RANGE_START) { type = NavType.IntType },
+                    navArgument(Screen.Summary.RANGE_END) { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                SummaryScreen(
+                    navController = navController,
+                    mediaId = backStackEntry.arguments?.getString(Screen.Summary.MEDIA_ID) ?: "",
+                    rangeStart = backStackEntry.arguments?.getInt(Screen.Summary.RANGE_START) ?: 1,
+                    rangeEnd = backStackEntry.arguments?.getInt(Screen.Summary.RANGE_END) ?: 1
+                )
             }
             composable(Screen.Settings.route) { 
                 SettingsScreen(navController)

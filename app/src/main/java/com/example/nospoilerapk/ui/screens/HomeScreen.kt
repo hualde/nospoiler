@@ -16,6 +16,11 @@ import com.example.nospoilerapk.ui.viewmodels.SearchState
 import com.example.nospoilerapk.ui.viewmodels.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import android.widget.Toast
+import androidx.compose.material3.Snackbar
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
