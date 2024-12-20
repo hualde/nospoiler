@@ -286,6 +286,15 @@ fun RangeSelectorScreen(
                                 ) {
                                     Text("Generate Summary")
                                 }
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Button(
+                                    onClick = { /* Sin funcionalidad por ahora */ },
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text("View Timeline")
+                                }
                             }
                         }
                     }
