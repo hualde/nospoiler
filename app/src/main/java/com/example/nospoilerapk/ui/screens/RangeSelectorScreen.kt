@@ -16,6 +16,7 @@ import coil.compose.AsyncImage
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.nospoilerapk.ui.viewmodels.RangeSelectorViewModel
 import com.example.nospoilerapk.data.model.MediaInfo
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -195,17 +196,26 @@ fun RangeSelectorScreen(
                                             Spacer(modifier = Modifier.height(16.dp))
 
                                             // Rango de episodios con sliders
-                                            Text("Episode Range: $startRange - $endRange of $maxEpisodes")
-                                            
-                                            RangeSlider(
-                                                value = startRange.toFloat()..endRange.toFloat(),
-                                                onValueChange = { range ->
-                                                    startRange = range.start.toInt()
-                                                    endRange = range.endInclusive.toInt()
-                                                },
-                                                valueRange = 1f..maxEpisodes.toFloat(),
-                                                steps = maxEpisodes - 1
-                                            )
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(horizontal = 16.dp)
+                                            ) {
+                                                Text(
+                                                    text = "Rango de episodios: $startRange - $endRange",
+                                                    style = MaterialTheme.typography.bodyMedium
+                                                )
+                                                RangeSlider(
+                                                    value = startRange.toFloat()..endRange.toFloat(),
+                                                    onValueChange = { range ->
+                                                        startRange = range.start.toInt()
+                                                        endRange = range.endInclusive.toInt()
+                                                    },
+                                                    valueRange = 1f..maxEpisodes.toFloat(),
+                                                    steps = maxEpisodes - 2,
+                                                    modifier = Modifier.fillMaxWidth()
+                                                )
+                                            }
                                         }
                                     }
                                     is MediaInfo.MovieInfo -> {
@@ -213,15 +223,26 @@ fun RangeSelectorScreen(
                                         Column {
                                             Text("Part Range: $startRange - $endRange")
                                             
-                                            RangeSlider(
-                                                value = startRange.toFloat()..endRange.toFloat(),
-                                                onValueChange = { range ->
-                                                    startRange = range.start.toInt()
-                                                    endRange = range.endInclusive.toInt()
-                                                },
-                                                valueRange = 1f..info.totalParts.toFloat(),
-                                                steps = info.totalParts - 1
-                                            )
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(horizontal = 16.dp)
+                                            ) {
+                                                Text(
+                                                    text = "Rango de partes: $startRange - $endRange",
+                                                    style = MaterialTheme.typography.bodyMedium
+                                                )
+                                                RangeSlider(
+                                                    value = startRange.toFloat()..endRange.toFloat(),
+                                                    onValueChange = { range ->
+                                                        startRange = range.start.toInt()
+                                                        endRange = range.endInclusive.toInt()
+                                                    },
+                                                    valueRange = 1f..info.totalParts.toFloat(),
+                                                    steps = info.totalParts - 2,
+                                                    modifier = Modifier.fillMaxWidth()
+                                                )
+                                            }
                                         }
                                     }
                                     null -> {
