@@ -57,7 +57,6 @@ fun RangeSelectorScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
         ) {
             when (val state = mediaState) {
                 is RangeSelectorViewModel.MediaState.Loading -> {
@@ -70,15 +69,17 @@ fun RangeSelectorScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .padding(16.dp)
+                            .padding(horizontal = 16.dp)
                     ) {
                         Card(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp)
                         ) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp)
+                                    .padding(12.dp)
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -130,7 +131,7 @@ fun RangeSelectorScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp)
+                                    .padding(12.dp)
                             ) {
                                 Text(
                                     text = when (state.media.Type.lowercase()) {
@@ -140,7 +141,7 @@ fun RangeSelectorScreen(
                                     style = MaterialTheme.typography.titleMedium
                                 )
                                 
-                                Spacer(modifier = Modifier.height(16.dp))
+                                Spacer(modifier = Modifier.height(8.dp))
 
                                 when (val info = state.parsedInfo) {
                                     is MediaInfo.SeriesInfo -> {
@@ -193,7 +194,7 @@ fun RangeSelectorScreen(
                                                 }
                                             }
 
-                                            Spacer(modifier = Modifier.height(16.dp))
+                                            Spacer(modifier = Modifier.height(8.dp))
 
                                             // Rango de episodios con sliders
                                             Column(
@@ -273,7 +274,7 @@ fun RangeSelectorScreen(
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(24.dp))
+                                Spacer(modifier = Modifier.height(16.dp))
 
                                 Button(
                                     onClick = {
