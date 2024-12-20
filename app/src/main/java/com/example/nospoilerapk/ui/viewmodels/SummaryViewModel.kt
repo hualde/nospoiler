@@ -30,12 +30,22 @@ class SummaryViewModel @Inject constructor(
                 _summaryState.value = SummaryState.Loading
                 
                 val prompt = """
-                    You are a JSON API that returns spoiler-free summaries. 
+                    You are a JSON API that returns comprehensive spoiler-free summaries. 
                     For the media with IMDB ID $mediaId, episodes $rangeStart to $rangeEnd, 
-                    return a JSON object with exactly this structure:
-                    {"summary": "the spoiler-free summary"}
-                    The summary should focus on themes and development without specific plot points.
-                    IMPORTANT: Return ONLY the JSON, no other text or explanation.
+                    provide a detailed analysis in JSON format.
+                    Return a JSON with this structure:
+                    {"summary": "your detailed summary here"}
+                    
+                    Guidelines for the summary:
+                    - Provide a comprehensive overview (300-400 words) that helps viewers catch up with the story
+                    - Explain the main events and developments in a general way
+                    - Focus on what viewers need to know to continue watching
+                    - Include important character introductions and group dynamics
+                    - Mention key locations and important elements introduced
+                    - Keep major twists and revelations vague but acknowledged
+                    - Balance between being informative and avoiding specific spoilers
+                    
+                    IMPORTANT: Return ONLY the JSON, no additional text or explanation.
                 """.trimIndent()
                 
                 val response = perplexityService.getMediaInfo(
