@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NoSpoilerApk</string>
+    <string name="settings">Paramètres</string>
+    <string name="dark_mode">Mode Sombre</string>
+    <string name="language">Langue</string>
+    <string name="select_language">Sélectionner la Langue</string>
+    <string name="cancel">Annuler</string>
+    <string name="search">Rechercher</string>
+    <string name="search_hint">Entrez un titre...</string>
+    <string name="no_results">Aucun résultat trouvé</string>
+    <string name="error_occurred">Une erreur est survenue</string>
+    <string name="try_again">Réessayer</string>
+    <string name="loading">Chargement...</string>
+    <string name="back">Retour</string>
+    <string name="select_range">Sélectionner la Plage</string>
+    <string name="summary">Résumé</string>
+    <string name="season">Saison</string>
+    <string name="episode">Épisode</string>
+    <string name="from">De</string>
+    <string name="to">À</string>
+    <string name="generate_summary">Générer le Résumé</string>
+    <string name="app_title">NoSpoiler</string>
+    <string name="search_button">Rechercher</string>
+    <string name="enter_title">Entrez un titre et appuyez sur le bouton de recherche</string>
+    <string name="year_type_format">%1$s - %2$s</string>
+    <string name="total_seasons_format">Nombre total de saisons: %1$s</string>
+    <string name="season_with_episodes">Saison %1$d (%2$d épisodes)</string>
+    <string name="episode_range_format">Plage d\'épisodes: %1$d - %2$d</string>
+    <string name="part_range_text">Plage de parties: %1$d - %2$d</string>
+    <string name="go_back_button">Retour</string>
+    <string name="select_episode_range">Sélectionner la plage d\'épisodes:</string>
+    <string name="select_part_range">Sélectionner la plage de parties:</string>
+    <string name="get_summary">Obtenir le Résumé</string>
+    <string name="view_timeline">Voir la Chronologie</string>
+</resources> 

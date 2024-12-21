@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NoSpoilerApk</string>
+    <string name="settings">Einstellungen</string>
+    <string name="dark_mode">Dunkelmodus</string>
+    <string name="language">Sprache</string>
+    <string name="select_language">Sprache Auswählen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="search">Suchen</string>
+    <string name="search_hint">Titel eingeben...</string>
+    <string name="no_results">Keine Ergebnisse gefunden</string>
+    <string name="error_occurred">Ein Fehler ist aufgetreten</string>
+    <string name="try_again">Erneut versuchen</string>
+    <string name="loading">Laden...</string>
+    <string name="back">Zurück</string>
+    <string name="select_range">Bereich auswählen</string>
+    <string name="summary">Zusammenfassung</string>
+    <string name="season">Staffel</string>
+    <string name="episode">Episode</string>
+    <string name="from">Von</string>
+    <string name="to">Bis</string>
+    <string name="generate_summary">Zusammenfassung generieren</string>
+    <string name="app_title">NoSpoiler</string>
+    <string name="search_button">Suchen</string>
+    <string name="enter_title">Geben Sie einen Titel ein und drücken Sie die Suchtaste</string>
+    <string name="year_type_format">%1$s - %2$s</string>
+    <string name="total_seasons_format">Gesamtzahl der Staffeln: %1$s</string>
+    <string name="season_with_episodes">Staffel %1$d (%2$d Folgen)</string>
+    <string name="episode_range_format">Episodenbereich: %1$d - %2$d</string>
+    <string name="part_range_text">Teilbereich: %1$d - %2$d</string>
+    <string name="go_back_button">Zurück</string>
+    <string name="select_episode_range">Episodenbereich auswählen:</string>
+    <string name="select_part_range">Teilbereich auswählen:</string>
+    <string name="get_summary">Zusammenfassung Anzeigen</string>
+    <string name="view_timeline">Zeitleiste Anzeigen</string>
+</resources> 

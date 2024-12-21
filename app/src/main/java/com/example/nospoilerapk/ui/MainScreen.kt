@@ -14,6 +14,8 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.nospoilerapk.navigation.Screen
 import com.example.nospoilerapk.ui.screens.*
+import androidx.compose.ui.res.stringResource
+import com.example.nospoilerapk.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,10 +25,13 @@ fun MainScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("NoSpoiler") },
+                title = { Text(stringResource(R.string.app_title)) },
                 actions = {
                     IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
-                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                        Icon(
+                            Icons.Default.Settings, 
+                            contentDescription = stringResource(R.string.settings)
+                        )
                     }
                 }
             )

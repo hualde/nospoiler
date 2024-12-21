@@ -16,20 +16,17 @@ import com.example.nospoilerapk.ui.viewmodels.SearchState
 import com.example.nospoilerapk.ui.viewmodels.SearchViewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import android.widget.Toast
-import androidx.compose.material3.Snackbar
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import kotlinx.coroutines.launch
+import androidx.compose.ui.res.stringResource
+import com.example.nospoilerapk.R
+import androidx.compose.foundation.clickable
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     var searchQuery by remember { mutableStateOf("") }
-    val searchState by viewModel.searchState.collectAsState()
+    val state by viewModel.searchState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -39,42 +36,39 @@ fun HomeScreen(
         OutlinedTextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
-            label = { Text("Search movies or TV shows") },
+            label = { Text(stringResource(R.string.search_hint)) },
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
-                IconButton(
-                    onClick = { 
-                        if (searchQuery.isNotBlank()) {
-                            viewModel.searchMedia(searchQuery)
-                        }
-                    }
-                ) {
-                    Icon(Icons.Default.Search, contentDescription = "Search")
+                IconButton(onClick = { viewModel.searchMedia(searchQuery) }) {
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = stringResource(R.string.search_button)
+                    )
                 }
             }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        when (val state = searchState) {
+        when (val currentState = state) {
             is SearchState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
             }
             is SearchState.Success -> {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(state.results) { media ->
+                    items(currentState.results) { media ->
                         Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = {
-                                navController.navigate(Screen.RangeSelector.createRoute(media.imdbID))
-                            }
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    navController.navigate(
+                                        Screen.RangeSelector.createRoute(media.imdbID)
+                                    )
+                                }
                         ) {
                             Row(
                                 modifier = Modifier
@@ -93,7 +87,7 @@ fun HomeScreen(
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                     Text(
-                                        text = "${media.Year} - ${media.Type}",
+                                        text = stringResource(R.string.year_type_format, media.Year, media.Type),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
@@ -104,14 +98,14 @@ fun HomeScreen(
             }
             is SearchState.Error -> {
                 Text(
-                    text = state.message,
+                    text = currentState.message,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
             is SearchState.Initial -> {
                 Text(
-                    text = "Enter a title and press the search button",
+                    text = stringResource(R.string.enter_title),
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }

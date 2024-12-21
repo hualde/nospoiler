@@ -20,6 +20,8 @@ import kotlin.math.roundToInt
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
 import com.example.nospoilerapk.navigation.Screen
+import androidx.compose.ui.res.stringResource
+import com.example.nospoilerapk.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,12 +48,12 @@ fun RangeSelectorScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Select Range") },
+                title = { Text(stringResource(R.string.select_range)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Go back"
+                            contentDescription = stringResource(R.string.go_back)
                         )
                     }
                 }
@@ -111,7 +113,7 @@ fun RangeSelectorScreen(
                                         )
                                         if (state.media.totalSeasons != null) {
                                             Text(
-                                                text = "Total Seasons: ${state.media.totalSeasons}",
+                                                text = stringResource(R.string.total_seasons_format, state.media.totalSeasons),
                                                 style = MaterialTheme.typography.bodyMedium
                                             )
                                         }
@@ -139,8 +141,8 @@ fun RangeSelectorScreen(
                             ) {
                                 Text(
                                     text = when (state.media.Type.lowercase()) {
-                                        "series" -> "Select episode range:"
-                                        else -> "Select part range:"
+                                        "series" -> stringResource(R.string.select_episode_range)
+                                        else -> stringResource(R.string.select_part_range)
                                     },
                                     style = MaterialTheme.typography.titleMedium
                                 )
@@ -174,10 +176,10 @@ fun RangeSelectorScreen(
                                                     horizontalArrangement = Arrangement.SpaceBetween,
                                                     verticalAlignment = Alignment.CenterVertically
                                                 ) {
-                                                    Text("Season $selectedSeason (${maxEpisodes} episodes)")
+                                                    Text(stringResource(R.string.season_with_episodes, selectedSeason, maxEpisodes))
                                                     Icon(
                                                         imageVector = Icons.Default.KeyboardArrowDown,
-                                                        contentDescription = "Select season"
+                                                        contentDescription = stringResource(R.string.select_season_description)
                                                     )
                                                 }
                                                 
@@ -188,7 +190,7 @@ fun RangeSelectorScreen(
                                                     (1..info.totalSeasons).forEach { season ->
                                                         val episodesInSeason = info.episodesPerSeason[season.toString()] ?: 1
                                                         DropdownMenuItem(
-                                                            text = { Text("Season $season ($episodesInSeason episodes)") },
+                                                            text = { Text(stringResource(R.string.season_episodes_dropdown, season, episodesInSeason)) },
                                                             onClick = {
                                                                 selectedSeason = season
                                                                 expanded = false
@@ -207,7 +209,7 @@ fun RangeSelectorScreen(
                                                     .padding(horizontal = 16.dp)
                                             ) {
                                                 Text(
-                                                    text = "Rango de episodios: $startRange - $endRange",
+                                                    text = stringResource(R.string.episode_range_format, startRange, endRange),
                                                     style = MaterialTheme.typography.bodyMedium
                                                 )
                                                 RangeSlider(
@@ -226,7 +228,7 @@ fun RangeSelectorScreen(
                                     is MediaInfo.MovieInfo -> {
                                         // Para películas
                                         Column {
-                                            Text("Part Range: $startRange - $endRange")
+                                            Text(stringResource(R.string.part_range_text, startRange, endRange))
                                             
                                             Column(
                                                 modifier = Modifier
@@ -257,7 +259,7 @@ fun RangeSelectorScreen(
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
                                             Text(
-                                                text = "Loading episode information...",
+                                                text = stringResource(R.string.loading_episode_info),
                                                 style = MaterialTheme.typography.bodyMedium
                                             )
                                             
@@ -272,7 +274,7 @@ fun RangeSelectorScreen(
                                                     viewModel.loadMediaDetails(mediaId)
                                                 }
                                             ) {
-                                                Text("Retry")
+                                                Text(stringResource(R.string.retry_button))
                                             }
                                         }
                                     }
@@ -292,7 +294,7 @@ fun RangeSelectorScreen(
                                     },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Text("Get Summary")
+                                    Text(stringResource(R.string.get_summary))
                                 }
 
                                 Spacer(modifier = Modifier.height(8.dp))
@@ -309,7 +311,7 @@ fun RangeSelectorScreen(
                                     },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Text("View Timeline")
+                                    Text(stringResource(R.string.view_timeline))
                                 }
                             }
                         }
@@ -329,7 +331,7 @@ fun RangeSelectorScreen(
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = { navController.navigateUp() }) {
-                            Text("Go Back")
+                            Text(stringResource(R.string.go_back_button))
                         }
                     }
                 }

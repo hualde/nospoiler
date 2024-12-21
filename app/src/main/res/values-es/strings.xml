@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NoSpoilerApk</string>
+    <string name="settings">Ajustes</string>
+    <string name="dark_mode">Modo Oscuro</string>
+    <string name="language">Idioma</string>
+    <string name="select_language">Seleccionar Idioma</string>
+    <string name="cancel">Cancelar</string>
+    <string name="search">Buscar</string>
+    <string name="search_hint">Introduce un título...</string>
+    <string name="no_results">No se encontraron resultados</string>
+    <string name="error_occurred">Ocurrió un error</string>
+    <string name="try_again">Intentar de nuevo</string>
+    <string name="loading">Cargando...</string>
+    <string name="back">Atrás</string>
+    <string name="select_range">Seleccionar Rango</string>
+    <string name="summary">Resumen</string>
+    <string name="season">Temporada</string>
+    <string name="episode">Episodio</string>
+    <string name="from">Desde</string>
+    <string name="to">Hasta</string>
+    <string name="generate_summary">Generar Resumen</string>
+    <string name="app_title">NoSpoiler</string>
+    <string name="part_range_format">Rango de partes: %1$d - %2$d</string>
+    <string name="loading_episode_info">Cargando información de episodios...</string>
+    <string name="search_button">Buscar</string>
+    <string name="enter_title">Introduce un título y pulsa el botón de búsqueda</string>
+    <string name="year_type_format">%1$s - %2$s</string>
+    <string name="total_seasons_format">Total de Temporadas: %1$s</string>
+    <string name="season_with_episodes">Temporada %1$d (%2$d episodios)</string>
+    <string name="episode_range_format">Rango de episodios: %1$d - %2$d</string>
+    <string name="part_range_text">Rango de partes: %1$d - %2$d</string>
+    <string name="go_back_button">Volver</string>
+    <string name="season_episodes_dropdown">Temporada %1$d (%2$d episodios)</string>
+    <string name="select_season_description">Seleccionar temporada</string>
+    <string name="retry_button">Reintentar</string>
+    <string name="select_episode_range">Seleccionar rango de episodios:</string>
+    <string name="select_part_range">Seleccionar rango de partes:</string>
+    <string name="get_summary">Obtener Resumen</string>
+    <string name="view_timeline">Ver Línea de Tiempo</string>
+</resources> 

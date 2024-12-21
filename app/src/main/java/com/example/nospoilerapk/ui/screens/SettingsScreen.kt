@@ -14,23 +14,31 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nospoilerapk.ui.viewmodels.ThemeViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.nospoilerapk.ui.viewmodels.LanguageViewModel
+import androidx.compose.ui.res.stringResource
+import com.example.nospoilerapk.R
+import android.app.Activity
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    themeViewModel: ThemeViewModel = hiltViewModel()
+    themeViewModel: ThemeViewModel = hiltViewModel(),
+    languageViewModel: LanguageViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
     var showLanguageDialog by remember { mutableStateOf(false) }
-    var selectedLanguage by remember { mutableStateOf("English") }
+    val selectedLanguage by languageViewModel.selectedLanguage.collectAsState()
     
     val languages = listOf("English", "Español", "Français", "Deutsch")
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text(stringResource(R.string.settings)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
@@ -69,7 +77,7 @@ fun SettingsScreen(
                             contentDescription = null,
                             modifier = Modifier.padding(end = 8.dp)
                         )
-                        Text("Dark Mode")
+                        Text(stringResource(R.string.dark_mode))
                     }
                     Switch(
                         checked = isDarkTheme,
@@ -100,7 +108,7 @@ fun SettingsScreen(
                             contentDescription = null,
                             modifier = Modifier.padding(end = 8.dp)
                         )
-                        Text("Language")
+                        Text(stringResource(R.string.language))
                     }
                     Text(selectedLanguage)
                 }
@@ -110,13 +118,14 @@ fun SettingsScreen(
         if (showLanguageDialog) {
             AlertDialog(
                 onDismissRequest = { showLanguageDialog = false },
-                title = { Text("Select Language") },
+                title = { Text(stringResource(R.string.select_language)) },
                 text = {
                     Column {
                         languages.forEach { language ->
                             TextButton(
                                 onClick = {
-                                    selectedLanguage = language
+                                    val activity = context as? Activity
+                                    languageViewModel.setLanguage(language, activity)
                                     showLanguageDialog = false
                                 },
                                 modifier = Modifier.fillMaxWidth()
@@ -128,7 +137,7 @@ fun SettingsScreen(
                 },
                 confirmButton = {
                     TextButton(onClick = { showLanguageDialog = false }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.cancel))
                     }
                 }
             )
