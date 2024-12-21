@@ -122,27 +122,32 @@ class SummaryViewModel @Inject constructor(
 
                 Log.d("SummaryViewModel", "API Response: $jsonResponse")
 
-                // Limpiar y extraer solo el contenido del summary
                 val summary = try {
                     val cleanJson = jsonResponse
                         .replace("```json", "")
                         .replace("```", "")
                         .trim()
                     
-                    // Escapar las comillas dentro del texto del resumen
-                    val escapedJson = cleanJson.replace("""\n""", " ")
-                        .replace("""\"Lost\"""", "'Lost'") // Manejar casos específicos de comillas
-                        .replace("""\"Others\"""", "'Others'")
-                        .replace("""\"hatch\"""", "'hatch'")
+                    // Escapar caracteres problemáticos
+                    val escapedJson = cleanJson
+                        .replace("""\n""", " ")
+                        .replace("\"", "'")
+                        .replace("'", "\"") // Volver a poner comillas dobles para el JSON
                     
                     val jsonObject = gson.fromJson(escapedJson, JsonObject::class.java)
-                    jsonObject.get("summary").asString
+                    jsonObject.get("summary")?.asString ?: throw Exception("Summary field is null")
                 } catch (e: Exception) {
-                    Log.e("SummaryViewModel", "Parsing error", e)
-                    // Si falla el parseo JSON, intentar extraer el texto directamente
-                    val summaryMatch = Regex(""""summary":\s*"(.*?)"\s*}""").find(jsonResponse)
-                    summaryMatch?.groupValues?.get(1) 
-                        ?: throw Exception("Could not parse response: ${e.message}")
+                    Log.e("SummaryViewModel", "First parsing attempt failed", e)
+                    
+                    // Segundo intento: buscar el contenido entre comillas después de "summary":
+                    try {
+                        val pattern = "\"summary\"\\s*:\\s*\"(.*?)\"".toRegex(RegexOption.DOT_MATCHES_ALL)
+                        val matchResult = pattern.find(jsonResponse)
+                        matchResult?.groupValues?.get(1) ?: throw Exception("No summary found in response")
+                    } catch (e: Exception) {
+                        Log.e("SummaryViewModel", "Second parsing attempt failed", e)
+                        throw Exception("Could not extract summary from response")
+                    }
                 }
 
                 _summaryState.value = SummaryState.Success(summary)
