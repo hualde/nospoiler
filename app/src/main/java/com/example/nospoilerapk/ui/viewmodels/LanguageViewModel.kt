@@ -6,27 +6,22 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.example.nospoilerapk.data.LanguageService
 
 @HiltViewModel
 class LanguageViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val languageService: LanguageService
 ) : ViewModel() {
-    private val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-    private val _selectedLanguage = MutableStateFlow(
-        prefs.getString("selected_language", "English") ?: "English"
-    )
+    private val _selectedLanguage = MutableStateFlow(languageService.getCurrentLanguage())
     val selectedLanguage: StateFlow<String> = _selectedLanguage
 
     fun setLanguage(language: String, activity: Activity?) {
         viewModelScope.launch {
-            prefs.edit()
-                .putString("selected_language", language)
-                .apply()
+            languageService.setLanguage(language)
             _selectedLanguage.value = language
             
             activity?.let {

@@ -13,10 +13,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.example.nospoilerapk.data.LanguageService
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
-    private val perplexityService: PerplexityService
+    private val perplexityService: PerplexityService,
+    private val languageService: LanguageService
 ) : ViewModel() {
 
     private val gson = Gson()
@@ -24,29 +26,89 @@ class SummaryViewModel @Inject constructor(
     private val _summaryState = MutableStateFlow<SummaryState>(SummaryState.Loading)
     val summaryState: StateFlow<SummaryState> = _summaryState
 
+    private fun getPromptForLanguage(mediaId: String, rangeStart: Int, rangeEnd: Int): String {
+        val languageCode = languageService.getCurrentLanguageCode()
+        return when (languageCode) {
+            "es" -> """
+                Eres una API JSON que genera resúmenes.
+                Para el contenido con ID de IMDB $mediaId, episodios $rangeStart a $rangeEnd,
+                devuelve un JSON con esta estructura:
+                {
+                    "summary": "el resumen aquí"
+                }
+                
+                Pautas para el resumen:
+                - Escribe en español
+                - Resume los eventos principales
+                - Mantén un tono neutral
+                - Evita spoilers importantes
+                - Usa tiempo presente
+                
+                IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
+            """.trimIndent()
+            
+            "fr" -> """
+                Tu es une API JSON qui génère des résumés.
+                Pour le contenu avec l'ID IMDB $mediaId, épisodes $rangeStart à $rangeEnd,
+                renvoie un JSON avec cette structure:
+                {
+                    "summary": "le résumé ici"
+                }
+                
+                Directives pour le résumé:
+                - Écris en français
+                - Résume les événements principaux
+                - Maintiens un ton neutre
+                - Évite les spoilers importants
+                - Utilise le présent
+                
+                IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
+            """.trimIndent()
+            
+            "de" -> """
+                Du bist eine JSON-API, die Zusammenfassungen generiert.
+                Für den Inhalt mit IMDB-ID $mediaId, Episoden $rangeStart bis $rangeEnd,
+                gib ein JSON mit dieser Struktur zurück:
+                {
+                    "summary": "die Zusammenfassung hier"
+                }
+                
+                Richtlinien für die Zusammenfassung:
+                - Schreibe auf Deutsch
+                - Fasse die Hauptereignisse zusammen
+                - Behalte einen neutralen Ton
+                - Vermeide wichtige Spoiler
+                - Verwende Präsens
+                
+                WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
+            """.trimIndent()
+            
+            else -> """
+                You are a JSON API that generates summaries.
+                For the media with IMDB ID $mediaId, episodes $rangeStart to $rangeEnd,
+                return a JSON with this structure:
+                {
+                    "summary": "the summary here"
+                }
+                
+                Guidelines for the summary:
+                - Write in English
+                - Summarize main events
+                - Keep a neutral tone
+                - Avoid major spoilers
+                - Use present tense
+                
+                IMPORTANT: Return ONLY the JSON, no additional text.
+            """.trimIndent()
+        }
+    }
+
     fun getSummary(mediaId: String, rangeStart: Int, rangeEnd: Int) {
         viewModelScope.launch {
             try {
                 _summaryState.value = SummaryState.Loading
                 
-                val prompt = """
-                    You are a JSON API that returns comprehensive spoiler-free summaries. 
-                    For the media with IMDB ID $mediaId, episodes $rangeStart to $rangeEnd, 
-                    provide a detailed analysis in JSON format.
-                    Return a JSON with this structure:
-                    {"summary": "your detailed summary here"}
-                    
-                    Guidelines for the summary:
-                    - Provide a comprehensive overview (300-400 words) that helps viewers catch up with the story
-                    - Explain the main events and developments in a general way
-                    - Focus on what viewers need to know to continue watching
-                    - Include important character introductions and group dynamics
-                    - Mention key locations and important elements introduced
-                    - Keep major twists and revelations vague but acknowledged
-                    - Balance between being informative and avoiding specific spoilers
-                    
-                    IMPORTANT: Return ONLY the JSON, no additional text or explanation.
-                """.trimIndent()
+                val prompt = getPromptForLanguage(mediaId, rangeStart, rangeEnd)
                 
                 val response = perplexityService.getMediaInfo(
                     PerplexityRequest(
@@ -67,11 +129,20 @@ class SummaryViewModel @Inject constructor(
                         .replace("```", "")
                         .trim()
                     
-                    val jsonObject = gson.fromJson(cleanJson, JsonObject::class.java)
+                    // Escapar las comillas dentro del texto del resumen
+                    val escapedJson = cleanJson.replace("""\n""", " ")
+                        .replace("""\"Lost\"""", "'Lost'") // Manejar casos específicos de comillas
+                        .replace("""\"Others\"""", "'Others'")
+                        .replace("""\"hatch\"""", "'hatch'")
+                    
+                    val jsonObject = gson.fromJson(escapedJson, JsonObject::class.java)
                     jsonObject.get("summary").asString
                 } catch (e: Exception) {
                     Log.e("SummaryViewModel", "Parsing error", e)
-                    throw Exception("Could not parse response: ${e.message}")
+                    // Si falla el parseo JSON, intentar extraer el texto directamente
+                    val summaryMatch = Regex(""""summary":\s*"(.*?)"\s*}""").find(jsonResponse)
+                    summaryMatch?.groupValues?.get(1) 
+                        ?: throw Exception("Could not parse response: ${e.message}")
                 }
 
                 _summaryState.value = SummaryState.Success(summary)
