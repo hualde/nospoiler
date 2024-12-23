@@ -7,6 +7,7 @@ import com.example.nospoilerapk.data.network.PerplexityService
 import com.example.nospoilerapk.data.network.Message
 import com.example.nospoilerapk.data.network.PerplexityRequest
 import com.example.nospoilerapk.data.LanguageService
+import com.example.nospoilerapk.data.network.OmdbService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,7 @@ import com.google.gson.JsonObject
 @HiltViewModel
 class TimelineViewModel @Inject constructor(
     private val perplexityService: PerplexityService,
+    private val omdbService: OmdbService,
     private val languageService: LanguageService
 ) : ViewModel() {
 
@@ -26,12 +28,12 @@ class TimelineViewModel @Inject constructor(
     private val _timelineState = MutableStateFlow<TimelineState>(TimelineState.Loading)
     val timelineState: StateFlow<TimelineState> = _timelineState
 
-    private fun getPromptForLanguage(mediaId: String, rangeStart: Int, rangeEnd: Int): String {
+    private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int): String {
         val languageCode = languageService.getCurrentLanguageCode()
         return when (languageCode) {
             "es" -> """
                 Eres una API JSON que devuelve líneas de tiempo de eventos importantes.
-                Para el contenido con ID de IMDB $mediaId, episodios $rangeStart a $rangeEnd,
+                Para la serie llamada "$title", episodios $rangeStart a $rangeEnd,
                 devuelve un JSON con esta estructura:
                 {
                     "events": [
@@ -53,7 +55,7 @@ class TimelineViewModel @Inject constructor(
 
             "fr" -> """
                 Tu es une API JSON qui renvoie des chronologies d'événements majeurs.
-                Pour le contenu avec l'ID IMDB $mediaId, épisodes $rangeStart à $rangeEnd,
+                Pour la série intitulée "$title", épisodes $rangeStart à $rangeEnd,
                 renvoie un JSON avec cette structure:
                 {
                     "events": [
@@ -75,7 +77,7 @@ class TimelineViewModel @Inject constructor(
 
             "de" -> """
                 Du bist eine JSON-API, die Zeitlinien wichtiger Ereignisse zurückgibt.
-                Für den Inhalt mit IMDB-ID $mediaId, Episoden $rangeStart bis $rangeEnd,
+                Für die Serie mit dem Titel "$title", Episoden $rangeStart bis $rangeEnd,
                 gib ein JSON mit dieser Struktur zurück:
                 {
                     "events": [
@@ -97,7 +99,7 @@ class TimelineViewModel @Inject constructor(
 
             else -> """
                 You are a JSON API that returns timelines of major events.
-                For the media with IMDB ID $mediaId, episodes $rangeStart to $rangeEnd,
+                For the series titled "$title", episodes $rangeStart to $rangeEnd,
                 return a JSON with this structure:
                 {
                     "events": [
@@ -124,7 +126,8 @@ class TimelineViewModel @Inject constructor(
             try {
                 _timelineState.value = TimelineState.Loading
                 
-                val prompt = getPromptForLanguage(mediaId, rangeStart, rangeEnd)
+                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
+                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd)
                 
                 val response = perplexityService.getMediaInfo(
                     PerplexityRequest(
