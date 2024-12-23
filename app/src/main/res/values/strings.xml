@@ -61,4 +61,42 @@
     <string name="faq_summary_content">The summary provides a spoiler-free overview of main events and important plot developments, without revealing major twists or endings. It\'s designed to help you catch up while preserving the viewing experience.</string>
     <string name="faq_timeline_title">What\'s the difference between Summary and Timeline?</string>
     <string name="faq_timeline_content">The Summary provides a narrative overview, while the Timeline shows key events in chronological order. The Timeline is useful for understanding the sequence of events, while the Summary gives you a more flowing narrative.</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="terms_content">Terms and Conditions for NoSpoiler\n\n
+1. Acceptance of Terms\n
+By accessing and using NoSpoiler, you agree to be bound by these Terms and Conditions.\n\n
+
+2. Service Description\n
+NoSpoiler provides AI-generated summaries and timelines of TV shows and movies. The content is generated using third-party APIs and may not be completely accurate.\n\n
+
+3. User Obligations\n
+- You must be at least 13 years old to use this service\n
+- You agree to use the service only for lawful purposes\n
+- You accept that summaries may contain minor inaccuracies\n\n
+
+4. Privacy and Data\n
+- We collect minimal user data necessary for app functionality\n
+- We use third-party APIs (OMDb and Perplexity) to generate content\n
+- We do not share personal information with third parties\n\n
+
+5. Content and Copyright\n
+- Generated summaries are for personal use only\n
+- Original content remains property of respective rights holders\n
+- API usage is subject to their respective terms of service\n\n
+
+6. Disclaimer\n
+The app is provided "as is" without warranties of any kind. We are not responsible for any inaccuracies in the generated content.\n\n
+
+7. Changes to Terms\n
+We reserve the right to modify these terms at any time. Continued use of the app constitutes acceptance of modified terms.\n\n
+
+8. Termination\n
+We reserve the right to terminate access for violations of these terms.\n\n
+
+9. Contact\n
+For questions about these terms, contact: support@nospoiler.com</string>
+    <string name="terms_decline_message">You must accept the Terms and Conditions to use NoSpoiler</string>
+    <string name="terms_required">Terms and Conditions acceptance is required</string>
 </resources>

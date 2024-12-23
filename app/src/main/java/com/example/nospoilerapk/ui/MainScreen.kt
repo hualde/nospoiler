@@ -102,6 +102,12 @@ fun MainScreen() {
             composable(Screen.Help.route) {
                 HelpScreen(navController)
             }
+            composable(Screen.Terms.route) {
+                TermsScreen(
+                    navController = navController,
+                    showBackButton = true
+                )
+            }
         }
     }
 } 

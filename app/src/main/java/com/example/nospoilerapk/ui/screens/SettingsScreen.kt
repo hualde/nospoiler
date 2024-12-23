@@ -150,6 +150,24 @@ fun SettingsScreen(
                     Text(stringResource(R.string.help))
                 }
             }
+
+            // Terms Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                onClick = { navController.navigate(Screen.Terms.route) }
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(stringResource(R.string.terms_and_conditions))
+                }
+            }
         }
 
         if (showLanguageDialog) {

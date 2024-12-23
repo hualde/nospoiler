@@ -50,4 +50,42 @@
     <string name="faq_summary_content">Le résumé fournit un aperçu sans spoiler des événements principaux et des développements importants de l\'intrigue, sans révéler les grands rebondissements ou les fins. Il est conçu pour vous aider à rattraper votre retard tout en préservant l\'expérience de visionnage.</string>
     <string name="faq_timeline_title">Quelle est la différence entre Résumé et Chronologie ?</string>
     <string name="faq_timeline_content">Le Résumé fournit un aperçu narratif, tandis que la Chronologie montre les événements clés dans l\'ordre chronologique. La Chronologie est utile pour comprendre la séquence des événements, tandis que le Résumé offre une narration plus fluide.</string>
+    <string name="terms_and_conditions">Conditions Générales</string>
+    <string name="accept">Accepter</string>
+    <string name="decline">Refuser</string>
+    <string name="terms_content">Conditions Générales de NoSpoiler\n\n
+1. Acceptation des Conditions\n
+En accédant et en utilisant NoSpoiler, vous acceptez d\'être lié par ces Conditions Générales.\n\n
+
+2. Description du Service\n
+NoSpoiler fournit des résumés et des chronologies générés par IA pour les séries et les films. Le contenu est généré à l\'aide d\'APIs tierces et peut ne pas être totalement précis.\n\n
+
+3. Obligations de l\'Utilisateur\n
+- Vous devez avoir au moins 13 ans pour utiliser ce service\n
+- Vous acceptez d\'utiliser le service uniquement à des fins légales\n
+- Vous acceptez que les résumés puissent contenir des inexactitudes mineures\n\n
+
+4. Confidentialité et Données\n
+- Nous collectons les données minimales nécessaires au fonctionnement de l\'application\n
+- Nous utilisons des APIs tierces (OMDb et Perplexity) pour générer le contenu\n
+- Nous ne partageons pas d\'informations personnelles avec des tiers\n\n
+
+5. Contenu et Droits d\'Auteur\n
+- Les résumés générés sont destinés à un usage personnel uniquement\n
+- Le contenu original reste la propriété de leurs détenteurs respectifs\n
+- L\'utilisation des APIs est soumise à leurs conditions de service respectives\n\n
+
+6. Avertissement\n
+L\'application est fournie "telle quelle" sans aucune garantie. Nous ne sommes pas responsables des inexactitudes dans le contenu généré.\n\n
+
+7. Modifications des Conditions\n
+Nous nous réservons le droit de modifier ces conditions à tout moment. L\'utilisation continue de l\'application constitue l\'acceptation des conditions modifiées.\n\n
+
+8. Résiliation\n
+Nous nous réservons le droit de résilier l\'accès en cas de violation de ces conditions.\n\n
+
+9. Contact\n
+Pour toute question concernant ces conditions, contactez : support@nospoiler.com</string>
+    <string name="terms_decline_message">Vous devez accepter les Conditions Générales pour utiliser NoSpoiler</string>
+    <string name="terms_required">L\'acceptation des Conditions Générales est requise</string>
 </resources> 
