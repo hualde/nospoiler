@@ -99,6 +99,9 @@ fun MainScreen() {
             composable(Screen.About.route) {
                 AboutScreen(navController)
             }
+            composable(Screen.Help.route) {
+                HelpScreen(navController)
+            }
         }
     }
 } 

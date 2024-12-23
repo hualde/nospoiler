@@ -40,4 +40,14 @@
     <string name="licenses">Licences</string>
     <string name="omdb_attribution">Ce produit utilise l\'API OMDb mais n\'est ni approuvé ni certifié par OMDb.</string>
     <string name="perplexity_attribution">Ce produit utilise l\'API Perplexity pour les résumés générés par IA.</string>
+    <string name="help">Aide</string>
+    <string name="faq_title">Questions Fréquentes</string>
+    <string name="faq_search_title">Comment rechercher une série ou un film ?</string>
+    <string name="faq_search_content">Saisissez le titre dans la barre de recherche de l\'écran d\'accueil et appuyez sur le bouton de recherche. Sélectionnez la série ou le film souhaité dans les résultats.</string>
+    <string name="faq_range_title">Comment sélectionner une plage d\'épisodes ?</string>
+    <string name="faq_range_content">Après avoir sélectionné une série, choisissez la saison puis définissez la plage d\'épisodes souhaitée à l\'aide des curseurs. Pour les films en plusieurs parties, sélectionnez simplement la plage de parties que vous souhaitez rattraper.</string>
+    <string name="faq_summary_title">Quelles informations contiendra le résumé ?</string>
+    <string name="faq_summary_content">Le résumé fournit un aperçu sans spoiler des événements principaux et des développements importants de l\'intrigue, sans révéler les grands rebondissements ou les fins. Il est conçu pour vous aider à rattraper votre retard tout en préservant l\'expérience de visionnage.</string>
+    <string name="faq_timeline_title">Quelle est la différence entre Résumé et Chronologie ?</string>
+    <string name="faq_timeline_content">Le Résumé fournit un aperçu narratif, tandis que la Chronologie montre les événements clés dans l\'ordre chronologique. La Chronologie est utile pour comprendre la séquence des événements, tandis que le Résumé offre une narration plus fluide.</string>
 </resources> 

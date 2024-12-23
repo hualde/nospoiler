@@ -26,4 +26,5 @@ sealed class Screen(val route: String) {
             "timeline/$mediaId/$rangeStart/$rangeEnd"
     }
     object About : Screen("about")
+    object Help : Screen("help")
 } 

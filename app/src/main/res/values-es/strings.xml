@@ -45,4 +45,15 @@
     <string name="licenses">Licencias</string>
     <string name="omdb_attribution">Este producto utiliza la API de OMDb pero no está respaldado ni certificado por OMDb.</string>
     <string name="perplexity_attribution">Este producto utiliza la API de Perplexity para resúmenes generados por IA.</string>
+    <string name="help">Ayuda</string>
+    <string name="faq_title">Preguntas Frecuentes</string>
+    <!-- FAQ Questions -->
+    <string name="faq_search_title">¿Cómo busco una serie o película?</string>
+    <string name="faq_search_content">Introduce el título en la barra de búsqueda de la pantalla principal y pulsa el botón de búsqueda. Selecciona la serie o película deseada de los resultados.</string>
+    <string name="faq_range_title">¿Cómo selecciono un rango de episodios?</string>
+    <string name="faq_range_content">Después de seleccionar una serie, elige la temporada y luego establece el rango de episodios deseado usando los deslizadores. Para películas con múltiples partes, simplemente selecciona el rango de partes que quieres ponerte al día.</string>
+    <string name="faq_summary_title">¿Qué información contendrá el resumen?</string>
+    <string name="faq_summary_content">El resumen proporciona una visión general de los eventos principales y desarrollos importantes de la trama, sin revelar giros importantes o finales. Está diseñado para ayudarte a ponerte al día mientras preserva la experiencia de visualización.</string>
+    <string name="faq_timeline_title">¿Cuál es la diferencia entre Resumen y Línea de Tiempo?</string>
+    <string name="faq_timeline_content">El Resumen proporciona una visión general narrativa, mientras que la Línea de Tiempo muestra eventos clave en orden cronológico. La Línea de Tiempo es útil para entender la secuencia de eventos, mientras que el Resumen te da una narrativa más fluida.</string>
 </resources> 

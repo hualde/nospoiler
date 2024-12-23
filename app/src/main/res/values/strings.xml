@@ -51,4 +51,14 @@
     <string name="licenses">Licenses</string>
     <string name="omdb_attribution">This product uses the OMDb API but is not endorsed or certified by OMDb.</string>
     <string name="perplexity_attribution">This product uses the Perplexity API for AI-generated summaries.</string>
+    <string name="help">Help</string>
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="faq_search_title">How do I search for a show or movie?</string>
+    <string name="faq_search_content">Enter the title in the search bar on the home screen and tap the search button. Select your desired show or movie from the results.</string>
+    <string name="faq_range_title">How do I select an episode range?</string>
+    <string name="faq_range_content">After selecting a show, choose the season and then set your desired episode range using the sliders. For movies with multiple parts, simply select the range of parts you want to catch up on.</string>
+    <string name="faq_summary_title">What information will the summary contain?</string>
+    <string name="faq_summary_content">The summary provides a spoiler-free overview of main events and important plot developments, without revealing major twists or endings. It\'s designed to help you catch up while preserving the viewing experience.</string>
+    <string name="faq_timeline_title">What\'s the difference between Summary and Timeline?</string>
+    <string name="faq_timeline_content">The Summary provides a narrative overview, while the Timeline shows key events in chronological order. The Timeline is useful for understanding the sequence of events, while the Summary gives you a more flowing narrative.</string>
 </resources>

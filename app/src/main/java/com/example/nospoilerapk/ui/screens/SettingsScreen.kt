@@ -132,6 +132,24 @@ fun SettingsScreen(
                     Text(stringResource(R.string.about))
                 }
             }
+
+            // Help Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                onClick = { navController.navigate(Screen.Help.route) }
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(stringResource(R.string.help))
+                }
+            }
         }
 
         if (showLanguageDialog) {

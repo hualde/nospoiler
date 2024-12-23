@@ -40,4 +40,14 @@
     <string name="licenses">Lizenzen</string>
     <string name="omdb_attribution">Dieses Produkt verwendet die OMDb-API, ist aber nicht von OMDb unterstützt oder zertifiziert.</string>
     <string name="perplexity_attribution">Dieses Produkt verwendet die Perplexity-API für KI-generierte Zusammenfassungen.</string>
+    <string name="help">Hilfe</string>
+    <string name="faq_title">Häufig gestellte Fragen</string>
+    <string name="faq_search_title">Wie suche ich nach einer Serie oder einem Film?</string>
+    <string name="faq_search_content">Geben Sie den Titel in die Suchleiste auf dem Startbildschirm ein und tippen Sie auf die Suchtaste. Wählen Sie die gewünschte Serie oder den gewünschten Film aus den Ergebnissen aus.</string>
+    <string name="faq_range_title">Wie wähle ich einen Episodenbereich aus?</string>
+    <string name="faq_range_content">Nachdem Sie eine Serie ausgewählt haben, wählen Sie die Staffel und legen Sie dann den gewünschten Episodenbereich mit den Schiebereglern fest. Bei mehrteiligen Filmen wählen Sie einfach den Bereich der Teile aus, die Sie nachholen möchten.</string>
+    <string name="faq_summary_title">Welche Informationen enthält die Zusammenfassung?</string>
+    <string name="faq_summary_content">Die Zusammenfassung bietet einen spoilerfreien Überblick über die wichtigsten Ereignisse und Handlungsentwicklungen, ohne große Wendungen oder Enden zu verraten. Sie soll Ihnen helfen, den Anschluss zu finden und dabei das Seherlebnis zu bewahren.</string>
+    <string name="faq_timeline_title">Was ist der Unterschied zwischen Zusammenfassung und Zeitleiste?</string>
+    <string name="faq_timeline_content">Die Zusammenfassung bietet einen narrativen Überblick, während die Zeitleiste wichtige Ereignisse in chronologischer Reihenfolge zeigt. Die Zeitleiste ist nützlich, um die Abfolge der Ereignisse zu verstehen, während die Zusammenfassung eine flüssigere Erzählung bietet.</string>
 </resources> 
