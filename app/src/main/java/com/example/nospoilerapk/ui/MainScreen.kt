@@ -16,6 +16,10 @@ import com.example.nospoilerapk.navigation.Screen
 import com.example.nospoilerapk.ui.screens.*
 import androidx.compose.ui.res.stringResource
 import com.example.nospoilerapk.R
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +29,20 @@ fun MainScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.app_title)) },
+                title = {
+                    Text(
+                        buildAnnotatedString {
+                            append("NoSpoiler")
+                            withStyle(
+                                style = SpanStyle(
+                                    color = Color(0xFF2196F3) // Material Blue
+                                )
+                            ) {
+                                append("AI")
+                            }
+                        }
+                    )
+                },
                 actions = {
                     IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
                         Icon(

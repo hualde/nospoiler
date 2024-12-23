@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NoSpoilerApk</string>
+    <string name="app_name">NoSpoilerAI</string>
     <string name="settings">Einstellungen</string>
     <string name="dark_mode">Dunkelmodus</string>
     <string name="language">Sprache</string>
@@ -20,7 +20,7 @@
     <string name="from">Von</string>
     <string name="to">Bis</string>
     <string name="generate_summary">Zusammenfassung generieren</string>
-    <string name="app_title">NoSpoiler</string>
+    <string name="app_title">NoSpoilerAI</string>
     <string name="search_button">Suchen</string>
     <string name="enter_title">Geben Sie einen Titel ein und drücken Sie die Suchtaste</string>
     <string name="year_type_format">%1$s - %2$s</string>
@@ -88,4 +88,10 @@ Wir behalten uns das Recht vor, den Zugang bei Verstößen gegen diese Bedingung
 Bei Fragen zu diesen Bedingungen kontaktieren Sie: support@nospoiler.com</string>
     <string name="terms_decline_message">Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren, um NoSpoiler nutzen zu können</string>
     <string name="terms_required">Die Annahme der Allgemeinen Geschäftsbedingungen ist erforderlich</string>
+    <string name="welcome_message">Was möchten Sie heute sehen?</string>
+    <string name="main_features">Hauptfunktionen</string>
+    <string name="feature_movies_series">Filme und Serien suchen</string>
+    <string name="feature_timeline">Zeitlinien anzeigen</string>
+    <string name="feature_summaries">Spoilerfreie Zusammenfassungen</string>
+    <string name="quick_help_title">Schnellhilfe</string>
 </resources> 

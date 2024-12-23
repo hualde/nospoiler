@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NoSpoilerApk</string>
+    <string name="app_name">NoSpoilerAI</string>
     <string name="settings">Ajustes</string>
     <string name="dark_mode">Modo Oscuro</string>
     <string name="language">Idioma</string>
@@ -20,7 +20,7 @@
     <string name="from">Desde</string>
     <string name="to">Hasta</string>
     <string name="generate_summary">Generar Resumen</string>
-    <string name="app_title">NoSpoiler</string>
+    <string name="app_title">NoSpoilerAI</string>
     <string name="part_range_format">Rango de partes: %1$d - %2$d</string>
     <string name="loading_episode_info">Cargando información de episodios...</string>
     <string name="search_button">Buscar</string>
@@ -56,4 +56,10 @@
     <string name="faq_summary_content">El resumen proporciona una visión general de los eventos principales y desarrollos importantes de la trama, sin revelar giros importantes o finales. Está diseñado para ayudarte a ponerte al día mientras preserva la experiencia de visualización.</string>
     <string name="faq_timeline_title">¿Cuál es la diferencia entre Resumen y Línea de Tiempo?</string>
     <string name="faq_timeline_content">El Resumen proporciona una visión general narrativa, mientras que la Línea de Tiempo muestra eventos clave en orden cronológico. La Línea de Tiempo es útil para entender la secuencia de eventos, mientras que el Resumen te da una narrativa más fluida.</string>
+    <string name="welcome_message">¿Qué quieres ver hoy?</string>
+    <string name="main_features">Características principales</string>
+    <string name="feature_movies_series">Busca películas y series</string>
+    <string name="feature_timeline">Visualiza líneas de tiempo</string>
+    <string name="feature_summaries">Obtén resúmenes sin spoilers</string>
+    <string name="quick_help_title">Ayuda rápida</string>
 </resources> 
