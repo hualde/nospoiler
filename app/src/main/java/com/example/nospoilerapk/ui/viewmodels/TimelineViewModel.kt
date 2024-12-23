@@ -37,9 +37,9 @@ class TimelineViewModel @Inject constructor(
                 devuelve un JSON con esta estructura:
                 {
                     "events": [
-                        "descripción del evento 1",
-                        "descripción del evento 2",
-                        "descripción del evento 3"
+                        "descripción de un evento",
+                        "descripción de otro evento",
+                        "descripción de otro evento más"
                     ]
                 }
                 
@@ -49,6 +49,7 @@ class TimelineViewModel @Inject constructor(
                 - Enfócate en desarrollos importantes de la trama
                 - Mantén las descripciones generales para evitar spoilers
                 - Usa tiempo presente
+                - No incluyas números o viñetas en las descripciones
                 
                 IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
             """.trimIndent()
@@ -59,9 +60,9 @@ class TimelineViewModel @Inject constructor(
                 renvoie un JSON avec cette structure:
                 {
                     "events": [
-                        "description de l'événement 1",
-                        "description de l'événement 2",
-                        "description de l'événement 3"
+                        "description d'un événement",
+                        "description d'un autre événement",
+                        "description d'un autre événement"
                     ]
                 }
                 
@@ -71,6 +72,7 @@ class TimelineViewModel @Inject constructor(
                 - Concentre-toi sur les développements importants de l'intrigue
                 - Garde les descriptions générales pour éviter les spoilers
                 - Utilise le présent
+                - N'inclus pas de numéros ou de puces dans les descriptions
                 
                 IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
             """.trimIndent()
@@ -81,9 +83,9 @@ class TimelineViewModel @Inject constructor(
                 gib ein JSON mit dieser Struktur zurück:
                 {
                     "events": [
-                        "Beschreibung des Ereignisses 1",
-                        "Beschreibung des Ereignisses 2",
-                        "Beschreibung des Ereignisses 3"
+                        "Beschreibung eines Ereignisses",
+                        "Beschreibung eines weiteren Ereignisses",
+                        "Beschreibung eines weiteren Ereignisses"
                     ]
                 }
                 
@@ -93,6 +95,7 @@ class TimelineViewModel @Inject constructor(
                 - Konzentriere dich auf wichtige Handlungsentwicklungen
                 - Halte die Beschreibungen allgemein, um Spoiler zu vermeiden
                 - Verwende Präsens
+                - Füge keine Nummern oder Aufzählungszeichen in die Beschreibungen ein
                 
                 WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
             """.trimIndent()
@@ -103,9 +106,9 @@ class TimelineViewModel @Inject constructor(
                 return a JSON with this structure:
                 {
                     "events": [
-                        "event 1 description",
-                        "event 2 description",
-                        "event 3 description"
+                        "description of an event",
+                        "description of another event",
+                        "description of another event"
                     ]
                 }
                 
@@ -115,6 +118,7 @@ class TimelineViewModel @Inject constructor(
                 - Focus on significant plot developments
                 - Keep descriptions general enough to avoid major spoilers
                 - Use present tense
+                - Do not include numbers or bullets in the descriptions
                 
                 IMPORTANT: Return ONLY the JSON, no additional text.
             """.trimIndent()

@@ -19,6 +19,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.nospoilerapk.ui.viewmodels.TimelineViewModel
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,11 +64,7 @@ fun TimelineScreen(
                     )
                 }
                 is TimelineViewModel.TimelineState.Success -> {
-                    TimelineList(
-                        events = state.events,
-                        rangeStart = rangeStart,
-                        rangeEnd = rangeEnd
-                    )
+                    TimelineContent(state.events)
                 }
                 is TimelineViewModel.TimelineState.Error -> {
                     ErrorContent(
@@ -80,95 +78,38 @@ fun TimelineScreen(
 }
 
 @Composable
-private fun TimelineList(
-    events: List<String>,
-    rangeStart: Int,
-    rangeEnd: Int
-) {
-    LazyColumn(
+private fun TimelineContent(events: List<String>) {
+    Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        item {
-            TimelineHeader(rangeStart = rangeStart, rangeEnd = rangeEnd)
-        }
-
-        itemsIndexed(events) { index, event ->
-            TimelineEventItem(
-                event = event,
-                index = index,
-                isLast = index == events.lastIndex
-            )
+        events.forEach { event ->
+            TimelineEvent(event)
         }
     }
 }
 
 @Composable
-private fun TimelineHeader(rangeStart: Int, rangeEnd: Int) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
-    ) {
-        Text(
-            text = "Episodes $rangeStart to $rangeEnd",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
-        )
-    }
-    Spacer(modifier = Modifier.height(16.dp))
-}
-
-@Composable
-private fun TimelineEventItem(
-    event: String,
-    index: Int,
-    isLast: Boolean
-) {
+private fun TimelineEvent(event: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.Top
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(
-            modifier = Modifier.width(50.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Surface(
-                modifier = Modifier.size(32.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary
-            ) {
-                Text(
-                    text = "${index + 1}",
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp),
-                    textAlign = TextAlign.Center
-                )
-            }
-            
-            if (!isLast) {
-                Spacer(
-                    modifier = Modifier
-                        .width(2.dp)
-                        .height(100.dp)
-                        .background(MaterialTheme.colorScheme.primary)
-                )
-            }
-        }
-
-        Card(
+        Box(
             modifier = Modifier
-                .weight(1f)
-                .padding(start = 8.dp),
+                .size(12.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = CircleShape
+                )
+        )
+        
+        Card(
+            modifier = Modifier.weight(1f),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
@@ -176,8 +117,7 @@ private fun TimelineEventItem(
             Text(
                 text = event,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                modifier = Modifier.padding(16.dp)
             )
         }
     }
