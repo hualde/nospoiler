@@ -35,7 +35,7 @@ fun MainScreen() {
                             append("NoSpoiler")
                             withStyle(
                                 style = SpanStyle(
-                                    color = Color(0xFF2196F3) // Material Blue
+                                    color = Color(0xFF0D47A1) // Material Blue 900 (más oscuro)
                                 )
                             ) {
                                 append("AI")
