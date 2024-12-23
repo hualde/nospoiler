@@ -20,6 +20,7 @@ import com.example.nospoilerapk.R
 import android.app.Activity
 import android.content.Context
 import androidx.compose.ui.platform.LocalContext
+import com.example.nospoilerapk.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -111,6 +112,24 @@ fun SettingsScreen(
                         Text(stringResource(R.string.language))
                     }
                     Text(selectedLanguage)
+                }
+            }
+
+            // About Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                onClick = { navController.navigate(Screen.About.route) }
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(stringResource(R.string.about))
                 }
             }
         }

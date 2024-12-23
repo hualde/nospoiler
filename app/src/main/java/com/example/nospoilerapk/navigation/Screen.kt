@@ -25,4 +25,5 @@ sealed class Screen(val route: String) {
         fun createRoute(mediaId: String, rangeStart: Int, rangeEnd: Int) = 
             "timeline/$mediaId/$rangeStart/$rangeEnd"
     }
+    object About : Screen("about")
 } 

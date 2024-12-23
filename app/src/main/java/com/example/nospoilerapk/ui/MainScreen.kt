@@ -96,6 +96,9 @@ fun MainScreen() {
                     rangeEnd = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_END) ?: 1
                 )
             }
+            composable(Screen.About.route) {
+                AboutScreen(navController)
+            }
         }
     }
 } 

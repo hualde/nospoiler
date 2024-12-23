@@ -33,4 +33,11 @@
     <string name="select_part_range">Teilbereich auswählen:</string>
     <string name="get_summary">Zusammenfassung Anzeigen</string>
     <string name="view_timeline">Zeitleiste Anzeigen</string>
+    <string name="about">Über</string>
+    <string name="app_description">NoSpoiler hilft Ihnen, bei Ihren Lieblingsserien und -filmen auf dem Laufenden zu bleiben, ohne wichtige Spoiler zu erhalten, indem es KI-generierte Zusammenfassungen und Zeitlinien für bestimmte Episodenbereiche bereitstellt.</string>
+    <string name="developer">Entwickler</string>
+    <string name="version">Version</string>
+    <string name="licenses">Lizenzen</string>
+    <string name="omdb_attribution">Dieses Produkt verwendet die OMDb-API, ist aber nicht von OMDb unterstützt oder zertifiziert.</string>
+    <string name="perplexity_attribution">Dieses Produkt verwendet die Perplexity-API für KI-generierte Zusammenfassungen.</string>
 </resources> 

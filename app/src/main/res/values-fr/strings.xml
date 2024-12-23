@@ -33,4 +33,11 @@
     <string name="select_part_range">Sélectionner la plage de parties:</string>
     <string name="get_summary">Obtenir le Résumé</string>
     <string name="view_timeline">Voir la Chronologie</string>
+    <string name="about">À propos</string>
+    <string name="app_description">NoSpoiler vous aide à rattraper vos séries et films préférés sans spoilers majeurs en fournissant des résumés et des chronologies générés par IA pour des plages d\'épisodes spécifiques.</string>
+    <string name="developer">Développeur</string>
+    <string name="version">Version</string>
+    <string name="licenses">Licences</string>
+    <string name="omdb_attribution">Ce produit utilise l\'API OMDb mais n\'est ni approuvé ni certifié par OMDb.</string>
+    <string name="perplexity_attribution">Ce produit utilise l\'API Perplexity pour les résumés générés par IA.</string>
 </resources> 
