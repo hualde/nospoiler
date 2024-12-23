@@ -13,16 +13,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.nospoilerapk.ui.screens.TermsScreen
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.example.nospoilerapk.ui.screens.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
     private val themeViewModel: ThemeViewModel by viewModels()
     private val termsViewModel: TermsViewModel by viewModels()
+    private var showSplash by mutableStateOf(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainContent(themeViewModel, termsViewModel)
+            if (showSplash) {
+                SplashScreen(onSplashFinished = { showSplash = false })
+            } else {
+                MainContent(themeViewModel, termsViewModel)
+            }
         }
     }
 }
