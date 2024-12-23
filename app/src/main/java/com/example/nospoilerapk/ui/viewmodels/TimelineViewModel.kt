@@ -151,22 +151,36 @@ class TimelineViewModel @Inject constructor(
                         .replace("```", "")
                         .trim()
                     
-                    // Escapar caracteres problemáticos
-                    val escapedJson = cleanJson
-                        .replace("""\n""", " ")
-                        .replace("\"", "'")
-                    
-                    val jsonObject = gson.fromJson(escapedJson, JsonObject::class.java)
-                    jsonObject.getAsJsonArray("events").map { it.asString }
+                    // Simplificar el proceso de limpieza
+                    val jsonObject = gson.fromJson(cleanJson, JsonObject::class.java)
+                    jsonObject.getAsJsonArray("events")
+                        .map { it.asString.trim() }
+                        // Filtrar eventos vacíos o que solo contengan espacios
+                        .filter { it.isNotBlank() }
+                        // Eliminar comillas extras si las hay
+                        .map { it.trim('"') }
+                        // Eliminar cualquier numeración al inicio si existe
+                        .map { it.replace(Regex("^\\d+\\.?\\s*"), "") }
+                        // Unir fragmentos que puedan haber sido separados incorrectamente
+                        .joinToString(" ")
+                        // Volver a dividir por puntos finales para tener eventos separados
+                        .split(".")
+                        .map { it.trim() }
+                        .filter { it.isNotBlank() }
+                        // Asegurarse de que cada evento termine con punto
+                        .map { if (it.endsWith(".")) it else "$it." }
+
                 } catch (e: Exception) {
-                    Log.e("TimelineViewModel", "Parsing error", e)
-                    // Intento alternativo usando regex
-                    val eventsMatch = Regex(""""events":\s*\[(.*?)\]""", RegexOption.DOT_MATCHES_ALL)
-                        .find(jsonResponse)?.groupValues?.get(1)
-                    
-                    eventsMatch?.split(",")
-                        ?.map { it.trim().removeSurrounding("\"") }
-                        ?: throw Exception("Could not parse response: ${e.message}")
+                    Log.e("TimelineViewModel", "Error en el primer intento de parsing", e)
+                    // Intento alternativo más simple si el primer método falla
+                    jsonResponse
+                        .replace(Regex("[\"\\[\\]{}]"), "")
+                        .split("events:")
+                        .last()
+                        .split(",")
+                        .map { it.trim() }
+                        .filter { it.isNotBlank() }
+                        .map { if (it.endsWith(".")) it else "$it." }
                 }
 
                 _timelineState.value = TimelineState.Success(events)
