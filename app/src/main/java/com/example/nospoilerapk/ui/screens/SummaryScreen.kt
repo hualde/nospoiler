@@ -63,7 +63,8 @@ fun SummaryScreen(
                         summary = state.summary,
                         rangeStart = rangeStart,
                         rangeEnd = rangeEnd,
-                        season = season
+                        season = season,
+                        isFromBeginning = isFromBeginning
                     )
                 }
                 is SummaryViewModel.SummaryState.Error -> {
@@ -92,7 +93,8 @@ private fun SummaryContent(
     summary: String,
     rangeStart: Int,
     rangeEnd: Int,
-    season: Int
+    season: Int,
+    isFromBeginning: Boolean
 ) {
     Column(
         modifier = Modifier
@@ -101,13 +103,13 @@ private fun SummaryContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        SummaryHeader(rangeStart, rangeEnd, season)
+        SummaryHeader(rangeStart, rangeEnd, season, isFromBeginning)
         SummaryCard(summary)
     }
 }
 
 @Composable
-private fun SummaryHeader(rangeStart: Int, rangeEnd: Int, season: Int) {
+private fun SummaryHeader(rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -115,12 +117,20 @@ private fun SummaryHeader(rangeStart: Int, rangeEnd: Int, season: Int) {
         )
     ) {
         Text(
-            text = stringResource(
-                R.string.season_episode_range_format,
-                season,
-                rangeStart,
-                rangeEnd
-            ),
+            text = if (isFromBeginning) {
+                stringResource(
+                    R.string.from_beginning_range_format,
+                    season,
+                    rangeEnd
+                )
+            } else {
+                stringResource(
+                    R.string.season_episode_range_format,
+                    season,
+                    rangeStart,
+                    rangeEnd
+                )
+            },
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .fillMaxWidth()
