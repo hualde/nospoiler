@@ -34,7 +34,7 @@
     <string name="get_summary">Obtenir le Résumé</string>
     <string name="view_timeline">Voir la Chronologie</string>
     <string name="about">À propos</string>
-    <string name="app_description">NoSpoiler vous aide à rattraper vos séries et films préférés sans spoilers majeurs en fournissant des résumés et des chronologies générés par IA pour des plages d\'épisodes spécifiques.</string>
+    <string name="app_description">NoSpoilerAI vous aide à rattraper vos séries et films préférés sans spoilers majeurs en fournissant des résumés et des chronologies générés par IA pour des plages d\'épisodes spécifiques.</string>
     <string name="developer">Développeur</string>
     <string name="version">Version</string>
     <string name="licenses">Licences</string>
@@ -53,12 +53,12 @@
     <string name="terms_and_conditions">Conditions Générales</string>
     <string name="accept">Accepter</string>
     <string name="decline">Refuser</string>
-    <string name="terms_content">Conditions Générales de NoSpoiler\n\n
+    <string name="terms_content">Conditions Générales de NoSpoilerAI\n\n
 1. Acceptation des Conditions\n
-En accédant et en utilisant NoSpoiler, vous acceptez d\'être lié par ces Conditions Générales.\n\n
+En accédant et en utilisant NoSpoilerAI, vous acceptez d\'être lié par ces Conditions Générales.\n\n
 
 2. Description du Service\n
-NoSpoiler fournit des résumés et des chronologies générés par IA pour les séries et les films. Le contenu est généré à l\'aide d\'APIs tierces et peut ne pas être totalement précis.\n\n
+NoSpoilerAI fournit des résumés et des chronologies générés par IA pour les séries et les films. Le contenu est généré à l\'aide d\'APIs tierces et peut ne pas être totalement précis.\n\n
 
 3. Obligations de l\'Utilisateur\n
 - Vous devez avoir au moins 13 ans pour utiliser ce service\n
@@ -85,8 +85,8 @@ Nous nous réservons le droit de modifier ces conditions à tout moment. L\'util
 Nous nous réservons le droit de résilier l\'accès en cas de violation de ces conditions.\n\n
 
 9. Contact\n
-Pour toute question concernant ces conditions, contactez : support@nospoiler.com</string>
-    <string name="terms_decline_message">Vous devez accepter les Conditions Générales pour utiliser NoSpoiler</string>
+Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</string>
+    <string name="terms_decline_message">Vous devez accepter les Conditions Générales pour utiliser NoSpoilerAI</string>
     <string name="terms_required">L\'acceptation des Conditions Générales est requise</string>
     <string name="welcome_message">Que voulez-vous regarder aujourd\'hui ?</string>
     <string name="main_features">Fonctionnalités principales</string>

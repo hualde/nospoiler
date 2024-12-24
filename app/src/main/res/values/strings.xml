@@ -45,7 +45,7 @@
     <string name="select_season_description">Select season</string>
     <string name="retry_button">Retry</string>
     <string name="about">About</string>
-    <string name="app_description">NoSpoiler helps you catch up on your favorite shows and movies without major spoilers by providing AI-generated summaries and timelines for specific episode ranges.</string>
+    <string name="app_description">NoSpoilerAI helps you catch up on your favorite shows and movies without major spoilers by providing AI-generated summaries and timelines for specific episode ranges.</string>
     <string name="developer">Developer</string>
     <string name="version">Version</string>
     <string name="licenses">Licenses</string>
@@ -64,12 +64,12 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
-    <string name="terms_content">Terms and Conditions for NoSpoiler\n\n
+    <string name="terms_content">Terms and Conditions for NoSpoilerAI\n\n
 1. Acceptance of Terms\n
-By accessing and using NoSpoiler, you agree to be bound by these Terms and Conditions.\n\n
+By accessing and using NoSpoilerAI, you agree to be bound by these Terms and Conditions.\n\n
 
 2. Service Description\n
-NoSpoiler provides AI-generated summaries and timelines of TV shows and movies. The content is generated using third-party APIs and may not be completely accurate.\n\n
+NoSpoilerAI provides AI-generated summaries and timelines of TV shows and movies. The content is generated using third-party APIs and may not be completely accurate.\n\n
 
 3. User Obligations\n
 - You must be at least 13 years old to use this service\n
@@ -96,8 +96,8 @@ We reserve the right to modify these terms at any time. Continued use of the app
 We reserve the right to terminate access for violations of these terms.\n\n
 
 9. Contact\n
-For questions about these terms, contact: support@nospoiler.com</string>
-    <string name="terms_decline_message">You must accept the Terms and Conditions to use NoSpoiler</string>
+For questions about these terms, contact: javhualde@gmail.com</string>
+    <string name="terms_decline_message">You must accept the Terms and Conditions to use NoSpoilerAI</string>
     <string name="terms_required">Terms and Conditions acceptance is required</string>
     <string name="welcome_message">What would you like to watch today?</string>
     <string name="main_features">Main Features</string>

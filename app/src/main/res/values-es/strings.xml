@@ -39,7 +39,7 @@
     <string name="get_summary">Obtener Resumen</string>
     <string name="view_timeline">Ver Línea de Tiempo</string>
     <string name="about">Acerca de</string>
-    <string name="app_description">NoSpoiler te ayuda a ponerte al día con tus series y películas favoritas sin spoilers importantes, proporcionando resúmenes y líneas de tiempo generadas por IA para rangos específicos de episodios.</string>
+    <string name="app_description">NoSpoilerAI te ayuda a ponerte al día con tus series y películas favoritas sin spoilers importantes, proporcionando resúmenes y líneas de tiempo generadas por IA para rangos específicos de episodios.</string>
     <string name="developer">Desarrollador</string>
     <string name="version">Versión</string>
     <string name="licenses">Licencias</string>

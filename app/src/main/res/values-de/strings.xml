@@ -53,12 +53,12 @@
     <string name="terms_and_conditions">Allgemeine Geschäftsbedingungen</string>
     <string name="accept">Akzeptieren</string>
     <string name="decline">Ablehnen</string>
-    <string name="terms_content">Allgemeine Geschäftsbedingungen für NoSpoiler\n\n
+    <string name="terms_content">Allgemeine Geschäftsbedingungen für NoSpoilerAI\n\n
 1. Annahme der Bedingungen\n
-Durch den Zugriff auf und die Nutzung von NoSpoiler stimmen Sie diesen Allgemeinen Geschäftsbedingungen zu.\n\n
+Durch den Zugriff auf und die Nutzung von NoSpoilerAI stimmen Sie diesen Allgemeinen Geschäftsbedingungen zu.\n\n
 
 2. Servicebeschreibung\n
-NoSpoiler bietet KI-generierte Zusammenfassungen und Zeitlinien von TV-Serien und Filmen. Die Inhalte werden mithilfe von Drittanbieter-APIs generiert und können nicht vollständig genau sein.\n\n
+NoSpoilerAI bietet KI-generierte Zusammenfassungen und Zeitlinien von TV-Serien und Filmen. Die Inhalte werden mithilfe von Drittanbieter-APIs generiert und können nicht vollständig genau sein.\n\n
 
 3. Nutzerpflichten\n
 - Sie müssen mindestens 13 Jahre alt sein, um diesen Service zu nutzen\n
@@ -85,8 +85,8 @@ Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Die weit
 Wir behalten uns das Recht vor, den Zugang bei Verstößen gegen diese Bedingungen zu beenden.\n\n
 
 9. Kontakt\n
-Bei Fragen zu diesen Bedingungen kontaktieren Sie: support@nospoiler.com</string>
-    <string name="terms_decline_message">Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren, um NoSpoiler nutzen zu können</string>
+Bei Fragen zu diesen Bedingungen kontaktieren Sie: javhualde@gmail.com</string>
+    <string name="terms_decline_message">Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren, um NoSpoilerAI nutzen zu können</string>
     <string name="terms_required">Die Annahme der Allgemeinen Geschäftsbedingungen ist erforderlich</string>
     <string name="welcome_message">Was möchten Sie heute sehen?</string>
     <string name="main_features">Hauptfunktionen</string>
