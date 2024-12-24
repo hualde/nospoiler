@@ -28,90 +28,179 @@ class SummaryViewModel @Inject constructor(
     private val _summaryState = MutableStateFlow<SummaryState>(SummaryState.Loading)
     val summaryState: StateFlow<SummaryState> = _summaryState
 
-    private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int): String {
+    private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false): String {
         val languageCode = languageService.getCurrentLanguageCode()
         return when (languageCode) {
-            "es" -> """
-                Eres una API JSON que genera resúmenes.
-                Para la serie llamada "$title", temporada $season, episodios $rangeStart a $rangeEnd,
-                devuelve un JSON con esta estructura:
-                {
-                    "summary": "el resumen aquí"
-                }
-                
-                Pautas para el resumen:
-                - Escribe en español
-                - Resume los eventos principales
-                - Mantén un tono neutral
-                - Evita spoilers importantes
-                - Usa tiempo presente
-                
-                IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
-            """.trimIndent()
+            "es" -> if (isFromBeginning) {
+                """
+                    Eres una API JSON que genera resúmenes.
+                    Para la serie llamada "$title", desde el episodio 1 de la temporada 1 hasta el episodio $rangeEnd de la temporada $season,
+                    devuelve un JSON con esta estructura:
+                    {
+                        "summary": "el resumen aquí"
+                    }
+                    
+                    Pautas para el resumen:
+                    - Escribe en español
+                    - Resume los eventos principales
+                    - Mantén un tono neutral
+                    - Evita spoilers importantes
+                    - Usa tiempo presente
+                    
+                    IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
+                """.trimIndent()
+            } else {
+                """
+                    Eres una API JSON que genera resúmenes.
+                    Para la serie llamada "$title", temporada $season, episodios $rangeStart a $rangeEnd,
+                    devuelve un JSON con esta estructura:
+                    {
+                        "summary": "el resumen aquí"
+                    }
+                    
+                    Pautas para el resumen:
+                    - Escribe en español
+                    - Resume los eventos principales
+                    - Mantén un tono neutral
+                    - Evita spoilers importantes
+                    - Usa tiempo presente
+                    
+                    IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
+                """.trimIndent()
+            }
             
-            "fr" -> """
-                Tu es une API JSON qui génère des résumés.
-                Pour la série intitulée "$title", saison $season, épisodes $rangeStart à $rangeEnd,
-                renvoie un JSON avec cette structure:
-                {
-                    "summary": "le résumé ici"
-                }
-                
-                Directives pour le résumé:
-                - Écris en français
-                - Résume les événements principaux
-                - Maintiens un ton neutre
-                - Évite les spoilers importants
-                - Utilise le présent
-                
-                IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
-            """.trimIndent()
+            "fr" -> if (isFromBeginning) {
+                """
+                    Tu es une API JSON qui génère des résumés.
+                    Pour la série intitulée "$title", depuis l'épisode 1 de la saison 1 jusqu'à l'épisode $rangeEnd de la saison $season,
+                    renvoie un JSON avec cette structure:
+                    {
+                        "summary": "le résumé ici"
+                    }
+                    
+                    Directives pour le résumé:
+                    - Écris en français
+                    - Résume les événements principaux
+                    - Maintiens un ton neutre
+                    - Évite les spoilers importants
+                    - Utilise le présent
+                    
+                    IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
+                """.trimIndent()
+            } else {
+                """
+                    Tu es une API JSON qui génère des résumés.
+                    Pour la série intitulée "$title", saison $season, épisodes $rangeStart à $rangeEnd,
+                    renvoie un JSON avec cette structure:
+                    {
+                        "summary": "le résumé ici"
+                    }
+                    
+                    Directives pour le résumé:
+                    - Écris en français
+                    - Résume les événements principaux
+                    - Maintiens un ton neutre
+                    - Évite les spoilers importants
+                    - Utilise le présent
+                    
+                    IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
+                """.trimIndent()
+            }
             
-            "de" -> """
-                Du bist eine JSON-API, die Zusammenfassungen generiert.
-                Für die Serie mit dem Titel "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
-                gib ein JSON mit dieser Struktur zurück:
-                {
-                    "summary": "die Zusammenfassung hier"
-                }
-                
-                Richtlinien für die Zusammenfassung:
-                - Schreibe auf Deutsch
-                - Fasse die Hauptereignisse zusammen
-                - Behalte einen neutralen Ton
-                - Vermeide wichtige Spoiler
-                - Verwende Präsens
-                
-                WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
-            """.trimIndent()
+            "de" -> if (isFromBeginning) {
+                """
+                    Du bist eine JSON-API, die Zusammenfassungen generiert.
+                    Für die Serie mit dem Titel "$title", von Episode 1 der Staffel 1 bis Episode $rangeEnd der Staffel $season,
+                    gib ein JSON mit dieser Struktur zurück:
+                    {
+                        "summary": "die Zusammenfassung hier"
+                    }
+                    
+                    Richtlinien für die Zusammenfassung:
+                    - Schreibe auf Deutsch
+                    - Fasse die Hauptereignisse zusammen
+                    - Behalte einen neutralen Ton
+                    - Vermeide wichtige Spoiler
+                    - Verwende Präsens
+                    
+                    WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
+                """.trimIndent()
+            } else {
+                """
+                    Du bist eine JSON-API, die Zusammenfassungen generiert.
+                    Für die Serie mit dem Titel "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
+                    gib ein JSON mit dieser Struktur zurück:
+                    {
+                        "summary": "die Zusammenfassung hier"
+                    }
+                    
+                    Richtlinien für die Zusammenfassung:
+                    - Schreibe auf Deutsch
+                    - Fasse die Hauptereignisse zusammen
+                    - Behalte einen neutralen Ton
+                    - Vermeide wichtige Spoiler
+                    - Verwende Präsens
+                    
+                    WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
+                """.trimIndent()
+            }
             
-            else -> """
-                You are a JSON API that generates summaries.
-                For the series titled "$title", season $season, episodes $rangeStart to $rangeEnd,
-                return a JSON with this structure:
-                {
-                    "summary": "the summary here"
-                }
-                
-                Guidelines for the summary:
-                - Write in English
-                - Summarize main events
-                - Keep a neutral tone
-                - Avoid major spoilers
-                - Use present tense
-                
-                IMPORTANT: Return ONLY the JSON, no additional text.
-            """.trimIndent()
+            else -> if (isFromBeginning) {
+                """
+                    You are a JSON API that generates summaries.
+                    For the series titled "$title", from episode 1 of season 1 to episode $rangeEnd of season $season,
+                    return a JSON with this structure:
+                    {
+                        "summary": "the summary here"
+                    }
+                    
+                    Guidelines for the summary:
+                    - Write in English
+                    - Summarize main events
+                    - Keep a neutral tone
+                    - Avoid major spoilers
+                    - Use present tense
+                    
+                    IMPORTANT: Return ONLY the JSON, no additional text.
+                """.trimIndent()
+            } else {
+                """
+                    You are a JSON API that generates summaries.
+                    For the series titled "$title", season $season, episodes $rangeStart to $rangeEnd,
+                    return a JSON with this structure:
+                    {
+                        "summary": "the summary here"
+                    }
+                    
+                    Guidelines for the summary:
+                    - Write in English
+                    - Summarize main events
+                    - Keep a neutral tone
+                    - Avoid major spoilers
+                    - Use present tense
+                    
+                    IMPORTANT: Return ONLY the JSON, no additional text.
+                """.trimIndent()
+            }
         }
     }
 
-    fun getSummary(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int) {
+    fun getSummary(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false) {
         viewModelScope.launch {
             try {
                 _summaryState.value = SummaryState.Loading
                 
+                Log.d("SummaryViewModel", "==================================")
+                Log.d("SummaryViewModel", "isFromBeginning: $isFromBeginning")
+                Log.d("SummaryViewModel", "rangeStart: $rangeStart")
+                Log.d("SummaryViewModel", "rangeEnd: $rangeEnd")
+                Log.d("SummaryViewModel", "season: $season")
+                Log.d("SummaryViewModel", "==================================")
+                
                 val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
-                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season)
+                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
+                
+                Log.d("SummaryViewModel", "Generated prompt: $prompt")
                 
                 val response = perplexityService.getMediaInfo(
                     PerplexityRequest(

@@ -25,12 +25,13 @@ fun SummaryScreen(
     rangeStart: Int,
     rangeEnd: Int,
     season: Int,
+    isFromBeginning: Boolean = false,
     viewModel: SummaryViewModel = hiltViewModel()
 ) {
     val summaryState by viewModel.summaryState.collectAsState()
 
     LaunchedEffect(mediaId, rangeStart, rangeEnd, season) {
-        viewModel.getSummary(mediaId, rangeStart, rangeEnd, season)
+        viewModel.getSummary(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
     }
 
     Scaffold(
@@ -68,7 +69,7 @@ fun SummaryScreen(
                 is SummaryViewModel.SummaryState.Error -> {
                     ErrorContent(
                         message = state.message,
-                        onRetry = { viewModel.getSummary(mediaId, rangeStart, rangeEnd, season) }
+                        onRetry = { viewModel.getSummary(mediaId, rangeStart, rangeEnd, season, isFromBeginning) }
                     )
                 }
             }

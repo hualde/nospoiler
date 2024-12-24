@@ -80,6 +80,8 @@ fun RangeSelectorScreen(
                     )
                 }
                 is RangeSelectorViewModel.MediaState.Success -> {
+                    val isFromBeginning by viewModel.fromBeginning.collectAsState()
+                    
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -231,7 +233,8 @@ fun RangeSelectorScreen(
                                                 mediaId = state.media.imdbID,
                                                 rangeStart = startRange,
                                                 rangeEnd = endRange,
-                                                season = selectedSeason
+                                                season = selectedSeason,
+                                                isFromBeginning = isFromBeginning
                                             )
                                         )
                                     },

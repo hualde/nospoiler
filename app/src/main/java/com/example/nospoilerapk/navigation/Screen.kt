@@ -10,13 +10,20 @@ sealed class Screen(val route: String) {
         const val MEDIA_ID = "mediaId"
         fun createRoute(mediaId: String) = "range_selector/$mediaId"
     }
-    object Summary : Screen("summary/{mediaId}/{rangeStart}/{rangeEnd}/{season}") {
+    object Summary : Screen("summary/{mediaId}/{rangeStart}/{rangeEnd}/{season}/{isFromBeginning}") {
         const val MEDIA_ID = "mediaId"
         const val RANGE_START = "rangeStart"
         const val RANGE_END = "rangeEnd"
         const val SEASON = "season"
-        fun createRoute(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int) = 
-            "summary/$mediaId/$rangeStart/$rangeEnd/$season"
+        const val IS_FROM_BEGINNING = "isFromBeginning"
+        
+        fun createRoute(
+            mediaId: String, 
+            rangeStart: Int, 
+            rangeEnd: Int, 
+            season: Int,
+            isFromBeginning: Boolean = false
+        ) = "summary/$mediaId/$rangeStart/$rangeEnd/$season/$isFromBeginning"
     }
     object Settings : Screen("settings")
     object Timeline : Screen("timeline/{mediaId}/{rangeStart}/{rangeEnd}/{season}") {
