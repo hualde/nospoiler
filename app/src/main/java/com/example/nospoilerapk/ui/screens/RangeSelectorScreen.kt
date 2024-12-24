@@ -252,7 +252,8 @@ fun RangeSelectorScreen(
                                                 mediaId = state.media.imdbID,
                                                 rangeStart = startRange,
                                                 rangeEnd = endRange,
-                                                season = selectedSeason
+                                                season = selectedSeason,
+                                                isFromBeginning = isFromBeginning
                                             )
                                         )
                                     },

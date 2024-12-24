@@ -117,20 +117,26 @@ fun MainScreen() {
                     navArgument(Screen.Timeline.MEDIA_ID) { type = NavType.StringType },
                     navArgument(Screen.Timeline.RANGE_START) { type = NavType.IntType },
                     navArgument(Screen.Timeline.RANGE_END) { type = NavType.IntType },
-                    navArgument(Screen.Timeline.SEASON) { type = NavType.IntType }
+                    navArgument(Screen.Timeline.SEASON) { type = NavType.IntType },
+                    navArgument(Screen.Timeline.IS_FROM_BEGINNING) { 
+                        type = NavType.BoolType 
+                        defaultValue = false
+                    }
                 )
             ) { backStackEntry ->
                 val mediaId = backStackEntry.arguments?.getString(Screen.Timeline.MEDIA_ID) ?: ""
                 val rangeStart = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_START) ?: 1
                 val rangeEnd = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_END) ?: 1
                 val season = backStackEntry.arguments?.getInt(Screen.Timeline.SEASON) ?: 1
+                val isFromBeginning = backStackEntry.arguments?.getBoolean(Screen.Timeline.IS_FROM_BEGINNING) ?: false
                 
                 TimelineScreen(
                     navController = navController,
                     mediaId = mediaId,
                     rangeStart = rangeStart,
                     rangeEnd = rangeEnd,
-                    season = season
+                    season = season,
+                    isFromBeginning = isFromBeginning
                 )
             }
             composable(Screen.About.route) {
