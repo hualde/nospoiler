@@ -85,14 +85,21 @@ fun MainScreen() {
                 arguments = listOf(
                     navArgument(Screen.Summary.MEDIA_ID) { type = NavType.StringType },
                     navArgument(Screen.Summary.RANGE_START) { type = NavType.IntType },
-                    navArgument(Screen.Summary.RANGE_END) { type = NavType.IntType }
+                    navArgument(Screen.Summary.RANGE_END) { type = NavType.IntType },
+                    navArgument(Screen.Summary.SEASON) { type = NavType.IntType }
                 )
             ) { backStackEntry ->
+                val mediaId = backStackEntry.arguments?.getString(Screen.Summary.MEDIA_ID) ?: ""
+                val rangeStart = backStackEntry.arguments?.getInt(Screen.Summary.RANGE_START) ?: 1
+                val rangeEnd = backStackEntry.arguments?.getInt(Screen.Summary.RANGE_END) ?: 1
+                val season = backStackEntry.arguments?.getInt(Screen.Summary.SEASON) ?: 1
+                
                 SummaryScreen(
                     navController = navController,
-                    mediaId = backStackEntry.arguments?.getString(Screen.Summary.MEDIA_ID) ?: "",
-                    rangeStart = backStackEntry.arguments?.getInt(Screen.Summary.RANGE_START) ?: 1,
-                    rangeEnd = backStackEntry.arguments?.getInt(Screen.Summary.RANGE_END) ?: 1
+                    mediaId = mediaId,
+                    rangeStart = rangeStart,
+                    rangeEnd = rangeEnd,
+                    season = season
                 )
             }
             composable(Screen.Settings.route) { 
@@ -103,14 +110,21 @@ fun MainScreen() {
                 arguments = listOf(
                     navArgument(Screen.Timeline.MEDIA_ID) { type = NavType.StringType },
                     navArgument(Screen.Timeline.RANGE_START) { type = NavType.IntType },
-                    navArgument(Screen.Timeline.RANGE_END) { type = NavType.IntType }
+                    navArgument(Screen.Timeline.RANGE_END) { type = NavType.IntType },
+                    navArgument(Screen.Timeline.SEASON) { type = NavType.IntType }
                 )
             ) { backStackEntry ->
+                val mediaId = backStackEntry.arguments?.getString(Screen.Timeline.MEDIA_ID) ?: ""
+                val rangeStart = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_START) ?: 1
+                val rangeEnd = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_END) ?: 1
+                val season = backStackEntry.arguments?.getInt(Screen.Timeline.SEASON) ?: 1
+                
                 TimelineScreen(
                     navController = navController,
-                    mediaId = backStackEntry.arguments?.getString(Screen.Timeline.MEDIA_ID) ?: "",
-                    rangeStart = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_START) ?: 1,
-                    rangeEnd = backStackEntry.arguments?.getInt(Screen.Timeline.RANGE_END) ?: 1
+                    mediaId = mediaId,
+                    rangeStart = rangeStart,
+                    rangeEnd = rangeEnd,
+                    season = season
                 )
             }
             composable(Screen.About.route) {

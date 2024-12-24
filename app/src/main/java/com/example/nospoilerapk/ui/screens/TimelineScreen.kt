@@ -29,12 +29,13 @@ fun TimelineScreen(
     mediaId: String,
     rangeStart: Int,
     rangeEnd: Int,
+    season: Int,
     viewModel: TimelineViewModel = hiltViewModel()
 ) {
     val timelineState by viewModel.timelineState.collectAsState()
 
-    LaunchedEffect(mediaId, rangeStart, rangeEnd) {
-        viewModel.getTimeline(mediaId, rangeStart, rangeEnd)
+    LaunchedEffect(mediaId, rangeStart, rangeEnd, season) {
+        viewModel.getTimeline(mediaId, rangeStart, rangeEnd, season)
     }
 
     Scaffold(
@@ -69,7 +70,7 @@ fun TimelineScreen(
                 is TimelineViewModel.TimelineState.Error -> {
                     ErrorContent(
                         message = state.message,
-                        onRetry = { viewModel.getTimeline(mediaId, rangeStart, rangeEnd) }
+                        onRetry = { viewModel.getTimeline(mediaId, rangeStart, rangeEnd, season) }
                     )
                 }
             }

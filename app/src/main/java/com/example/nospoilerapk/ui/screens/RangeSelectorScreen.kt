@@ -33,6 +33,7 @@ fun RangeSelectorScreen(
     val mediaState by viewModel.mediaState.collectAsState()
     var startRange by remember { mutableStateOf(1) }
     var endRange by remember { mutableStateOf(1) }
+    var selectedSeason by remember { mutableStateOf(1) }
     val context = LocalContext.current
 
     LaunchedEffect(mediaId) {
@@ -152,7 +153,6 @@ fun RangeSelectorScreen(
                                 when (val info = state.parsedInfo) {
                                     is MediaInfo.SeriesInfo -> {
                                         // Para series
-                                        var selectedSeason by remember { mutableStateOf(1) }
                                         var expanded by remember { mutableStateOf(false) }
                                         val maxEpisodes = info.episodesPerSeason[selectedSeason.toString()] ?: 1
                                         
@@ -288,7 +288,8 @@ fun RangeSelectorScreen(
                                             Screen.Summary.createRoute(
                                                 mediaId = state.media.imdbID,
                                                 rangeStart = startRange,
-                                                rangeEnd = endRange
+                                                rangeEnd = endRange,
+                                                season = selectedSeason
                                             )
                                         )
                                     },
@@ -305,7 +306,8 @@ fun RangeSelectorScreen(
                                             Screen.Timeline.createRoute(
                                                 mediaId = state.media.imdbID,
                                                 rangeStart = startRange,
-                                                rangeEnd = endRange
+                                                rangeEnd = endRange,
+                                                season = selectedSeason
                                             )
                                         )
                                     },

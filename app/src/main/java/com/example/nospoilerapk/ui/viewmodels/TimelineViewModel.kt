@@ -28,12 +28,12 @@ class TimelineViewModel @Inject constructor(
     private val _timelineState = MutableStateFlow<TimelineState>(TimelineState.Loading)
     val timelineState: StateFlow<TimelineState> = _timelineState
 
-    private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int): String {
+    private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int): String {
         val languageCode = languageService.getCurrentLanguageCode()
         return when (languageCode) {
             "es" -> """
                 Eres una API JSON que devuelve líneas de tiempo de eventos importantes.
-                Para la serie llamada "$title", episodios $rangeStart a $rangeEnd,
+                Para la serie llamada "$title", temporada $season, episodios $rangeStart a $rangeEnd,
                 devuelve un JSON con esta estructura:
                 {
                     "events": [
@@ -56,7 +56,7 @@ class TimelineViewModel @Inject constructor(
 
             "fr" -> """
                 Tu es une API JSON qui renvoie des chronologies d'événements majeurs.
-                Pour la série intitulée "$title", épisodes $rangeStart à $rangeEnd,
+                Pour la série intitulée "$title", saison $season, épisodes $rangeStart à $rangeEnd,
                 renvoie un JSON avec cette structure:
                 {
                     "events": [
@@ -79,7 +79,7 @@ class TimelineViewModel @Inject constructor(
 
             "de" -> """
                 Du bist eine JSON-API, die Zeitlinien wichtiger Ereignisse zurückgibt.
-                Für die Serie mit dem Titel "$title", Episoden $rangeStart bis $rangeEnd,
+                Für die Serie mit dem Titel "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
                 gib ein JSON mit dieser Struktur zurück:
                 {
                     "events": [
@@ -102,7 +102,7 @@ class TimelineViewModel @Inject constructor(
 
             else -> """
                 You are a JSON API that returns timelines of major events.
-                For the series titled "$title", episodes $rangeStart to $rangeEnd,
+                For the series titled "$title", season $season, episodes $rangeStart to $rangeEnd,
                 return a JSON with this structure:
                 {
                     "events": [
@@ -125,13 +125,13 @@ class TimelineViewModel @Inject constructor(
         }
     }
 
-    fun getTimeline(mediaId: String, rangeStart: Int, rangeEnd: Int) {
+    fun getTimeline(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int) {
         viewModelScope.launch {
             try {
                 _timelineState.value = TimelineState.Loading
                 
                 val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
-                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd)
+                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season)
                 
                 val response = perplexityService.getMediaInfo(
                     PerplexityRequest(

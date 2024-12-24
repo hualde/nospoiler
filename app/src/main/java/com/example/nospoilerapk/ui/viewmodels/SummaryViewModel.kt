@@ -28,12 +28,12 @@ class SummaryViewModel @Inject constructor(
     private val _summaryState = MutableStateFlow<SummaryState>(SummaryState.Loading)
     val summaryState: StateFlow<SummaryState> = _summaryState
 
-    private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int): String {
+    private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int): String {
         val languageCode = languageService.getCurrentLanguageCode()
         return when (languageCode) {
             "es" -> """
                 Eres una API JSON que genera resúmenes.
-                Para la serie llamada "$title", episodios $rangeStart a $rangeEnd,
+                Para la serie llamada "$title", temporada $season, episodios $rangeStart a $rangeEnd,
                 devuelve un JSON con esta estructura:
                 {
                     "summary": "el resumen aquí"
@@ -51,7 +51,7 @@ class SummaryViewModel @Inject constructor(
             
             "fr" -> """
                 Tu es une API JSON qui génère des résumés.
-                Pour la série intitulée "$title", épisodes $rangeStart à $rangeEnd,
+                Pour la série intitulée "$title", saison $season, épisodes $rangeStart à $rangeEnd,
                 renvoie un JSON avec cette structure:
                 {
                     "summary": "le résumé ici"
@@ -69,7 +69,7 @@ class SummaryViewModel @Inject constructor(
             
             "de" -> """
                 Du bist eine JSON-API, die Zusammenfassungen generiert.
-                Für die Serie mit dem Titel "$title", Episoden $rangeStart bis $rangeEnd,
+                Für die Serie mit dem Titel "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
                 gib ein JSON mit dieser Struktur zurück:
                 {
                     "summary": "die Zusammenfassung hier"
@@ -87,7 +87,7 @@ class SummaryViewModel @Inject constructor(
             
             else -> """
                 You are a JSON API that generates summaries.
-                For the series titled "$title", episodes $rangeStart to $rangeEnd,
+                For the series titled "$title", season $season, episodes $rangeStart to $rangeEnd,
                 return a JSON with this structure:
                 {
                     "summary": "the summary here"
@@ -105,13 +105,13 @@ class SummaryViewModel @Inject constructor(
         }
     }
 
-    fun getSummary(mediaId: String, rangeStart: Int, rangeEnd: Int) {
+    fun getSummary(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int) {
         viewModelScope.launch {
             try {
                 _summaryState.value = SummaryState.Loading
                 
                 val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
-                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd)
+                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season)
                 
                 val response = perplexityService.getMediaInfo(
                     PerplexityRequest(
