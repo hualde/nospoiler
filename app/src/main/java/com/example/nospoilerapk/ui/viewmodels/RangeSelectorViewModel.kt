@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nospoilerapk.data.network.*
 import com.example.nospoilerapk.data.model.MediaInfo
+import com.example.nospoilerapk.data.model.RangeSelectionMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -31,8 +32,20 @@ class RangeSelectorViewModel @Inject constructor(
     private val _endRange = MutableStateFlow(1)
     val endRange: StateFlow<Int> = _endRange
 
+    private val _selectionMode = MutableStateFlow(RangeSelectionMode.SEASON)
+    val selectionMode: StateFlow<RangeSelectionMode> = _selectionMode.asStateFlow()
+
+    private val _fullSeriesEndSeason = MutableStateFlow(1)
+    val fullSeriesEndSeason: StateFlow<Int> = _fullSeriesEndSeason.asStateFlow()
+
+    private val _fullSeriesEndEpisode = MutableStateFlow(1)
+    val fullSeriesEndEpisode: StateFlow<Int> = _fullSeriesEndEpisode.asStateFlow()
+
     private var cachedMediaDetails: DetailedMediaItem? = null
     private var cachedParsedInfo: MediaInfo? = null
+
+    private val _fromBeginning = MutableStateFlow(false)
+    val fromBeginning: StateFlow<Boolean> = _fromBeginning.asStateFlow()
 
     fun setSelectedSeason(season: Int) {
         _selectedSeason.value = season
@@ -41,6 +54,29 @@ class RangeSelectorViewModel @Inject constructor(
     fun setRange(start: Int, end: Int) {
         _startRange.value = start
         _endRange.value = end
+    }
+
+    fun setSelectionMode(mode: RangeSelectionMode) {
+        _selectionMode.value = mode
+    }
+
+    fun setFullSeriesRange(endSeason: Int, endEpisode: Int) {
+        _fullSeriesEndSeason.value = endSeason
+        _fullSeriesEndEpisode.value = endEpisode
+        
+        // Cuando estamos en modo serie completa, el rango siempre empieza desde S1E1
+        _startRange.value = 1
+        _selectedSeason.value = endSeason
+        _endRange.value = endEpisode
+    }
+
+    fun setFromBeginning(value: Boolean) {
+        _fromBeginning.value = value
+        if (value) {
+            // Si se activa "desde el principio", reseteamos el rango
+            _startRange.value = 1
+            _selectedSeason.value = 1
+        }
     }
 
     fun loadMediaDetails(mediaId: String) {

@@ -21,7 +21,12 @@ import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
 import com.example.nospoilerapk.navigation.Screen
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.alpha
 import com.example.nospoilerapk.R
+import com.example.nospoilerapk.data.model.RangeSelectionMode
+import android.util.Log
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.runtime.DisposableEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,11 +35,18 @@ fun RangeSelectorScreen(
     mediaId: String,
     viewModel: RangeSelectorViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    
+    // Forzar recomposición cuando cambia la configuración
+    DisposableEffect(configuration) {
+        onDispose { }
+    }
+
     val mediaState by viewModel.mediaState.collectAsState()
     val selectedSeason by viewModel.selectedSeason.collectAsState()
     val startRange by viewModel.startRange.collectAsState()
     val endRange by viewModel.endRange.collectAsState()
-    val context = LocalContext.current
 
     LaunchedEffect(mediaId) {
         if (mediaId.isNotBlank()) {
@@ -148,75 +160,13 @@ fun RangeSelectorScreen(
 
                                 when (val info = state.parsedInfo) {
                                     is MediaInfo.SeriesInfo -> {
-                                        var expanded by remember { mutableStateOf(false) }
-                                        val maxEpisodes = info.episodesPerSeason[selectedSeason.toString()] ?: 1
-                                        
-                                        // Ajustar los rangos cuando cambie la temporada
-                                        LaunchedEffect(selectedSeason) {
-                                            viewModel.setRange(1, maxEpisodes)
-                                        }
-                                        
-                                        Column {
-                                            // Selector de temporada con dropdown
-                                            OutlinedCard(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .clickable { expanded = true }
-                                            ) {
-                                                Row(
-                                                    modifier = Modifier
-                                                        .fillMaxWidth()
-                                                        .padding(16.dp),
-                                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                                    verticalAlignment = Alignment.CenterVertically
-                                                ) {
-                                                    Text(stringResource(R.string.season_with_episodes, selectedSeason, maxEpisodes))
-                                                    Icon(
-                                                        imageVector = Icons.Default.KeyboardArrowDown,
-                                                        contentDescription = stringResource(R.string.select_season_description)
-                                                    )
-                                                }
-                                                
-                                                DropdownMenu(
-                                                    expanded = expanded,
-                                                    onDismissRequest = { expanded = false }
-                                                ) {
-                                                    (1..info.totalSeasons).forEach { season ->
-                                                        val episodesInSeason = info.episodesPerSeason[season.toString()] ?: 1
-                                                        DropdownMenuItem(
-                                                            text = { Text(stringResource(R.string.season_episodes_dropdown, season, episodesInSeason)) },
-                                                            onClick = {
-                                                                viewModel.setSelectedSeason(season)
-                                                                expanded = false
-                                                            }
-                                                        )
-                                                    }
-                                                }
-                                            }
-
-                                            Spacer(modifier = Modifier.height(8.dp))
-
-                                            // Rango de episodios con sliders
-                                            Column(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(horizontal = 16.dp)
-                                            ) {
-                                                Text(
-                                                    text = stringResource(R.string.episode_range_format, startRange, endRange),
-                                                    style = MaterialTheme.typography.bodyMedium
-                                                )
-                                                RangeSlider(
-                                                    value = startRange.toFloat()..endRange.toFloat(),
-                                                    onValueChange = { range ->
-                                                        viewModel.setRange(range.start.toInt(), range.endInclusive.toInt())
-                                                    },
-                                                    valueRange = 1f..maxEpisodes.toFloat(),
-                                                    steps = maxEpisodes - 2,
-                                                    modifier = Modifier.fillMaxWidth()
-                                                )
-                                            }
-                                        }
+                                        SummaryHeader(
+                                            rangeStart = startRange,
+                                            rangeEnd = endRange,
+                                            season = selectedSeason,
+                                            info = info,
+                                            viewModel = viewModel
+                                        )
                                     }
                                     is MediaInfo.MovieInfo -> {
                                         // Para películas
@@ -329,6 +279,165 @@ fun RangeSelectorScreen(
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SummaryHeader(
+    rangeStart: Int,
+    rangeEnd: Int,
+    season: Int,
+    info: MediaInfo.SeriesInfo,
+    viewModel: RangeSelectorViewModel
+) {
+    val context = LocalContext.current
+    Log.d("RangeSelectorScreen", "Current locale: ${context.resources.configuration.locales[0]}")
+    Log.d("RangeSelectorScreen", "From beginning text: ${context.getString(R.string.from_beginning)}")
+
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.from_beginning),
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Switch(
+                checked = viewModel.fromBeginning.collectAsState().value,
+                onCheckedChange = { fromBeginning ->
+                    viewModel.setFromBeginning(fromBeginning)
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Selector de temporada y episodios
+        SeasonSelector(
+            info = info,
+            selectedSeason = season,
+            startRange = rangeStart,
+            endRange = rangeEnd,
+            viewModel = viewModel,
+            isFromBeginning = viewModel.fromBeginning.collectAsState().value
+        )
+    }
+}
+
+@Composable
+private fun SeasonSelector(
+    info: MediaInfo.SeriesInfo,
+    selectedSeason: Int,
+    startRange: Int,
+    endRange: Int,
+    viewModel: RangeSelectorViewModel,
+    isFromBeginning: Boolean
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val maxEpisodes = info.episodesPerSeason[selectedSeason.toString()] ?: 1
+
+    // Cuando cambia la temporada, ajustamos el endRange al máximo de episodios
+    LaunchedEffect(selectedSeason) {
+        if (isFromBeginning) {
+            // En modo "desde el principio", ajustamos el endRange al máximo de la nueva temporada
+            viewModel.setRange(1, maxEpisodes)
+        } else {
+            viewModel.setRange(1, maxEpisodes)
+        }
+    }
+
+    Column {
+        // Texto explicativo según el modo
+        Text(
+            text = if (isFromBeginning) {
+                stringResource(R.string.select_until_season_episode)
+            } else {
+                stringResource(R.string.select_season_episode_range)
+            },
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        // Selector de temporada
+        OutlinedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = true }
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(stringResource(R.string.season_with_episodes, selectedSeason, maxEpisodes))
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = stringResource(R.string.select_season_description)
+                )
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                (1..info.totalSeasons).forEach { season ->
+                    val episodesInSeason = info.episodesPerSeason[season.toString()] ?: 1
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.season_episodes_dropdown, season, episodesInSeason)) },
+                        onClick = {
+                            viewModel.setSelectedSeason(season)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Selector de episodios
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        ) {
+            if (isFromBeginning) {
+                Text(
+                    text = stringResource(R.string.until_episode_format, selectedSeason, endRange),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Slider(
+                    value = endRange.toFloat(),
+                    onValueChange = { value ->
+                        viewModel.setRange(1, value.toInt())
+                    },
+                    valueRange = 1f..maxEpisodes.toFloat(),
+                    steps = maxEpisodes - 2,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            } else {
+                // En modo normal mostramos el RangeSlider
+                Text(
+                    text = stringResource(R.string.episode_range_format, startRange, endRange),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                RangeSlider(
+                    value = startRange.toFloat()..endRange.toFloat(),
+                    onValueChange = { range ->
+                        viewModel.setRange(range.start.toInt(), range.endInclusive.toInt())
+                    },
+                    valueRange = 1f..maxEpisodes.toFloat(),
+                    steps = maxEpisodes - 2,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

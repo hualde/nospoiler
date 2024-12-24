@@ -95,4 +95,8 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
     <string name="feature_summaries">Obtenir des résumés sans spoilers</string>
     <string name="quick_help_title">Aide rapide</string>
     <string name="season_episode_range_format">Saison %1$d - Épisodes %2$d à %3$d</string>
+    <string name="select_until_season_episode">Sélectionnez la saison et l\'épisode jusqu\'où regarder</string>
+    <string name="select_season_episode_range">Sélectionnez la plage d\'épisodes pour cette saison</string>
+    <string name="until_episode_format">Depuis le début jusqu\'à la saison %1$d épisode %2$d</string>
+    <string name="from_beginning">Depuis le début</string>
 </resources> 

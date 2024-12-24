@@ -63,4 +63,12 @@
     <string name="feature_summaries">Obtén resúmenes sin spoilers</string>
     <string name="quick_help_title">Ayuda rápida</string>
     <string name="season_episode_range_format">Temporada %1$d - Episodios %2$d a %3$d</string>
+    <string name="season_mode">Modo Temporada</string>
+    <string name="full_series_mode">Modo Serie Completa</string>
+    <string name="select_until_episode">Seleccionar episodio hasta el cual ver</string>
+    <string name="episode_number_format">Episodio %d</string>
+    <string name="from_beginning">Desde el principio</string>
+    <string name="select_until_season_episode">Selecciona temporada y episodio hasta donde ver</string>
+    <string name="select_season_episode_range">Selecciona el rango de episodios para esta temporada</string>
+    <string name="until_episode_format">Desde el principio hasta temporada %1$d episodio %2$d</string>
 </resources> 

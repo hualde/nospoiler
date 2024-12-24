@@ -106,4 +106,12 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="feature_summaries">Get spoiler-free summaries</string>
     <string name="quick_help_title">Quick Help</string>
     <string name="season_episode_range_format">Season %1$d - Episodes %2$d to %3$d</string>
+    <string name="season_mode">Season Mode</string>
+    <string name="full_series_mode">Full Series Mode</string>
+    <string name="select_until_episode">Select episode to watch until</string>
+    <string name="episode_number_format">Episode %d</string>
+    <string name="from_beginning">From beginning</string>
+    <string name="select_until_season_episode">Select season and episode to watch until</string>
+    <string name="select_season_episode_range">Select episode range for this season</string>
+    <string name="until_episode_format">From beginning until season %1$d episode %2$d</string>
 </resources>
