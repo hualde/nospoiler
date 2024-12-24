@@ -105,4 +105,5 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="feature_timeline">View timelines</string>
     <string name="feature_summaries">Get spoiler-free summaries</string>
     <string name="quick_help_title">Quick Help</string>
+    <string name="season_episode_range_format">Season %1$d - Episodes %2$d to %3$d</string>
 </resources>

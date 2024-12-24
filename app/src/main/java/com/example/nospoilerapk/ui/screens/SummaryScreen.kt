@@ -14,6 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.nospoilerapk.ui.viewmodels.SummaryViewModel
+import androidx.compose.ui.res.stringResource
+import com.example.nospoilerapk.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +61,8 @@ fun SummaryScreen(
                     SummaryContent(
                         summary = state.summary,
                         rangeStart = rangeStart,
-                        rangeEnd = rangeEnd
+                        rangeEnd = rangeEnd,
+                        season = season
                     )
                 }
                 is SummaryViewModel.SummaryState.Error -> {
@@ -87,7 +90,8 @@ private fun LoadingContent() {
 private fun SummaryContent(
     summary: String,
     rangeStart: Int,
-    rangeEnd: Int
+    rangeEnd: Int,
+    season: Int
 ) {
     Column(
         modifier = Modifier
@@ -96,13 +100,13 @@ private fun SummaryContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        SummaryHeader(rangeStart, rangeEnd)
+        SummaryHeader(rangeStart, rangeEnd, season)
         SummaryCard(summary)
     }
 }
 
 @Composable
-private fun SummaryHeader(rangeStart: Int, rangeEnd: Int) {
+private fun SummaryHeader(rangeStart: Int, rangeEnd: Int, season: Int) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -110,7 +114,12 @@ private fun SummaryHeader(rangeStart: Int, rangeEnd: Int) {
         )
     ) {
         Text(
-            text = "Episodes $rangeStart to $rangeEnd",
+            text = stringResource(
+                R.string.season_episode_range_format,
+                season,
+                rangeStart,
+                rangeEnd
+            ),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .fillMaxWidth()

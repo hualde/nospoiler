@@ -62,4 +62,5 @@
     <string name="feature_timeline">Visualiza líneas de tiempo</string>
     <string name="feature_summaries">Obtén resúmenes sin spoilers</string>
     <string name="quick_help_title">Ayuda rápida</string>
+    <string name="season_episode_range_format">Temporada %1$d - Episodios %2$d a %3$d</string>
 </resources> 

@@ -94,4 +94,5 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
     <string name="feature_timeline">Voir les chronologies</string>
     <string name="feature_summaries">Obtenir des résumés sans spoilers</string>
     <string name="quick_help_title">Aide rapide</string>
+    <string name="season_episode_range_format">Saison %1$d - Épisodes %2$d à %3$d</string>
 </resources> 
