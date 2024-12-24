@@ -31,18 +31,14 @@ fun RangeSelectorScreen(
     viewModel: RangeSelectorViewModel = hiltViewModel()
 ) {
     val mediaState by viewModel.mediaState.collectAsState()
-    var startRange by remember { mutableStateOf(1) }
-    var endRange by remember { mutableStateOf(1) }
-    var selectedSeason by remember { mutableStateOf(1) }
+    val selectedSeason by viewModel.selectedSeason.collectAsState()
+    val startRange by viewModel.startRange.collectAsState()
+    val endRange by viewModel.endRange.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(mediaId) {
         if (mediaId.isNotBlank()) {
-            try {
-                viewModel.loadMediaDetails(mediaId)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            viewModel.loadMediaDetails(mediaId)
         }
     }
 
@@ -152,14 +148,12 @@ fun RangeSelectorScreen(
 
                                 when (val info = state.parsedInfo) {
                                     is MediaInfo.SeriesInfo -> {
-                                        // Para series
                                         var expanded by remember { mutableStateOf(false) }
                                         val maxEpisodes = info.episodesPerSeason[selectedSeason.toString()] ?: 1
                                         
                                         // Ajustar los rangos cuando cambie la temporada
                                         LaunchedEffect(selectedSeason) {
-                                            startRange = 1
-                                            endRange = maxEpisodes
+                                            viewModel.setRange(1, maxEpisodes)
                                         }
                                         
                                         Column {
@@ -192,7 +186,7 @@ fun RangeSelectorScreen(
                                                         DropdownMenuItem(
                                                             text = { Text(stringResource(R.string.season_episodes_dropdown, season, episodesInSeason)) },
                                                             onClick = {
-                                                                selectedSeason = season
+                                                                viewModel.setSelectedSeason(season)
                                                                 expanded = false
                                                             }
                                                         )
@@ -215,8 +209,7 @@ fun RangeSelectorScreen(
                                                 RangeSlider(
                                                     value = startRange.toFloat()..endRange.toFloat(),
                                                     onValueChange = { range ->
-                                                        startRange = range.start.toInt()
-                                                        endRange = range.endInclusive.toInt()
+                                                        viewModel.setRange(range.start.toInt(), range.endInclusive.toInt())
                                                     },
                                                     valueRange = 1f..maxEpisodes.toFloat(),
                                                     steps = maxEpisodes - 2,
@@ -242,8 +235,7 @@ fun RangeSelectorScreen(
                                                 RangeSlider(
                                                     value = startRange.toFloat()..endRange.toFloat(),
                                                     onValueChange = { range ->
-                                                        startRange = range.start.toInt()
-                                                        endRange = range.endInclusive.toInt()
+                                                        viewModel.setRange(range.start.toInt(), range.endInclusive.toInt())
                                                     },
                                                     valueRange = 1f..info.totalParts.toFloat(),
                                                     steps = info.totalParts - 2,

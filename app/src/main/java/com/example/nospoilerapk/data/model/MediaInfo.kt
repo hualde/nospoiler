@@ -23,10 +23,19 @@ sealed interface MediaInfo {
         fun fromJson(json: String, type: String): MediaInfo? {
             return try {
                 println("Attempting to parse JSON: $json") // Debug log
+                
+                // Limpiar el JSON de marcadores markdown
+                val cleanJson = json
+                    .replace("```json", "")
+                    .replace("```", "")
+                    .trim()
+                
+                println("Cleaned JSON: $cleanJson") // Debug log para ver el JSON limpio
+                
                 val gson = Gson()
                 val result = when (type.lowercase()) {
-                    "series" -> gson.fromJson(json, SeriesInfo::class.java)
-                    else -> gson.fromJson(json, MovieInfo::class.java)
+                    "series" -> gson.fromJson(cleanJson, SeriesInfo::class.java)
+                    else -> gson.fromJson(cleanJson, MovieInfo::class.java)
                 }
                 println("Successfully parsed JSON to: $result") // Debug log
                 result

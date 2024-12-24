@@ -20,110 +20,128 @@ class RangeSelectorViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _mediaState = MutableStateFlow<MediaState>(MediaState.Loading)
-    val mediaState: StateFlow<MediaState> = _mediaState.asStateFlow()
+    val mediaState: StateFlow<MediaState> = _mediaState
 
-    fun loadMediaDetails(imdbId: String) {
+    private val _selectedSeason = MutableStateFlow(1)
+    val selectedSeason: StateFlow<Int> = _selectedSeason
+
+    private val _startRange = MutableStateFlow(1)
+    val startRange: StateFlow<Int> = _startRange
+
+    private val _endRange = MutableStateFlow(1)
+    val endRange: StateFlow<Int> = _endRange
+
+    private var cachedMediaDetails: DetailedMediaItem? = null
+    private var cachedParsedInfo: MediaInfo? = null
+
+    fun setSelectedSeason(season: Int) {
+        _selectedSeason.value = season
+    }
+
+    fun setRange(start: Int, end: Int) {
+        _startRange.value = start
+        _endRange.value = end
+    }
+
+    fun loadMediaDetails(mediaId: String) {
+        if (cachedMediaDetails != null && cachedParsedInfo != null) {
+            _mediaState.value = MediaState.Success(
+                media = cachedMediaDetails!!,
+                parsedInfo = cachedParsedInfo
+            )
+            return
+        }
+
         viewModelScope.launch {
-            _mediaState.value = MediaState.Loading
             try {
-                val omdbResponse = async { omdbService.getMediaDetails(imdbId = imdbId) }
+                _mediaState.value = MediaState.Loading
                 
-                if (omdbResponse.await().Response == "True") {
-                    val media = omdbResponse.await()
-                    
-                    val perplexityRequest = PerplexityRequest(
-                        messages = listOf(
-                            Message(
-                                role = "system",
-                                content = "You are a helpful assistant that provides information about movies and TV shows. Respond only with the requested JSON format, no additional text."
-                            ),
-                            Message(
-                                role = "user",
-                                content = when (media.Type.lowercase()) {
-                                    "series" -> """
-                                        For the TV show '${media.Title}', tell me exactly how many episodes are in each season. 
-                                        Be precise and respond in this exact JSON format: 
-                                        {
-                                            "totalSeasons": number,
-                                            "episodesPerSeason": {
-                                                "1": number,
-                                                "2": number,
-                                                etc
+                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
+                cachedMediaDetails = mediaDetails
+
+                val perplexityRequest = PerplexityRequest(
+                    messages = listOf(
+                        Message(
+                            role = "system",
+                            content = "You are a helpful assistant that provides information about movies and TV shows. Respond only with the requested JSON format, no additional text."
+                        ),
+                        Message(
+                            role = "user",
+                            content = when (mediaDetails.Type.lowercase()) {
+                                "series" -> """
+                                    For the TV show '${mediaDetails.Title}', tell me exactly how many episodes are in each season. 
+                                    Be precise and respond in this exact JSON format: 
+                                    {
+                                        "totalSeasons": number,
+                                        "episodesPerSeason": {
+                                            "1": number,
+                                            "2": number,
+                                            etc
+                                        }
+                                    }
+                                    Include only confirmed and aired episodes.
+                                    """
+                                else -> """
+                                    For the movie '${mediaDetails.Title}', tell me if it has any parts or sequels. 
+                                    Respond in this exact JSON format:
+                                    {
+                                        "totalParts": number,
+                                        "parts": [
+                                            {
+                                                "number": 1,
+                                                "title": "exact movie title",
+                                                "year": "year"
                                             }
-                                        }
-                                        Include only confirmed and aired episodes.
-                                        """
-                                    else -> """
-                                        For the movie '${media.Title}', tell me if it has any parts or sequels. 
-                                        Respond in this exact JSON format:
-                                        {
-                                            "totalParts": number,
-                                            "parts": [
-                                                {
-                                                    "number": 1,
-                                                    "title": "exact movie title",
-                                                    "year": "year"
-                                                }
-                                            ]
-                                        }
-                                        Include only released movies, no announced or upcoming ones.
-                                        """
-                                }
-                            )
+                                        ]
+                                    }
+                                    Include only released movies, no announced or upcoming ones.
+                                    """
+                            }
                         )
                     )
+                )
+                
+                val episodeInfo = try {
+                    val response = perplexityService.getMediaInfo(perplexityRequest)
+                        .choices.firstOrNull()?.message?.content
+                        ?.replace("```json", "")
+                        ?.replace("```", "")
+                        ?.trim()
                     
-                    val episodeInfo = try {
-                        val response = perplexityService.getMediaInfo(perplexityRequest)
-                            .choices.firstOrNull()?.message?.content
-                        
-                        println("Perplexity response: $response") // Debug log
-                        
-                        if (response != null) {
-                            // Intentar parsear directamente, sin reintento
-                            response
-                        } else {
-                            println("Perplexity response was null") // Debug log
-                            null
+                    println("Perplexity response: $response") // Debug log
+                    
+                    if (response != null) {
+                        response
+                    } else {
+                        println("Perplexity response was null") // Debug log
+                        null
+                    }
+                } catch (e: Exception) {
+                    println("Error getting Perplexity info: ${e.message}") // Debug log
+                    e.printStackTrace()
+                    null
+                }
+
+                val parsedInfo = episodeInfo?.let { 
+                    try {
+                        MediaInfo.fromJson(it, mediaDetails.Type).also { info ->
+                            println("Parsed info: $info") // Debug log
                         }
                     } catch (e: Exception) {
-                        println("Error getting Perplexity info: ${e.message}") // Debug log
+                        println("Error parsing JSON: ${e.message}") // Debug log
                         e.printStackTrace()
                         null
                     }
-
-                    val parsedInfo = episodeInfo?.let { 
-                        try {
-                            MediaInfo.fromJson(it, media.Type).also { info ->
-                                println("Parsed info: $info") // Debug log
-                            }
-                        } catch (e: Exception) {
-                            println("Error parsing JSON: ${e.message}") // Debug log
-                            e.printStackTrace()
-                            null
-                        }
-                    }
-
-                    _mediaState.value = MediaState.Success(
-                        media = media,
-                        episodeInfo = episodeInfo,
-                        parsedInfo = parsedInfo
-                    )
-                } else {
-                    _mediaState.value = MediaState.Error(omdbResponse.await().Error ?: "No results found")
                 }
+
+                cachedParsedInfo = parsedInfo
+
+                _mediaState.value = MediaState.Success(
+                    media = mediaDetails,
+                    parsedInfo = parsedInfo
+                )
             } catch (e: Exception) {
-                val errorMessage = when (e) {
-                    is retrofit2.HttpException -> {
-                        when (e.code()) {
-                            404 -> "Movie or series not found"
-                            401 -> "Invalid API key"
-                            else -> "Error: ${e.message()}"
-                        }
-                    }
-                    else -> e.message ?: "Unknown error occurred"
-                }
-                _mediaState.value = MediaState.Error(errorMessage)
+                _mediaState.value = MediaState.Error(e.message ?: "Unknown error occurred")
             }
         }
     }
@@ -132,8 +150,7 @@ class RangeSelectorViewModel @Inject constructor(
         object Loading : MediaState()
         data class Success(
             val media: DetailedMediaItem,
-            val episodeInfo: String?,
-            val parsedInfo: MediaInfo? = null
+            val parsedInfo: MediaInfo?
         ) : MediaState()
         data class Error(val message: String) : MediaState()
     }
