@@ -61,7 +61,7 @@
     <string name="feature_movies_series">Busca películas y series</string>
     <string name="feature_timeline">Visualiza líneas de tiempo</string>
     <string name="feature_summaries">Obtén resúmenes sin spoilers</string>
-    <string name="quick_help_title">Ayuda rápida</string>
+    <string name="quick_help_title">Modos de Resumen</string>
     <string name="season_episode_range_format">Temporada %1$d - Episodios %2$d a %3$d</string>
     <string name="season_mode">Modo Temporada</string>
     <string name="full_series_mode">Modo Serie Completa</string>
@@ -75,4 +75,10 @@
     <string name="mode_normal">Normal</string>
     <string name="complete_season">Temporada Completa</string>
     <string name="select_complete_season">Selecciona la temporada que quieres resumir completamente</string>
+    <string name="mode_normal_description">Selecciona un rango específico de episodios dentro de una temporada</string>
+    <string name="from_beginning_description">Obtén un resumen desde el primer episodio hasta el punto que elijas</string>
+    <string name="complete_season_description">Resume una temporada completa de una vez</string>
+    <string name="feature_movies_description">Busca y encuentra información sobre tus películas y series favoritas</string>
+    <string name="feature_timeline_description">Visualiza la línea temporal de eventos importantes</string>
+    <string name="feature_summaries_description">Obtén resúmenes detallados sin spoilers</string>
 </resources> 

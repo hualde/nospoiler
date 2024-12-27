@@ -139,19 +139,19 @@ private fun FeaturesSection() {
             FeatureItem(
                 icon = Icons.Default.Movie,
                 text = stringResource(R.string.feature_movies_series),
-                description = "Busca y encuentra información sobre tus películas y series favoritas"
+                description = stringResource(R.string.feature_movies_description)
             )
             Spacer(modifier = Modifier.height(12.dp))
             FeatureItem(
                 icon = Icons.Default.Timeline,
                 text = stringResource(R.string.feature_timeline),
-                description = "Visualiza la línea temporal de eventos importantes"
+                description = stringResource(R.string.feature_timeline_description)
             )
             Spacer(modifier = Modifier.height(12.dp))
             FeatureItem(
                 icon = Icons.Default.Description,
                 text = stringResource(R.string.feature_summaries),
-                description = "Obtén resúmenes detallados sin spoilers"
+                description = stringResource(R.string.feature_summaries_description)
             )
         }
     }
@@ -354,13 +354,53 @@ private fun QuickHelpSection(navController: NavController) {
             Text(
                 text = stringResource(R.string.quick_help_title),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 12.dp)
             )
-            Text(
-                text = stringResource(R.string.faq_search_content),
-                style = MaterialTheme.typography.bodyMedium
+
+            // Modo Normal
+            HelpItem(
+                title = stringResource(R.string.mode_normal),
+                description = stringResource(R.string.mode_normal_description)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Modo Desde el Principio
+            HelpItem(
+                title = stringResource(R.string.from_beginning),
+                description = stringResource(R.string.from_beginning_description)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Modo Temporada Completa
+            HelpItem(
+                title = stringResource(R.string.complete_season),
+                description = stringResource(R.string.complete_season_description)
             )
         }
+    }
+}
+
+@Composable
+private fun HelpItem(
+    title: String,
+    description: String
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Text(
+            text = description,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

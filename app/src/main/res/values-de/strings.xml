@@ -93,7 +93,7 @@ Bei Fragen zu diesen Bedingungen kontaktieren Sie: javhualde@gmail.com</string>
     <string name="feature_movies_series">Filme und Serien suchen</string>
     <string name="feature_timeline">Zeitlinien anzeigen</string>
     <string name="feature_summaries">Spoilerfreie Zusammenfassungen</string>
-    <string name="quick_help_title">Schnellhilfe</string>
+    <string name="quick_help_title">Zusammenfassungsmodi</string>
     <string name="season_episode_range_format">Staffel %1$d - Episoden %2$d bis %3$d</string>
     <string name="select_until_season_episode">Wählen Sie Staffel und Episode aus, bis wohin Sie schauen möchten</string>
     <string name="select_season_episode_range">Wählen Sie den Episodenbereich für diese Staffel</string>
@@ -103,4 +103,10 @@ Bei Fragen zu diesen Bedingungen kontaktieren Sie: javhualde@gmail.com</string>
     <string name="mode_normal">Normal</string>
     <string name="complete_season">Komplette Staffel</string>
     <string name="select_complete_season">Wählen Sie die Staffel aus, die Sie vollständig zusammenfassen möchten</string>
+    <string name="mode_normal_description">Wählen Sie einen bestimmten Episodenbereich innerhalb einer Staffel</string>
+    <string name="from_beginning_description">Erhalten Sie eine Zusammenfassung von der ersten Episode bis zu Ihrem gewählten Punkt</string>
+    <string name="complete_season_description">Fassen Sie eine ganze Staffel auf einmal zusammen</string>
+    <string name="feature_movies_description">Suchen und finden Sie Informationen zu Ihren Lieblingsfilmen und -serien</string>
+    <string name="feature_timeline_description">Visualisieren Sie die Zeitlinie wichtiger Ereignisse</string>
+    <string name="feature_summaries_description">Erhalten Sie detaillierte Zusammenfassungen ohne Spoiler</string>
 </resources> 

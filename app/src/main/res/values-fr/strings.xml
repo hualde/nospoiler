@@ -93,7 +93,7 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
     <string name="feature_movies_series">Rechercher des films et séries</string>
     <string name="feature_timeline">Voir les chronologies</string>
     <string name="feature_summaries">Obtenir des résumés sans spoilers</string>
-    <string name="quick_help_title">Aide rapide</string>
+    <string name="quick_help_title">Modes de Résumé</string>
     <string name="season_episode_range_format">Saison %1$d - Épisodes %2$d à %3$d</string>
     <string name="select_until_season_episode">Sélectionnez la saison et l\'épisode jusqu\'où regarder</string>
     <string name="select_season_episode_range">Sélectionnez la plage d\'épisodes pour cette saison</string>
@@ -103,4 +103,10 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
     <string name="mode_normal">Normal</string>
     <string name="complete_season">Saison Complète</string>
     <string name="select_complete_season">Sélectionnez la saison que vous souhaitez résumer complètement</string>
+    <string name="mode_normal_description">Sélectionnez une plage spécifique d\'épisodes dans une saison</string>
+    <string name="from_beginning_description">Obtenez un résumé depuis le premier épisode jusqu\'au point choisi</string>
+    <string name="complete_season_description">Résumez une saison entière en une fois</string>
+    <string name="feature_movies_description">Recherchez et trouvez des informations sur vos films et séries préférés</string>
+    <string name="feature_timeline_description">Visualisez la chronologie des événements importants</string>
+    <string name="feature_summaries_description">Obtenez des résumés détaillés sans spoilers</string>
 </resources> 

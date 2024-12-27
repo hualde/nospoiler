@@ -104,7 +104,7 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="feature_movies_series">Search movies and series</string>
     <string name="feature_timeline">View timelines</string>
     <string name="feature_summaries">Get spoiler-free summaries</string>
-    <string name="quick_help_title">Quick Help</string>
+    <string name="quick_help_title">Summary Modes</string>
     <string name="season_episode_range_format">Season %1$d - Episodes %2$d to %3$d</string>
     <string name="season_mode">Season Mode</string>
     <string name="full_series_mode">Full Series Mode</string>
@@ -118,4 +118,10 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="mode_normal">Normal</string>
     <string name="complete_season">Complete Season</string>
     <string name="select_complete_season">Select the season you want to summarize completely</string>
+    <string name="mode_normal_description">Select a specific range of episodes within a season</string>
+    <string name="from_beginning_description">Get a summary from the first episode to your chosen point</string>
+    <string name="complete_season_description">Summarize an entire season at once</string>
+    <string name="feature_movies_description">Search and find information about your favorite movies and series</string>
+    <string name="feature_timeline_description">Visualize the timeline of important events</string>
+    <string name="feature_summaries_description">Get detailed summaries without spoilers</string>
 </resources>
