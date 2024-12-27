@@ -20,14 +20,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nospoilerapk.ui.viewmodels.ThemeViewModel
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
+    primary = PrimaryDark80,
+    secondary = SecondaryDark,
+    background = BackgroundDark,
+    surface = SurfaceDark,
+    error = Error,
     tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
+    primary = Primary,
+    secondary = Secondary,
+    background = Background,
+    surface = Surface,
+    error = Error,
     tertiary = Pink40
 )
 

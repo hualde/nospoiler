@@ -27,6 +27,8 @@ import com.example.nospoilerapk.data.model.RangeSelectionMode
 import android.util.Log
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +39,7 @@ fun RangeSelectorScreen(
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
+    val scrollState = rememberScrollState()
     
     // Forzar recomposición cuando cambia la configuración
     DisposableEffect(configuration) {
@@ -86,7 +89,9 @@ fun RangeSelectorScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .padding(horizontal = 16.dp)
+                            .verticalScroll(scrollState)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Card(
                             modifier = Modifier
@@ -261,6 +266,8 @@ fun RangeSelectorScreen(
                                 ) {
                                     Text(stringResource(R.string.view_timeline))
                                 }
+
+                                Spacer(modifier = Modifier.height(32.dp))
                             }
                         }
                     }

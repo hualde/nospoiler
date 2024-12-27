@@ -25,6 +25,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.nospoilerapk.data.network.MediaItem
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @Composable
 fun HomeScreen(
@@ -37,63 +42,51 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
     ) {
-        // Sección de búsqueda
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        // La barra de búsqueda siempre visible en la parte superior
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.welcome_message),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    label = { Text(stringResource(R.string.search_hint)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    trailingIcon = {
-                        IconButton(onClick = { viewModel.searchMedia(searchQuery) }) {
-                            Icon(
-                                Icons.Default.Search,
-                                contentDescription = stringResource(R.string.search_button)
-                            )
-                        }
-                    },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Search
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onSearch = { viewModel.searchMedia(searchQuery) }
-                    )
-                )
-            }
+            SearchBar(
+                searchQuery = searchQuery,
+                onSearchQueryChange = { searchQuery = it },
+                onSearch = { viewModel.searchMedia(searchQuery) }
+            )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Estado de la búsqueda
-        when (val currentState = state) {
-            is SearchState.Loading -> {
-                LoadingIndicator()
-            }
-            is SearchState.Success -> {
-                SearchResults(currentState.results, navController)
-            }
-            is SearchState.Error -> {
-                ErrorMessage(currentState.message)
-            }
-            is SearchState.Initial -> {
-                InitialContent(navController)
+        // Contenido scrolleable
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
+            when (val currentState = state) {
+                is SearchState.Loading -> {
+                    LoadingIndicator()
+                }
+                is SearchState.Success -> {
+                    // LazyColumn para resultados de búsqueda
+                    SearchResults(currentState.results, navController)
+                }
+                is SearchState.Error -> {
+                    ErrorMessage(currentState.message)
+                }
+                is SearchState.Initial -> {
+                    // Column scrolleable para el contenido inicial
+                    val scrollState = rememberScrollState()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(scrollState),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        InitialContent(navController)
+                        // Espaciador al final
+                        Spacer(modifier = Modifier.height(32.dp))
+                    }
+                }
             }
         }
     }
@@ -102,7 +95,8 @@ fun HomeScreen(
 @Composable
 private fun InitialContent(navController: NavController) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // Sección de características principales
@@ -113,13 +107,22 @@ private fun InitialContent(navController: NavController) {
         
         // Sección de ayuda rápida
         QuickHelpSection(navController)
+        
+        // Añadir un espaciador al final para evitar que el último elemento quede cortado
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 
 @Composable
 private fun FeaturesSection() {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Column(
             modifier = Modifier
@@ -128,21 +131,27 @@ private fun FeaturesSection() {
         ) {
             Text(
                 text = stringResource(R.string.main_features),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 16.dp)
             )
             
             FeatureItem(
                 icon = Icons.Default.Movie,
-                text = stringResource(R.string.feature_movies_series)
+                text = stringResource(R.string.feature_movies_series),
+                description = "Busca y encuentra información sobre tus películas y series favoritas"
             )
+            Spacer(modifier = Modifier.height(12.dp))
             FeatureItem(
                 icon = Icons.Default.Timeline,
-                text = stringResource(R.string.feature_timeline)
+                text = stringResource(R.string.feature_timeline),
+                description = "Visualiza la línea temporal de eventos importantes"
             )
+            Spacer(modifier = Modifier.height(12.dp))
             FeatureItem(
                 icon = Icons.Default.Description,
-                text = stringResource(R.string.feature_summaries)
+                text = stringResource(R.string.feature_summaries),
+                description = "Obtén resúmenes detallados sin spoilers"
             )
         }
     }
@@ -170,20 +179,48 @@ private fun QuickAccessSection(navController: NavController) {
 }
 
 @Composable
-private fun FeatureItem(icon: ImageVector, text: String) {
+private fun FeatureItem(
+    icon: ImageVector,
+    text: String,
+    description: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.Top
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = text)
+        Card(
+            modifier = Modifier.size(48.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Column {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }
 
@@ -231,7 +268,8 @@ private fun LoadingIndicator() {
 @Composable
 private fun SearchResults(results: List<MediaItem>, navController: NavController) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
         items(results) { media ->
             Card(
@@ -241,31 +279,45 @@ private fun SearchResults(results: List<MediaItem>, navController: NavController
                         navController.navigate(
                             Screen.RangeSelector.createRoute(media.imdbID)
                         )
-                    }
+                    },
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    AsyncImage(
-                        model = media.Poster,
-                        contentDescription = null,
-                        modifier = Modifier.size(80.dp)
-                    )
-                    Column {
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        AsyncImage(
+                            model = media.Poster,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ) {
                         Text(
                             text = media.Title,
-                            style = MaterialTheme.typography.titleMedium
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = stringResource(
                                 R.string.year_type_format,
                                 media.Year,
-                                media.Type
+                                media.Type.capitalize()
                             ),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -307,6 +359,75 @@ private fun QuickHelpSection(navController: NavController) {
             Text(
                 text = stringResource(R.string.faq_search_content),
                 style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+
+@Composable
+private fun SearchBar(
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
+    onSearch: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.welcome_message),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { 
+                    Text(stringResource(R.string.search_hint)) 
+                },
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                },
+                trailingIcon = if (searchQuery.isNotEmpty()) {
+                    {
+                        IconButton(onClick = { onSearchQueryChange("") }) {
+                            Icon(
+                                Icons.Default.Clear,
+                                contentDescription = "Limpiar"
+                            )
+                        }
+                    }
+                } else null,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    cursorColor = MaterialTheme.colorScheme.primary
+                ),
+                shape = RoundedCornerShape(12.dp),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Search
+                ),
+                keyboardActions = KeyboardActions(
+                    onSearch = { onSearch() }
+                )
             )
         }
     }
