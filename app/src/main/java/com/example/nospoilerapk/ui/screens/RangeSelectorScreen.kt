@@ -90,13 +90,13 @@ fun RangeSelectorScreen(
                             .fillMaxSize()
                             .padding(paddingValues)
                             .verticalScroll(scrollState)
-                            .padding(16.dp),
+                            .padding(8.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 4.dp)
+                                .padding(bottom = 2.dp)
                         ) {
                             Column(
                                 modifier = Modifier
@@ -136,16 +136,16 @@ fun RangeSelectorScreen(
                                     }
                                 }
                                 
-                                Spacer(modifier = Modifier.height(4.dp))
+                                Spacer(modifier = Modifier.height(2.dp))
                                 
                                 Text(
                                     text = state.media.Plot,
-                                    style = MaterialTheme.typography.bodySmall
+                                    style = MaterialTheme.typography.bodyMedium
                                 )
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(2.dp))
 
                         Card(
                             modifier = Modifier.fillMaxWidth()
@@ -154,7 +154,7 @@ fun RangeSelectorScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
                                 Text(
                                     text = when (state.media.Type.lowercase()) {
@@ -230,7 +230,7 @@ fun RangeSelectorScreen(
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(4.dp))
+                                Spacer(modifier = Modifier.height(2.dp))
 
                                 Button(
                                     onClick = {
