@@ -96,33 +96,33 @@ fun RangeSelectorScreen(
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp)
+                                .padding(bottom = 4.dp)
                         ) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(12.dp)
+                                    .padding(8.dp)
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
                                     AsyncImage(
                                         model = state.media.Poster,
                                         contentDescription = null,
-                                        modifier = Modifier.size(120.dp)
+                                        modifier = Modifier.size(100.dp)
                                     )
                                     Column {
                                         Text(
                                             text = state.media.Title,
-                                            style = MaterialTheme.typography.titleLarge
+                                            style = MaterialTheme.typography.titleMedium
                                         )
-                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Spacer(modifier = Modifier.height(2.dp))
                                         Text(
                                             text = state.media.Year,
                                             style = MaterialTheme.typography.bodyMedium
                                         )
-                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Spacer(modifier = Modifier.height(2.dp))
                                         Text(
                                             text = state.media.Genre,
                                             style = MaterialTheme.typography.bodyMedium
@@ -136,16 +136,16 @@ fun RangeSelectorScreen(
                                     }
                                 }
                                 
-                                Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(4.dp))
                                 
                                 Text(
                                     text = state.media.Plot,
-                                    style = MaterialTheme.typography.bodyMedium
+                                    style = MaterialTheme.typography.bodySmall
                                 )
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         Card(
                             modifier = Modifier.fillMaxWidth()
@@ -153,7 +153,8 @@ fun RangeSelectorScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(12.dp)
+                                    .padding(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 Text(
                                     text = when (state.media.Type.lowercase()) {
@@ -183,7 +184,7 @@ fun RangeSelectorScreen(
                                             Column(
                                                 modifier = Modifier
                                                     .fillMaxWidth()
-                                                    .padding(horizontal = 16.dp)
+                                                    .padding(horizontal = 8.dp)
                                             ) {
                                                 Text(
                                                     text = "Rango de partes: $startRange - $endRange",
@@ -229,7 +230,7 @@ fun RangeSelectorScreen(
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(16.dp))
+                                Spacer(modifier = Modifier.height(4.dp))
 
                                 Button(
                                     onClick = {
@@ -247,8 +248,6 @@ fun RangeSelectorScreen(
                                 ) {
                                     Text(stringResource(R.string.get_summary))
                                 }
-
-                                Spacer(modifier = Modifier.height(8.dp))
 
                                 Button(
                                     onClick = { 
@@ -337,8 +336,8 @@ private fun ModeSelectionChips(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         FilterChip(
             selected = selectionMode == RangeSelectionMode.NORMAL,
@@ -462,7 +461,7 @@ private fun SeasonSelector(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 8.dp)
             ) {
                 if (selectionMode == RangeSelectionMode.FROM_BEGINNING) {
                     Text(
