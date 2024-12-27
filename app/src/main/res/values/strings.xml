@@ -124,4 +124,13 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="feature_movies_description">Search and find information about your favorite movies and series</string>
     <string name="feature_timeline_description">Visualize the timeline of important events</string>
     <string name="feature_summaries_description">Get detailed summaries without spoilers</string>
+    <string name="faq_modes_title">What are the different summary modes?</string>
+    <string name="faq_modes_content">There are three summary modes:\n\n
+• Normal Mode: Select a specific range of episodes within a season\n
+• From Beginning: Get a summary from the first episode to your chosen point\n
+• Complete Season: Summarize an entire season at once</string>
+    <string name="faq_when_use_title">When should I use each mode?</string>
+    <string name="faq_when_use_content">• Use Normal Mode when you want to catch up on specific episodes\n
+• Use From Beginning when you\'re starting a series and want to skip to a certain point\n
+• Use Complete Season when you want a full overview of an entire season</string>
 </resources>

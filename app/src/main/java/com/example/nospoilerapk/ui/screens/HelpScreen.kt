@@ -3,8 +3,8 @@ package com.example.nospoilerapk.ui.screens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -21,7 +21,14 @@ import com.example.nospoilerapk.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HelpScreen(navController: NavController) {
-    val scrollState = rememberScrollState()
+    val faqItems = listOf(
+        Pair(R.string.faq_modes_title, R.string.faq_modes_content),
+        Pair(R.string.faq_when_use_title, R.string.faq_when_use_content),
+        Pair(R.string.faq_search_title, R.string.faq_search_content),
+        Pair(R.string.faq_range_title, R.string.faq_range_content),
+        Pair(R.string.faq_summary_title, R.string.faq_summary_content),
+        Pair(R.string.faq_timeline_title, R.string.faq_timeline_content)
+    )
 
     Scaffold(
         topBar = {
@@ -31,50 +38,30 @@ fun HelpScreen(navController: NavController) {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.go_back)
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 }
             )
         }
     ) { paddingValues ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp)
-                .verticalScroll(scrollState),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(
-                text = stringResource(R.string.faq_title),
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(vertical = 16.dp)
-            )
-
-            // FAQ Items
-            FaqItem(
-                title = stringResource(R.string.faq_search_title),
-                content = stringResource(R.string.faq_search_content)
-            )
+            items(faqItems) { (titleRes, contentRes) ->
+                FaqItem(
+                    title = stringResource(titleRes),
+                    content = stringResource(contentRes)
+                )
+            }
             
-            FaqItem(
-                title = stringResource(R.string.faq_range_title),
-                content = stringResource(R.string.faq_range_content)
-            )
-            
-            FaqItem(
-                title = stringResource(R.string.faq_summary_title),
-                content = stringResource(R.string.faq_summary_content)
-            )
-            
-            FaqItem(
-                title = stringResource(R.string.faq_timeline_title),
-                content = stringResource(R.string.faq_timeline_content)
-            )
-
-            // Añadir espacio al final para evitar que el último ítem quede cortado
-            Spacer(modifier = Modifier.height(16.dp))
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }

@@ -109,4 +109,13 @@ Bei Fragen zu diesen Bedingungen kontaktieren Sie: javhualde@gmail.com</string>
     <string name="feature_movies_description">Suchen und finden Sie Informationen zu Ihren Lieblingsfilmen und -serien</string>
     <string name="feature_timeline_description">Visualisieren Sie die Zeitlinie wichtiger Ereignisse</string>
     <string name="feature_summaries_description">Erhalten Sie detaillierte Zusammenfassungen ohne Spoiler</string>
+    <string name="faq_modes_title">Was sind die verschiedenen Zusammenfassungsmodi?</string>
+    <string name="faq_modes_content">Es gibt drei Zusammenfassungsmodi:\n\n
+• Normaler Modus: Wählen Sie einen bestimmten Episodenbereich innerhalb einer Staffel\n
+• Von Anfang an: Erhalten Sie eine Zusammenfassung von der ersten Episode bis zu Ihrem gewählten Punkt\n
+• Komplette Staffel: Fassen Sie eine ganze Staffel auf einmal zusammen</string>
+    <string name="faq_when_use_title">Wann sollte ich welchen Modus verwenden?</string>
+    <string name="faq_when_use_content">• Verwenden Sie den Normalen Modus, wenn Sie bestimmte Episoden nachholen möchten\n
+• Verwenden Sie Von Anfang an, wenn Sie eine Serie beginnen und zu einem bestimmten Punkt springen möchten\n
+• Verwenden Sie Komplette Staffel, wenn Sie einen Gesamtüberblick über eine ganze Staffel wünschen</string>
 </resources> 

@@ -109,4 +109,13 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
     <string name="feature_movies_description">Recherchez et trouvez des informations sur vos films et séries préférés</string>
     <string name="feature_timeline_description">Visualisez la chronologie des événements importants</string>
     <string name="feature_summaries_description">Obtenez des résumés détaillés sans spoilers</string>
+    <string name="faq_modes_title">Quels sont les différents modes de résumé ?</string>
+    <string name="faq_modes_content">Il existe trois modes de résumé :\n\n
+• Mode Normal : Sélectionnez une plage spécifique d\'épisodes dans une saison\n
+• Depuis le Début : Obtenez un résumé depuis le premier épisode jusqu\'au point choisi\n
+• Saison Complète : Résumez une saison entière en une fois</string>
+    <string name="faq_when_use_title">Quand dois-je utiliser chaque mode ?</string>
+    <string name="faq_when_use_content">• Utilisez le Mode Normal pour rattraper des épisodes spécifiques\n
+• Utilisez Depuis le Début lorsque vous commencez une série et souhaitez passer à un certain point\n
+• Utilisez Saison Complète pour avoir un aperçu complet d\'une saison entière</string>
 </resources> 

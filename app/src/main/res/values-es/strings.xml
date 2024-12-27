@@ -81,4 +81,13 @@
     <string name="feature_movies_description">Busca y encuentra información sobre tus películas y series favoritas</string>
     <string name="feature_timeline_description">Visualiza la línea temporal de eventos importantes</string>
     <string name="feature_summaries_description">Obtén resúmenes detallados sin spoilers</string>
+    <string name="faq_modes_title">¿Cuáles son los diferentes modos de resumen?</string>
+    <string name="faq_modes_content">Hay tres modos de resumen:\n\n
+    • Modo Normal: Selecciona un rango específico de episodios dentro de una temporada\n
+    • Desde el Principio: Obtén un resumen desde el primer episodio hasta el punto que elijas\n
+    • Temporada Completa: Resume una temporada completa de una vez</string>
+    <string name="faq_when_use_title">¿Cuándo debo usar cada modo?</string>
+    <string name="faq_when_use_content">• Usa el Modo Normal cuando quieras ponerte al día con episodios específicos\n
+    • Usa Desde el Principio cuando estés empezando una serie y quieras saltar a cierto punto\n
+    • Usa Temporada Completa cuando quieras una visión general de toda una temporada</string>
 </resources> 
