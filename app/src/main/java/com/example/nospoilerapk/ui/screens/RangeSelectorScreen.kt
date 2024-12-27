@@ -297,26 +297,30 @@ private fun SummaryHeader(
     viewModel: RangeSelectorViewModel
 ) {
     val context = LocalContext.current
-    Log.d("RangeSelectorScreen", "Current locale: ${context.resources.configuration.locales[0]}")
-    Log.d("RangeSelectorScreen", "From beginning text: ${context.getString(R.string.from_beginning)}")
+    val selectionMode by viewModel.selectionMode.collectAsState()
 
     Column {
+        // Selector de modo
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(
-                text = stringResource(R.string.from_beginning),
-                style = MaterialTheme.typography.bodyLarge
+            FilterChip(
+                selected = selectionMode == RangeSelectionMode.NORMAL,
+                onClick = { viewModel.setSelectionMode(RangeSelectionMode.NORMAL) },
+                label = { Text(stringResource(R.string.mode_normal)) }
             )
-            Switch(
-                checked = viewModel.fromBeginning.collectAsState().value,
-                onCheckedChange = { fromBeginning ->
-                    viewModel.setFromBeginning(fromBeginning)
-                }
+            FilterChip(
+                selected = selectionMode == RangeSelectionMode.FROM_BEGINNING,
+                onClick = { viewModel.setSelectionMode(RangeSelectionMode.FROM_BEGINNING) },
+                label = { Text(stringResource(R.string.from_beginning)) }
+            )
+            FilterChip(
+                selected = selectionMode == RangeSelectionMode.COMPLETE_SEASON,
+                onClick = { viewModel.setSelectionMode(RangeSelectionMode.COMPLETE_SEASON) },
+                label = { Text(stringResource(R.string.complete_season)) }
             )
         }
 
@@ -329,7 +333,7 @@ private fun SummaryHeader(
             startRange = rangeStart,
             endRange = rangeEnd,
             viewModel = viewModel,
-            isFromBeginning = viewModel.fromBeginning.collectAsState().value
+            selectionMode = selectionMode
         )
     }
 }
@@ -341,28 +345,33 @@ private fun SeasonSelector(
     startRange: Int,
     endRange: Int,
     viewModel: RangeSelectorViewModel,
-    isFromBeginning: Boolean
+    selectionMode: RangeSelectionMode
 ) {
     var expanded by remember { mutableStateOf(false) }
     val maxEpisodes = info.episodesPerSeason[selectedSeason.toString()] ?: 1
 
-    // Cuando cambia la temporada, ajustamos el endRange al máximo de episodios
-    LaunchedEffect(selectedSeason) {
-        if (isFromBeginning) {
-            // En modo "desde el principio", ajustamos el endRange al máximo de la nueva temporada
-            viewModel.setRange(1, maxEpisodes)
-        } else {
-            viewModel.setRange(1, maxEpisodes)
+    // Cuando cambia la temporada o el modo, ajustamos el rango
+    LaunchedEffect(selectedSeason, selectionMode) {
+        when (selectionMode) {
+            RangeSelectionMode.NORMAL -> {
+                viewModel.setRange(1, maxEpisodes)
+            }
+            RangeSelectionMode.FROM_BEGINNING -> {
+                viewModel.setRange(1, maxEpisodes)
+            }
+            RangeSelectionMode.COMPLETE_SEASON -> {
+                viewModel.setRange(1, maxEpisodes)
+            }
         }
     }
 
     Column {
         // Texto explicativo según el modo
         Text(
-            text = if (isFromBeginning) {
-                stringResource(R.string.select_until_season_episode)
-            } else {
-                stringResource(R.string.select_season_episode_range)
+            text = when (selectionMode) {
+                RangeSelectionMode.NORMAL -> stringResource(R.string.select_season_episode_range)
+                RangeSelectionMode.FROM_BEGINNING -> stringResource(R.string.select_until_season_episode)
+                RangeSelectionMode.COMPLETE_SEASON -> stringResource(R.string.select_complete_season)
             },
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 8.dp)
@@ -405,43 +414,44 @@ private fun SeasonSelector(
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Selector de episodios
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        ) {
-            if (isFromBeginning) {
-                Text(
-                    text = stringResource(R.string.until_episode_format, selectedSeason, endRange),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Slider(
-                    value = endRange.toFloat(),
-                    onValueChange = { value ->
-                        viewModel.setRange(1, value.toInt())
-                    },
-                    valueRange = 1f..maxEpisodes.toFloat(),
-                    steps = maxEpisodes - 2,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            } else {
-                // En modo normal mostramos el RangeSlider
-                Text(
-                    text = stringResource(R.string.episode_range_format, startRange, endRange),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                RangeSlider(
-                    value = startRange.toFloat()..endRange.toFloat(),
-                    onValueChange = { range ->
-                        viewModel.setRange(range.start.toInt(), range.endInclusive.toInt())
-                    },
-                    valueRange = 1f..maxEpisodes.toFloat(),
-                    steps = maxEpisodes - 2,
-                    modifier = Modifier.fillMaxWidth()
-                )
+        // Solo mostramos los sliders si no estamos en modo COMPLETE_SEASON
+        if (selectionMode != RangeSelectionMode.COMPLETE_SEASON) {
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                if (selectionMode == RangeSelectionMode.FROM_BEGINNING) {
+                    Text(
+                        text = stringResource(R.string.until_episode_format, selectedSeason, endRange),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Slider(
+                        value = endRange.toFloat(),
+                        onValueChange = { value ->
+                            viewModel.setRange(1, value.toInt())
+                        },
+                        valueRange = 1f..maxEpisodes.toFloat(),
+                        steps = maxEpisodes - 2,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    Text(
+                        text = stringResource(R.string.episode_range_format, startRange, endRange),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    RangeSlider(
+                        value = startRange.toFloat()..endRange.toFloat(),
+                        onValueChange = { range ->
+                            viewModel.setRange(range.start.toInt(), range.endInclusive.toInt())
+                        },
+                        valueRange = 1f..maxEpisodes.toFloat(),
+                        steps = maxEpisodes - 2,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }

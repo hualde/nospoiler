@@ -100,4 +100,7 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
     <string name="until_episode_format">Depuis le début jusqu\'à la saison %1$d épisode %2$d</string>
     <string name="from_beginning">Depuis le début</string>
     <string name="from_beginning_range_format">Du début jusqu\'à la Saison %1$d - Épisode %2$d</string>
+    <string name="mode_normal">Normal</string>
+    <string name="complete_season">Saison Complète</string>
+    <string name="select_complete_season">Sélectionnez la saison que vous souhaitez résumer complètement</string>
 </resources> 

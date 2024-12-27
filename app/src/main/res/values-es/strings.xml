@@ -72,4 +72,7 @@
     <string name="select_season_episode_range">Selecciona el rango de episodios para esta temporada</string>
     <string name="until_episode_format">Desde el principio hasta temporada %1$d episodio %2$d</string>
     <string name="from_beginning_range_format">Desde el principio hasta Temporada %1$d - Episodio %2$d</string>
+    <string name="mode_normal">Normal</string>
+    <string name="complete_season">Temporada Completa</string>
+    <string name="select_complete_season">Selecciona la temporada que quieres resumir completamente</string>
 </resources> 

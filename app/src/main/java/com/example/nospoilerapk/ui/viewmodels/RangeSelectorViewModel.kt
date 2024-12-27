@@ -32,8 +32,8 @@ class RangeSelectorViewModel @Inject constructor(
     private val _endRange = MutableStateFlow(1)
     val endRange: StateFlow<Int> = _endRange
 
-    private val _selectionMode = MutableStateFlow(RangeSelectionMode.SEASON)
-    val selectionMode: StateFlow<RangeSelectionMode> = _selectionMode.asStateFlow()
+    private val _selectionMode = MutableStateFlow(RangeSelectionMode.NORMAL)
+    val selectionMode: StateFlow<RangeSelectionMode> = _selectionMode
 
     private val _fullSeriesEndSeason = MutableStateFlow(1)
     val fullSeriesEndSeason: StateFlow<Int> = _fullSeriesEndSeason.asStateFlow()
@@ -58,6 +58,21 @@ class RangeSelectorViewModel @Inject constructor(
 
     fun setSelectionMode(mode: RangeSelectionMode) {
         _selectionMode.value = mode
+        // Ajustar el rango según el modo seleccionado
+        when (mode) {
+            RangeSelectionMode.COMPLETE_SEASON -> {
+                val maxEpisodes = (mediaState.value as? MediaState.Success)?.let { state ->
+                    (state.parsedInfo as? MediaInfo.SeriesInfo)?.episodesPerSeason?.get(_selectedSeason.value.toString())
+                } ?: 1
+                setRange(1, maxEpisodes)
+            }
+            RangeSelectionMode.FROM_BEGINNING -> {
+                // Mantener el comportamiento actual
+            }
+            RangeSelectionMode.NORMAL -> {
+                // Mantener el comportamiento actual
+            }
+        }
     }
 
     fun setFullSeriesRange(endSeason: Int, endEpisode: Int) {

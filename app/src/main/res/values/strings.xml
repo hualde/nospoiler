@@ -115,4 +115,7 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="select_season_episode_range">Select episode range for this season</string>
     <string name="until_episode_format">From beginning until season %1$d episode %2$d</string>
     <string name="from_beginning_range_format">From beginning to Season %1$d - Episode %2$d</string>
+    <string name="mode_normal">Normal</string>
+    <string name="complete_season">Complete Season</string>
+    <string name="select_complete_season">Select the season you want to summarize completely</string>
 </resources>
