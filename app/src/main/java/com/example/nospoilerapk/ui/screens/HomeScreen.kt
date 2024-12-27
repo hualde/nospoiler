@@ -97,19 +97,11 @@ private fun InitialContent(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Sección de características principales
         FeaturesSection()
-        
-        // Sección de accesos rápidos
         QuickAccessSection(navController)
-        
-        // Sección de ayuda rápida
         QuickHelpSection(navController)
-        
-        // Añadir un espaciador al final para evitar que el último elemento quede cortado
-        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 
@@ -118,7 +110,7 @@ private fun FeaturesSection() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -127,13 +119,13 @@ private fun FeaturesSection() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(12.dp)
         ) {
             Text(
                 text = stringResource(R.string.main_features),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 8.dp)
             )
             
             FeatureItem(
@@ -141,13 +133,13 @@ private fun FeaturesSection() {
                 text = stringResource(R.string.feature_movies_series),
                 description = stringResource(R.string.feature_movies_description)
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             FeatureItem(
                 icon = Icons.Default.Timeline,
                 text = stringResource(R.string.feature_timeline),
                 description = stringResource(R.string.feature_timeline_description)
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             FeatureItem(
                 icon = Icons.Default.Description,
                 text = stringResource(R.string.feature_summaries),
@@ -349,32 +341,29 @@ private fun QuickHelpSection(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(12.dp)
         ) {
             Text(
                 text = stringResource(R.string.quick_help_title),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(bottom = 12.dp)
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Modo Normal
             HelpItem(
                 title = stringResource(R.string.mode_normal),
                 description = stringResource(R.string.mode_normal_description)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
-            // Modo Desde el Principio
             HelpItem(
                 title = stringResource(R.string.from_beginning),
                 description = stringResource(R.string.from_beginning_description)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
-            // Modo Temporada Completa
             HelpItem(
                 title = stringResource(R.string.complete_season),
                 description = stringResource(R.string.complete_season_description)
@@ -398,7 +387,7 @@ private fun HelpItem(
         )
         Text(
             text = description,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
@@ -413,7 +402,7 @@ private fun SearchBar(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -422,13 +411,13 @@ private fun SearchBar(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(12.dp)
         ) {
             Text(
                 text = stringResource(R.string.welcome_message),
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 8.dp)
             )
             
             OutlinedTextField(

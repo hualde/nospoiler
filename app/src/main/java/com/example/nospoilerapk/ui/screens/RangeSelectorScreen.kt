@@ -308,28 +308,12 @@ private fun SummaryHeader(
 
     Column {
         // Selector de modo
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            FilterChip(
-                selected = selectionMode == RangeSelectionMode.NORMAL,
-                onClick = { viewModel.setSelectionMode(RangeSelectionMode.NORMAL) },
-                label = { Text(stringResource(R.string.mode_normal)) }
-            )
-            FilterChip(
-                selected = selectionMode == RangeSelectionMode.FROM_BEGINNING,
-                onClick = { viewModel.setSelectionMode(RangeSelectionMode.FROM_BEGINNING) },
-                label = { Text(stringResource(R.string.from_beginning)) }
-            )
-            FilterChip(
-                selected = selectionMode == RangeSelectionMode.COMPLETE_SEASON,
-                onClick = { viewModel.setSelectionMode(RangeSelectionMode.COMPLETE_SEASON) },
-                label = { Text(stringResource(R.string.complete_season)) }
-            )
-        }
+        ModeSelectionChips(
+            selectionMode = selectionMode,
+            onModeSelected = { mode ->
+                viewModel.setSelectionMode(mode)
+            }
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -341,6 +325,56 @@ private fun SummaryHeader(
             endRange = rangeEnd,
             viewModel = viewModel,
             selectionMode = selectionMode
+        )
+    }
+}
+
+@Composable
+private fun ModeSelectionChips(
+    selectionMode: RangeSelectionMode,
+    onModeSelected: (RangeSelectionMode) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        FilterChip(
+            selected = selectionMode == RangeSelectionMode.NORMAL,
+            onClick = { onModeSelected(RangeSelectionMode.NORMAL) },
+            label = { 
+                Text(
+                    text = stringResource(R.string.mode_normal),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            },
+            modifier = Modifier.weight(1f)
+        )
+        FilterChip(
+            selected = selectionMode == RangeSelectionMode.FROM_BEGINNING,
+            onClick = { onModeSelected(RangeSelectionMode.FROM_BEGINNING) },
+            label = { 
+                Text(
+                    text = stringResource(R.string.from_beginning),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            },
+            modifier = Modifier.weight(1f)
+        )
+        FilterChip(
+            selected = selectionMode == RangeSelectionMode.COMPLETE_SEASON,
+            onClick = { onModeSelected(RangeSelectionMode.COMPLETE_SEASON) },
+            label = { 
+                Text(
+                    text = stringResource(R.string.complete_season),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            },
+            modifier = Modifier.weight(1f)
         )
     }
 }
