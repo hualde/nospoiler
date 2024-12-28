@@ -33,7 +33,7 @@ class SummaryViewModel @Inject constructor(
         return when (languageCode) {
             "es" -> if (isFromBeginning) {
                 """
-                    Eres una API JSON que genera resúmenes.
+                    Eres una API JSON que genera resúmenes detallados y extensos.
                     Para la serie llamada "$title", desde el episodio 1 de la temporada 1 hasta el episodio $rangeEnd de la temporada $season,
                     devuelve un JSON con esta estructura:
                     {
@@ -42,16 +42,21 @@ class SummaryViewModel @Inject constructor(
                     
                     Pautas para el resumen:
                     - Escribe en español
-                    - Resume los eventos principales
+                    - Proporciona un resumen extenso y detallado
+                    - Incluye desarrollo de personajes y arcos argumentales
+                    - Describe las subtramas importantes
+                    - Menciona el contexto y las motivaciones de los personajes
+                    - Explica las relaciones entre personajes
                     - Mantén un tono neutral
-                    - Evita spoilers importantes
+                    - Evita spoilers importantes sobre muertes o giros dramáticos
                     - Usa tiempo presente
+                    - Mínimo 500 palabras
                     
                     IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
                 """.trimIndent()
             } else {
                 """
-                    Eres una API JSON que genera resúmenes.
+                    Eres una API JSON que genera resúmenes detallados y extensos.
                     Para la serie llamada "$title", temporada $season, episodios $rangeStart a $rangeEnd,
                     devuelve un JSON con esta estructura:
                     {
@@ -60,10 +65,15 @@ class SummaryViewModel @Inject constructor(
                     
                     Pautas para el resumen:
                     - Escribe en español
-                    - Resume los eventos principales
+                    - Proporciona un resumen extenso y detallado
+                    - Incluye desarrollo de personajes y arcos argumentales
+                    - Describe las subtramas importantes
+                    - Menciona el contexto y las motivaciones de los personajes
+                    - Explica las relaciones entre personajes
                     - Mantén un tono neutral
-                    - Evita spoilers importantes
+                    - Evita spoilers importantes sobre muertes o giros dramáticos
                     - Usa tiempo presente
+                    - Mínimo 500 palabras
                     
                     IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
                 """.trimIndent()
@@ -71,7 +81,7 @@ class SummaryViewModel @Inject constructor(
             
             "fr" -> if (isFromBeginning) {
                 """
-                    Tu es une API JSON qui génère des résumés.
+                    Tu es une API JSON qui génère des résumés détaillés et approfondis.
                     Pour la série intitulée "$title", depuis l'épisode 1 de la saison 1 jusqu'à l'épisode $rangeEnd de la saison $season,
                     renvoie un JSON avec cette structure:
                     {
@@ -80,16 +90,21 @@ class SummaryViewModel @Inject constructor(
                     
                     Directives pour le résumé:
                     - Écris en français
-                    - Résume les événements principaux
+                    - Fournis un résumé détaillé et approfondi
+                    - Inclus le développement des personnages et les arcs narratifs
+                    - Décris les intrigues secondaires importantes
+                    - Mentionne le contexte et les motivations des personnages
+                    - Explique les relations entre les personnages
                     - Maintiens un ton neutre
-                    - Évite les spoilers importants
+                    - Évite les spoilers importants concernant les morts ou les rebondissements majeurs
                     - Utilise le présent
+                    - Minimum 500 mots
                     
                     IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
             } else {
                 """
-                    Tu es une API JSON qui génère des résumés.
+                    Tu es une API JSON qui génère des résumés détaillés et approfondis.
                     Pour la série intitulée "$title", saison $season, épisodes $rangeStart à $rangeEnd,
                     renvoie un JSON avec cette structure:
                     {
@@ -98,10 +113,15 @@ class SummaryViewModel @Inject constructor(
                     
                     Directives pour le résumé:
                     - Écris en français
-                    - Résume les événements principaux
+                    - Fournis un résumé détaillé et approfondi
+                    - Inclus le développement des personnages et les arcs narratifs
+                    - Décris les intrigues secondaires importantes
+                    - Mentionne le contexte et les motivations des personnages
+                    - Explique les relations entre les personnages
                     - Maintiens un ton neutre
-                    - Évite les spoilers importants
+                    - Évite les spoilers importants concernant les morts ou les rebondissements majeurs
                     - Utilise le présent
+                    - Minimum 500 mots
                     
                     IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
@@ -109,7 +129,7 @@ class SummaryViewModel @Inject constructor(
             
             "de" -> if (isFromBeginning) {
                 """
-                    Du bist eine JSON-API, die Zusammenfassungen generiert.
+                    Du bist eine JSON-API, die detaillierte und umfassende Zusammenfassungen generiert.
                     Für die Serie mit dem Titel "$title", von Episode 1 der Staffel 1 bis Episode $rangeEnd der Staffel $season,
                     gib ein JSON mit dieser Struktur zurück:
                     {
@@ -118,16 +138,21 @@ class SummaryViewModel @Inject constructor(
                     
                     Richtlinien für die Zusammenfassung:
                     - Schreibe auf Deutsch
-                    - Fasse die Hauptereignisse zusammen
+                    - Liefere eine detaillierte und umfassende Zusammenfassung
+                    - Berücksichtige Charakterentwicklung und Handlungsbögen
+                    - Beschreibe wichtige Nebenhandlungen
+                    - Erwähne Kontext und Motivationen der Charaktere
+                    - Erkläre die Beziehungen zwischen den Charakteren
                     - Behalte einen neutralen Ton
-                    - Vermeide wichtige Spoiler
+                    - Vermeide wichtige Spoiler zu Todesfällen oder dramatischen Wendungen
                     - Verwende Präsens
+                    - Mindestens 500 Wörter
                     
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
             } else {
                 """
-                    Du bist eine JSON-API, die Zusammenfassungen generiert.
+                    Du bist eine JSON-API, die detaillierte und umfassende Zusammenfassungen generiert.
                     Für die Serie mit dem Titel "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
                     gib ein JSON mit dieser Struktur zurück:
                     {
@@ -136,10 +161,15 @@ class SummaryViewModel @Inject constructor(
                     
                     Richtlinien für die Zusammenfassung:
                     - Schreibe auf Deutsch
-                    - Fasse die Hauptereignisse zusammen
+                    - Liefere eine detaillierte und umfassende Zusammenfassung
+                    - Berücksichtige Charakterentwicklung und Handlungsbögen
+                    - Beschreibe wichtige Nebenhandlungen
+                    - Erwähne Kontext und Motivationen der Charaktere
+                    - Erkläre die Beziehungen zwischen den Charakteren
                     - Behalte einen neutralen Ton
-                    - Vermeide wichtige Spoiler
+                    - Vermeide wichtige Spoiler zu Todesfällen oder dramatischen Wendungen
                     - Verwende Präsens
+                    - Mindestens 500 Wörter
                     
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
@@ -147,7 +177,7 @@ class SummaryViewModel @Inject constructor(
             
             else -> if (isFromBeginning) {
                 """
-                    You are a JSON API that generates summaries.
+                    You are a JSON API that generates detailed and comprehensive summaries.
                     For the series titled "$title", from episode 1 of season 1 to episode $rangeEnd of season $season,
                     return a JSON with this structure:
                     {
@@ -156,16 +186,21 @@ class SummaryViewModel @Inject constructor(
                     
                     Guidelines for the summary:
                     - Write in English
-                    - Summarize main events
+                    - Provide a detailed and comprehensive summary
+                    - Include character development and story arcs
+                    - Describe important subplots
+                    - Mention context and character motivations
+                    - Explain relationships between characters
                     - Keep a neutral tone
-                    - Avoid major spoilers
+                    - Avoid major spoilers about deaths or dramatic twists
                     - Use present tense
+                    - Minimum 500 words
                     
                     IMPORTANT: Return ONLY the JSON, no additional text.
                 """.trimIndent()
             } else {
                 """
-                    You are a JSON API that generates summaries.
+                    You are a JSON API that generates detailed and comprehensive summaries.
                     For the series titled "$title", season $season, episodes $rangeStart to $rangeEnd,
                     return a JSON with this structure:
                     {
@@ -174,10 +209,15 @@ class SummaryViewModel @Inject constructor(
                     
                     Guidelines for the summary:
                     - Write in English
-                    - Summarize main events
+                    - Provide a detailed and comprehensive summary
+                    - Include character development and story arcs
+                    - Describe important subplots
+                    - Mention context and character motivations
+                    - Explain relationships between characters
                     - Keep a neutral tone
-                    - Avoid major spoilers
+                    - Avoid major spoilers about deaths or dramatic twists
                     - Use present tense
+                    - Minimum 500 words
                     
                     IMPORTANT: Return ONLY the JSON, no additional text.
                 """.trimIndent()
