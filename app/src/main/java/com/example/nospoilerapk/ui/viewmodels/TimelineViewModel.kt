@@ -81,9 +81,9 @@ class TimelineViewModel @Inject constructor(
 
             "fr" -> if (isFromBeginning) {
                 """
-                    Tu es une API JSON qui renvoie des chronologies d'événements majeurs.
-                    Pour la série intitulée "$title", depuis l'épisode 1 de la saison 1 jusqu'à l'épisode $rangeEnd de la saison $season,
-                    renvoie un JSON avec cette structure:
+                    Tu es une API JSON qui génère des chronologies détaillées d'événements importants.
+                    Pour la série "$title", depuis l'épisode 1 de la saison 1 jusqu'à l'épisode $rangeEnd de la saison $season,
+                    renvoie un JSON avec cette structure :
                     {
                         "events": [
                             "description d'un événement",
@@ -92,21 +92,24 @@ class TimelineViewModel @Inject constructor(
                         ]
                     }
                     
-                    Directives pour les événements:
-                    - Liste 5-7 événements majeurs par ordre chronologique
-                    - Chaque événement doit être une description brève et claire
-                    - Concentre-toi sur les développements importants de l'intrigue
-                    - Garde les descriptions générales pour éviter les spoilers
+                    Directives pour les événements :
+                    - Liste tous les événements significatifs par ordre chronologique
+                    - Inclus les événements principaux et secondaires pertinents
+                    - Chaque événement doit avoir une description claire et détaillée
+                    - Concentre-toi sur les moments clés qui impactent l'intrigue
+                    - Inclus les développements importants dans les relations entre personnages
+                    - Écris en français
+                    - Maintiens un ton neutre
+                    - Évite les spoilers importants
                     - Utilise le présent
-                    - N'inclus pas de numéros ou de puces dans les descriptions
                     
-                    IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
+                    IMPORTANT : Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
             } else {
                 """
-                    Tu es une API JSON qui renvoie des chronologies d'événements majeurs.
-                    Pour la série intitulée "$title", saison $season, épisodes $rangeStart à $rangeEnd,
-                    renvoie un JSON avec cette structure:
+                    Tu es une API JSON qui génère des chronologies détaillées d'événements importants.
+                    Pour la série "$title", saison $season, épisodes $rangeStart à $rangeEnd,
+                    renvoie un JSON avec cette structure :
                     {
                         "events": [
                             "description d'un événement",
@@ -115,22 +118,25 @@ class TimelineViewModel @Inject constructor(
                         ]
                     }
                     
-                    Directives pour les événements:
-                    - Liste 5-7 événements majeurs par ordre chronologique
-                    - Chaque événement doit être une description brève et claire
-                    - Concentre-toi sur les développements importants de l'intrigue
-                    - Garde les descriptions générales pour éviter les spoilers
+                    Directives pour les événements :
+                    - Liste tous les événements significatifs par ordre chronologique
+                    - Inclus les événements principaux et secondaires pertinents
+                    - Chaque événement doit avoir une description claire et détaillée
+                    - Concentre-toi sur les moments clés qui impactent l'intrigue
+                    - Inclus les développements importants dans les relations entre personnages
+                    - Écris en français
+                    - Maintiens un ton neutre
+                    - Évite les spoilers importants
                     - Utilise le présent
-                    - N'inclus pas de numéros ou de puces dans les descriptions
                     
-                    IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
+                    IMPORTANT : Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
             }
 
             "de" -> if (isFromBeginning) {
                 """
-                    Du bist eine JSON-API, die Zeitlinien wichtiger Ereignisse zurückgibt.
-                    Für die Serie mit dem Titel "$title", von Episode 1 der Staffel 1 bis Episode $rangeEnd der Staffel $season,
+                    Du bist eine JSON-API, die detaillierte Zeitlinien wichtiger Ereignisse erstellt.
+                    Für die Serie "$title", von Episode 1 der Staffel 1 bis Episode $rangeEnd der Staffel $season,
                     gib ein JSON mit dieser Struktur zurück:
                     {
                         "events": [
@@ -141,19 +147,22 @@ class TimelineViewModel @Inject constructor(
                     }
                     
                     Richtlinien für die Ereignisse:
-                    - Liste 5-7 Hauptereignisse in chronologischer Reihenfolge auf
-                    - Jedes Ereignis sollte eine kurze, klare Beschreibung sein
-                    - Konzentriere dich auf wichtige Handlungsentwicklungen
-                    - Halte die Beschreibungen allgemein, um Spoiler zu vermeiden
-                    - Verwende Präsens
-                    - Füge keine Nummern oder Aufzählungszeichen in die Beschreibungen ein
+                    - Liste alle bedeutenden Ereignisse in chronologischer Reihenfolge auf
+                    - Berücksichtige sowohl wichtige Haupt- als auch relevante Nebenereignisse
+                    - Jedes Ereignis muss eine klare und detaillierte Beschreibung haben
+                    - Konzentriere dich auf Schlüsselmomente, die die Handlung beeinflussen
+                    - Berücksichtige wichtige Entwicklungen in den Beziehungen zwischen den Charakteren
+                    - Schreibe auf Deutsch
+                    - Behalte einen neutralen Ton bei
+                    - Vermeide wichtige Spoiler
+                    - Verwende die Gegenwartsform
                     
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
             } else {
                 """
-                    Du bist eine JSON-API, die Zeitlinien wichtiger Ereignisse zurückgibt.
-                    Für die Serie mit dem Titel "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
+                    Du bist eine JSON-API, die detaillierte Zeitlinien wichtiger Ereignisse erstellt.
+                    Für die Serie "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
                     gib ein JSON mit dieser Struktur zurück:
                     {
                         "events": [
@@ -164,12 +173,15 @@ class TimelineViewModel @Inject constructor(
                     }
                     
                     Richtlinien für die Ereignisse:
-                    - Liste 5-7 Hauptereignisse in chronologischer Reihenfolge auf
-                    - Jedes Ereignis sollte eine kurze, klare Beschreibung sein
-                    - Konzentriere dich auf wichtige Handlungsentwicklungen
-                    - Halte die Beschreibungen allgemein, um Spoiler zu vermeiden
-                    - Verwende Präsens
-                    - Füge keine Nummern oder Aufzählungszeichen in die Beschreibungen ein
+                    - Liste alle bedeutenden Ereignisse in chronologischer Reihenfolge auf
+                    - Berücksichtige sowohl wichtige Haupt- als auch relevante Nebenereignisse
+                    - Jedes Ereignis muss eine klare und detaillierte Beschreibung haben
+                    - Konzentriere dich auf Schlüsselmomente, die die Handlung beeinflussen
+                    - Berücksichtige wichtige Entwicklungen in den Beziehungen zwischen den Charakteren
+                    - Schreibe auf Deutsch
+                    - Behalte einen neutralen Ton bei
+                    - Vermeide wichtige Spoiler
+                    - Verwende die Gegenwartsform
                     
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
@@ -177,8 +189,8 @@ class TimelineViewModel @Inject constructor(
 
             else -> if (isFromBeginning) {
                 """
-                    You are a JSON API that returns timelines of major events.
-                    For the series titled "$title", from episode 1 of season 1 to episode $rangeEnd of season $season,
+                    You are a JSON API that generates detailed timelines of important events.
+                    For the TV show "$title", from episode 1 of season 1 to episode $rangeEnd of season $season,
                     return a JSON with this structure:
                     {
                         "events": [
@@ -189,19 +201,22 @@ class TimelineViewModel @Inject constructor(
                     }
                     
                     Guidelines for events:
-                    - List 5-7 major events in chronological order
-                    - Each event should be a brief, clear description
-                    - Focus on significant plot developments
-                    - Keep descriptions general enough to avoid major spoilers
+                    - List all significant events in chronological order
+                    - Include both major and relevant minor events
+                    - Each event must have a clear and detailed description
+                    - Focus on key moments that impact the plot
+                    - Include important developments in character relationships
+                    - Write in English
+                    - Maintain a neutral tone
+                    - Avoid major spoilers
                     - Use present tense
-                    - Do not include numbers or bullets in the descriptions
                     
-                    IMPORTANT: Return ONLY the JSON, no additional text.
+                    IMPORTANT: Return ONLY the JSON, without additional text.
                 """.trimIndent()
             } else {
                 """
-                    You are a JSON API that returns timelines of major events.
-                    For the series titled "$title", season $season, episodes $rangeStart to $rangeEnd,
+                    You are a JSON API that generates detailed timelines of important events.
+                    For the TV show "$title", season $season, episodes $rangeStart to $rangeEnd,
                     return a JSON with this structure:
                     {
                         "events": [
@@ -212,14 +227,17 @@ class TimelineViewModel @Inject constructor(
                     }
                     
                     Guidelines for events:
-                    - List 5-7 major events in chronological order
-                    - Each event should be a brief, clear description
-                    - Focus on significant plot developments
-                    - Keep descriptions general enough to avoid major spoilers
+                    - List all significant events in chronological order
+                    - Include both major and relevant minor events
+                    - Each event must have a clear and detailed description
+                    - Focus on key moments that impact the plot
+                    - Include important developments in character relationships
+                    - Write in English
+                    - Maintain a neutral tone
+                    - Avoid major spoilers
                     - Use present tense
-                    - Do not include numbers or bullets in the descriptions
                     
-                    IMPORTANT: Return ONLY the JSON, no additional text.
+                    IMPORTANT: Return ONLY the JSON, without additional text.
                 """.trimIndent()
             }
         }
