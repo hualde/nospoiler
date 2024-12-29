@@ -282,7 +282,13 @@ class SummaryViewModel @Inject constructor(
                     }
                 }
 
-                _summaryState.value = SummaryState.Success(summary)
+                // Extraer las citas de la respuesta
+                val citations = response.citations ?: emptyList()
+
+                _summaryState.value = SummaryState.Success(
+                    summary = summary,
+                    citations = citations
+                )
             } catch (e: Exception) {
                 Log.e("SummaryViewModel", "Error getting summary", e)
                 _summaryState.value = SummaryState.Error(e.message ?: "Unknown error occurred")
@@ -292,7 +298,10 @@ class SummaryViewModel @Inject constructor(
 
     sealed class SummaryState {
         object Loading : SummaryState()
-        data class Success(val summary: String) : SummaryState()
+        data class Success(
+            val summary: String,
+            val citations: List<String> = emptyList()
+        ) : SummaryState()
         data class Error(val message: String) : SummaryState()
     }
 } 

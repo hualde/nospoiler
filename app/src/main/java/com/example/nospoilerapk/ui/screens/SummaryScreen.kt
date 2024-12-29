@@ -16,6 +16,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.nospoilerapk.ui.viewmodels.SummaryViewModel
 import androidx.compose.ui.res.stringResource
 import com.example.nospoilerapk.R
+import android.util.Log
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,6 +68,7 @@ fun SummaryScreen(
                 is SummaryViewModel.SummaryState.Success -> {
                     SummaryContent(
                         summary = state.summary,
+                        citations = state.citations,
                         rangeStart = rangeStart,
                         rangeEnd = rangeEnd,
                         season = season,
@@ -91,6 +99,7 @@ private fun LoadingContent() {
 @Composable
 private fun SummaryContent(
     summary: String,
+    citations: List<String>,
     rangeStart: Int,
     rangeEnd: Int,
     season: Int,
@@ -105,6 +114,10 @@ private fun SummaryContent(
     ) {
         SummaryHeader(rangeStart, rangeEnd, season, isFromBeginning)
         SummaryCard(summary)
+        
+        if (citations.isNotEmpty()) {
+            CitationsCard(citations)
+        }
     }
 }
 
@@ -161,6 +174,51 @@ private fun SummaryCard(summary: String) {
 }
 
 @Composable
+private fun CitationsCard(citations: List<String>) {
+    val uriHandler = LocalUriHandler.current
+    
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.sources),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            citations.forEach { citation ->
+                ClickableText(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                color = MaterialTheme.colorScheme.primary,
+                                textDecoration = TextDecoration.Underline,
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize
+                            )
+                        ) {
+                            append("• $citation")
+                        }
+                    },
+                    onClick = {
+                        try {
+                            uriHandler.openUri(citation)
+                        } catch (e: Exception) {
+                            Log.e("CitationsCard", "Error opening URL: $citation", e)
+                        }
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun ErrorContent(
     message: String,
     onRetry: () -> Unit
@@ -183,4 +241,4 @@ private fun ErrorContent(
             Text("Retry")
         }
     }
-} 
+}
