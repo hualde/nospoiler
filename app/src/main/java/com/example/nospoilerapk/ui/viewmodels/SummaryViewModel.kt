@@ -18,12 +18,19 @@ import com.example.nospoilerapk.data.network.OmdbService
 import kotlinx.coroutines.async
 import com.example.nospoilerapk.data.network.DetailedMediaItem
 import kotlinx.coroutines.flow.asStateFlow
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
     private val perplexityService: PerplexityService,
     private val omdbService: OmdbService,
-    private val languageService: LanguageService
+    private val languageService: LanguageService,
+    private val httpClient: OkHttpClient
 ) : ViewModel() {
 
     private val gson = Gson()
@@ -275,6 +282,67 @@ class SummaryViewModel @Inject constructor(
         }
     }
 
+    private suspend fun getActorImage(actorName: String): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val encodedName = actorName
+                    .replace(" ", "_")
+                    .replace("'", "%27")
+                    .replace("\"", "")
+                
+                val url = "https://commons.wikimedia.org/w/api.php?" +
+                    "action=query&" +
+                    "format=json&" +
+                    "prop=imageinfo&" +
+                    "iiprop=url&" +
+                    "generator=search&" +
+                    "gsrnamespace=6&" +
+                    "gsrlimit=10&" +
+                    "gsrsearch=filetype:bitmap|drawing|jpg|jpeg|png " +
+                    "\"${encodedName}\" actor"
+
+                val request = Request.Builder()
+                    .url(url)
+                    .header("User-Agent", "NoSpoilerAI/1.0 (javhualde@gmail.com)")
+                    .build()
+
+                httpClient.newCall(request).execute().use { response ->
+                    if (!response.isSuccessful) return@withContext null
+                    
+                    val jsonResponse = response.body?.string() ?: return@withContext null
+                    Log.d("SummaryViewModel", "Response for $actorName: $jsonResponse")
+                    
+                    val jsonObject = gson.fromJson(jsonResponse, JsonObject::class.java)
+                    
+                    val query = jsonObject.getAsJsonObject("query") ?: return@withContext null
+                    val pages = query.getAsJsonObject("pages") ?: return@withContext null
+                    
+                    pages.entrySet().asSequence()
+                        .mapNotNull { entry ->
+                            val page = entry.value.asJsonObject
+                            val title = page.get("title")?.asString ?: return@mapNotNull null
+                            val imageInfo = page.getAsJsonArray("imageinfo")
+                                ?.get(0)?.asJsonObject
+                                ?.get("url")?.asString
+
+                            if (title.contains("svg", ignoreCase = true) ||
+                                title.contains("logo", ignoreCase = true) ||
+                                title.contains("icon", ignoreCase = true) ||
+                                title.contains("symbol", ignoreCase = true)) {
+                                null
+                            } else {
+                                imageInfo
+                            }
+                        }
+                        .firstOrNull()
+                }
+            } catch (e: Exception) {
+                Log.e("SummaryViewModel", "Error getting actor image for $actorName", e)
+                null
+            }
+        }
+    }
+
     fun loadSummary(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false) {
         viewModelScope.launch {
             try {
@@ -323,9 +391,27 @@ class SummaryViewModel @Inject constructor(
                 val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
                 val summary = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
 
+                // Obtener imágenes de los actores en paralelo
+                val actorImages = coroutineScope {
+                    mediaDetails.Actors.split(",")
+                        .map { it.trim() }
+                        .map { actorName ->
+                            async {
+                                val imageUrl = getActorImage(actorName)
+                                if (imageUrl != null) {
+                                    Pair(actorName, imageUrl)
+                                } else null
+                            }
+                        }
+                        .awaitAll()
+                        .filterNotNull()
+                        .toMap()
+                }
+
                 _state.value = _state.value.copy(
                     mediaDetails = mediaDetails,
                     summary = summary,
+                    actorImages = actorImages,
                     isLoading = false
                 )
             } catch (e: Exception) {
@@ -344,6 +430,7 @@ class SummaryViewModel @Inject constructor(
         val error: String? = null,
         val rangeStart: Int = 0,
         val rangeEnd: Int = 0,
-        val season: Int = 1
+        val season: Int = 1,
+        val actorImages: Map<String, String> = emptyMap() // Nombre del actor -> URL de la imagen
     )
 } 

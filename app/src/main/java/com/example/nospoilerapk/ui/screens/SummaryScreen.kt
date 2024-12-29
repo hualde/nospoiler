@@ -28,6 +28,17 @@ import com.example.nospoilerapk.R
 import com.example.nospoilerapk.data.network.DetailedMediaItem
 import com.example.nospoilerapk.ui.viewmodels.SummaryViewModel
 import com.example.nospoilerapk.ui.viewmodels.SummaryViewModel.SummaryScreenState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
+import kotlinx.coroutines.awaitAll
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 
 @Composable
 fun SummaryScreen(
@@ -82,8 +93,11 @@ private fun SummaryContent(state: SummaryScreenState) {
         // Resumen
         SummaryCard(state.summary)
         
-        // Información adicional
-        AdditionalInfo(state.mediaDetails)
+        // Información adicional con imágenes de actores
+        AdditionalInfo(
+            mediaDetails = state.mediaDetails,
+            actorImages = state.actorImages
+        )
     }
 }
 
@@ -238,7 +252,10 @@ private fun EpisodeRangeInfo(
 }
 
 @Composable
-private fun AdditionalInfo(mediaDetails: DetailedMediaItem?) {
+private fun AdditionalInfo(
+    mediaDetails: DetailedMediaItem?,
+    actorImages: Map<String, String> = emptyMap()
+) {
     if (mediaDetails == null) return
     
     Card(
@@ -262,16 +279,85 @@ private fun AdditionalInfo(mediaDetails: DetailedMediaItem?) {
                 text = "Director: ${mediaDetails.Director}",
                 style = MaterialTheme.typography.bodyMedium
             )
+            
+            // Sección de Actores con imágenes
             Text(
-                text = "Actores: ${mediaDetails.Actors}",
+                text = "Actores:",
                 style = MaterialTheme.typography.bodyMedium
             )
+            
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(vertical = 8.dp)
+            ) {
+                items(mediaDetails.Actors.split(",").map { it.trim() }) { actorName ->
+                    ActorCard(
+                        name = actorName,
+                        imageUrl = actorImages[actorName]
+                    )
+                }
+            }
+            
             if (mediaDetails.Awards.isNotBlank()) {
                 Text(
                     text = "Premios: ${mediaDetails.Awards}",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun ActorCard(
+    name: String,
+    imageUrl: String?
+) {
+    Card(
+        modifier = Modifier.width(120.dp),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (!imageUrl.isNullOrEmpty()) {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = "Foto de $name",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                // Placeholder cuando no hay imagen
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(
+                            MaterialTheme.colorScheme.surfaceVariant,
+                            RoundedCornerShape(8.dp)
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+            
+            Text(
+                text = name,
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(4.dp)
+            )
         }
     }
 }
