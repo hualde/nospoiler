@@ -91,4 +91,13 @@
     • Usa Desde el Principio cuando estés empezando una serie y quieras saltar a cierto punto\n
     • Usa Temporada Completa cuando quieras una visión general de toda una temporada</string>
     <string name="sources">Fuentes</string>
+    <string name="additional_info">Información Adicional</string>
+    <string name="director_format">Director: %s</string>
+    <string name="actors_label">Algunos actores:</string>
+    <string name="awards_format">Premios: %s</string>
+    <string name="actor_photo_description">Foto de %s</string>
+    <string name="actor_placeholder_description">Icono de actor</string>
+    <string name="season_format">Temporada %d</string>
+    <string name="episodes_range_with_total">Episodios %1$d a %2$d de %3$d</string>
+    <string name="episodes_range">Episodios %1$d a %2$d</string>
 </resources> 

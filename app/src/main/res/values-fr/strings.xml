@@ -119,4 +119,13 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
 • Utilisez Depuis le Début lorsque vous commencez une série et souhaitez passer à un certain point\n
 • Utilisez Saison Complète pour avoir un aperçu complet d\'une saison entière</string>
     <string name="sources">Sources</string>
+    <string name="additional_info">Informations Supplémentaires</string>
+    <string name="director_format">Réalisateur : %s</string>
+    <string name="actors_label">Quelques acteurs :</string>
+    <string name="awards_format">Récompenses : %s</string>
+    <string name="actor_photo_description">Photo de %s</string>
+    <string name="actor_placeholder_description">Icône d\'acteur</string>
+    <string name="season_format">Saison %d</string>
+    <string name="episodes_range_with_total">Épisodes %1$d à %2$d sur %3$d</string>
+    <string name="episodes_range">Épisodes %1$d à %2$d</string>
 </resources> 

@@ -234,15 +234,15 @@ private fun EpisodeRangeInfo(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Temporada $season",
+                text = stringResource(R.string.season_format, season),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             Text(
                 text = if (totalEpisodes > 0) {
-                    "Episodios $rangeStart a $rangeEnd de $totalEpisodes"
+                    stringResource(R.string.episodes_range_with_total, rangeStart, rangeEnd, totalEpisodes)
                 } else {
-                    "Episodios $rangeStart a $rangeEnd"
+                    stringResource(R.string.episodes_range, rangeStart, rangeEnd)
                 },
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -271,21 +271,21 @@ private fun AdditionalInfo(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "Información Adicional",
+                text = stringResource(R.string.additional_info),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                text = "Director: ${mediaDetails.Director}",
+                text = stringResource(R.string.director_format, mediaDetails.Director),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            
+            Text(
+                text = stringResource(R.string.actors_label),
                 style = MaterialTheme.typography.bodyMedium
             )
             
             // Sección de Actores con imágenes
-            Text(
-                text = "Actores:",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(vertical = 8.dp)
@@ -300,7 +300,7 @@ private fun AdditionalInfo(
             
             if (mediaDetails.Awards.isNotBlank()) {
                 Text(
-                    text = "Premios: ${mediaDetails.Awards}",
+                    text = stringResource(R.string.awards_format, mediaDetails.Awards),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -325,7 +325,7 @@ private fun ActorCard(
             if (!imageUrl.isNullOrEmpty()) {
                 AsyncImage(
                     model = imageUrl,
-                    contentDescription = "Foto de $name",
+                    contentDescription = stringResource(R.string.actor_photo_description, name),
                     modifier = Modifier
                         .size(100.dp)
                         .clip(RoundedCornerShape(8.dp)),
@@ -344,7 +344,7 @@ private fun ActorCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Person,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.actor_placeholder_description),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }

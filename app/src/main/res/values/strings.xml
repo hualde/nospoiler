@@ -134,4 +134,13 @@ For questions about these terms, contact: javhualde@gmail.com</string>
 • Use From Beginning when you\'re starting a series and want to skip to a certain point\n
 • Use Complete Season when you want a full overview of an entire season</string>
     <string name="sources">Sources</string>
+    <string name="additional_info">Additional Information</string>
+    <string name="director_format">Director: %s</string>
+    <string name="actors_label">Some Cast Members:</string>
+    <string name="awards_format">Awards: %s</string>
+    <string name="actor_photo_description">Photo of %s</string>
+    <string name="actor_placeholder_description">Actor placeholder icon</string>
+    <string name="season_format">Season %d</string>
+    <string name="episodes_range_with_total">Episodes %1$d to %2$d of %3$d</string>
+    <string name="episodes_range">Episodes %1$d to %2$d</string>
 </resources>

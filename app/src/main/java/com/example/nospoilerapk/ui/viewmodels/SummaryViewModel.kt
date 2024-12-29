@@ -255,31 +255,18 @@ class SummaryViewModel @Inject constructor(
         val jsonResponse = response.choices.firstOrNull()?.message?.content
             ?: throw Exception("No summary generated")
 
-        return try {
-            val cleanJson = jsonResponse
-                .replace("```json", "")
-                .replace("```", "")
-                .trim()
-            
-            val escapedJson = cleanJson
-                .replace("""\n""", " ")
-                .replace("\"", "'")
-                .replace("'", "\"")
-            
-            val jsonObject = gson.fromJson(escapedJson, JsonObject::class.java)
-            jsonObject.get("summary")?.asString ?: throw Exception("Summary field is null")
-        } catch (e: Exception) {
-            Log.e("SummaryViewModel", "First parsing attempt failed", e)
-            
-            try {
-                val pattern = "\"summary\"\\s*:\\s*\"(.*?)\"".toRegex(RegexOption.DOT_MATCHES_ALL)
-                val matchResult = pattern.find(jsonResponse)
-                matchResult?.groupValues?.get(1) ?: throw Exception("No summary found in response")
-            } catch (e: Exception) {
-                Log.e("SummaryViewModel", "Second parsing attempt failed", e)
-                throw Exception("Could not extract summary from response")
-            }
-        }
+        // Extraer directamente el contenido del resumen usando regex
+        val summaryPattern = "\"summary\"\\s*:\\s*\"(.*?)(?:\"|$)".toRegex(RegexOption.DOT_MATCHES_ALL)
+        val matchResult = summaryPattern.find(jsonResponse)
+        
+        return matchResult?.groupValues?.get(1)?.let { summary ->
+            // Limpiar el resumen de caracteres de escape
+            summary
+                .replace("\\n", "\n")
+                .replace("\\\"", "\"")
+                .replace("\\\\", "\\")
+                .replace("\\t", "\t")
+        } ?: throw Exception("Could not extract summary from response")
     }
 
     private suspend fun getActorImage(actorName: String): String? {
