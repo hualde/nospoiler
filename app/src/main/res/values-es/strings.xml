@@ -100,4 +100,6 @@
     <string name="season_format">Temporada %d</string>
     <string name="episodes_range_with_total">Episodios %1$d a %2$d de %3$d</string>
     <string name="episodes_range">Episodios %1$d a %2$d</string>
+    <string name="generating_summary">Generando resumen...</string>
+    <string name="generating_timeline">Generando línea temporal...</string>
 </resources> 

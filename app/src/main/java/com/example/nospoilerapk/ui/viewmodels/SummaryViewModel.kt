@@ -24,6 +24,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Job
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
@@ -37,6 +38,9 @@ class SummaryViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(SummaryScreenState())
     val state = _state.asStateFlow()
+
+    // Añadir un Job para manejar las corrutinas
+    private var currentJob: Job? = null
 
     private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false): String {
         val languageCode = languageService.getCurrentLanguageCode()
@@ -241,7 +245,7 @@ class SummaryViewModel @Inject constructor(
         rangeEnd: Int,
         season: Int,
         isFromBeginning: Boolean
-    ): String {
+    ): String = withContext(Dispatchers.IO) {
         val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
         val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
         
@@ -259,7 +263,7 @@ class SummaryViewModel @Inject constructor(
         val summaryPattern = "\"summary\"\\s*:\\s*\"(.*?)(?:\"|$)".toRegex(RegexOption.DOT_MATCHES_ALL)
         val matchResult = summaryPattern.find(jsonResponse)
         
-        return matchResult?.groupValues?.get(1)?.let { summary ->
+        matchResult?.groupValues?.get(1)?.let { summary ->
             // Limpiar el resumen de caracteres de escape
             summary
                 .replace("\\n", "\n")
@@ -366,10 +370,16 @@ class SummaryViewModel @Inject constructor(
         rangeEnd: Int,
         isFromBeginning: Boolean
     ) {
-        viewModelScope.launch {
+        // Cancelar el job anterior si existe
+        currentJob?.cancel()
+        
+        // Crear un nuevo job
+        currentJob = viewModelScope.launch {
             try {
                 // Primero cargamos los detalles del media
-                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
+                val mediaDetails = withContext(Dispatchers.IO) {
+                    omdbService.getMediaDetails(imdbId = mediaId)
+                }
                 
                 // Actualizamos el estado con los detalles básicos
                 _state.value = _state.value.copy(
@@ -381,21 +391,26 @@ class SummaryViewModel @Inject constructor(
                 )
 
                 // Luego cargamos el resumen y las imágenes de actores
-                val summary = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
-                val actorImages = coroutineScope {
-                    mediaDetails.Actors.split(",")
-                        .map { it.trim() }
-                        .map { actorName ->
-                            async {
-                                val imageUrl = getActorImage(actorName)
-                                if (imageUrl != null) {
-                                    Pair(actorName, imageUrl)
-                                } else null
+                val summary = withContext(Dispatchers.IO) {
+                    fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
+                }
+                
+                val actorImages = withContext(Dispatchers.IO) {
+                    coroutineScope {
+                        mediaDetails.Actors.split(",")
+                            .map { it.trim() }
+                            .map { actorName ->
+                                async {
+                                    val imageUrl = getActorImage(actorName)
+                                    if (imageUrl != null) {
+                                        Pair(actorName, imageUrl)
+                                    } else null
+                                }
                             }
-                        }
-                        .awaitAll()
-                        .filterNotNull()
-                        .toMap()
+                            .awaitAll()
+                            .filterNotNull()
+                            .toMap()
+                    }
                 }
 
                 // Actualizamos el estado con toda la información
@@ -411,6 +426,12 @@ class SummaryViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    // Limpiar recursos cuando se destruye el ViewModel
+    override fun onCleared() {
+        super.onCleared()
+        currentJob?.cancel()
     }
 
     data class SummaryScreenState(

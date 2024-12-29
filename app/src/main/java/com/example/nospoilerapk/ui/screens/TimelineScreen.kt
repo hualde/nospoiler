@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import com.example.nospoilerapk.ui.components.MediaHeader
+import com.example.nospoilerapk.ui.components.AnimatedLoadingProgress
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,9 +69,17 @@ fun TimelineScreen(
             Box(modifier = Modifier.weight(1f)) {
                 when (val state = timelineState) {
                     is TimelineViewModel.TimelineState.Loading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            AnimatedLoadingProgress(
+                                isTimeline = true,
+                                isComplete = state is TimelineViewModel.TimelineState.Success
+                            )
+                        }
                     }
                     is TimelineViewModel.TimelineState.Success -> {
                         TimelineContent(state.events)

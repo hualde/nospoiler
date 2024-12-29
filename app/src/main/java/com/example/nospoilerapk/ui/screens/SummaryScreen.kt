@@ -40,6 +40,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import com.example.nospoilerapk.ui.components.MediaHeader
+import com.example.nospoilerapk.ui.components.AnimatedLoadingProgress
 
 @Composable
 fun SummaryScreen(
@@ -85,7 +86,10 @@ fun SummaryScreen(
                             .padding(16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator()
+                        AnimatedLoadingProgress(
+                            isTimeline = false,
+                            isComplete = state.summary.isNotEmpty()
+                        )
                     }
                 }
                 state.error != null -> ErrorContent(state.error!!)
