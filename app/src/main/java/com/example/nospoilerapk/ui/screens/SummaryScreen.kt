@@ -82,11 +82,7 @@ private fun SummaryContent(state: SummaryScreenState) {
         // Resumen
         SummaryCard(state.summary)
         
-        // Mantenemos la sección de citations si hay alguna
-        if (state.citations.isNotEmpty()) {
-            CitationsCard(state.citations)
-        }
-        
+        // Información adicional
         AdditionalInfo(state.mediaDetails)
     }
 }
@@ -183,51 +179,6 @@ private fun SummaryCard(summary: String) {
             lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.5f,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-    }
-}
-
-@Composable
-private fun CitationsCard(citations: List<String>) {
-    val uriHandler = LocalUriHandler.current
-    
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.sources),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            citations.forEach { citation ->
-                ClickableText(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                color = MaterialTheme.colorScheme.primary,
-                                textDecoration = TextDecoration.Underline,
-                                fontSize = MaterialTheme.typography.bodySmall.fontSize
-                            )
-                        ) {
-                            append("• $citation")
-                        }
-                    },
-                    onClick = {
-                        try {
-                            uriHandler.openUri(citation)
-                        } catch (e: Exception) {
-                            Log.e("CitationsCard", "Error opening URL: $citation", e)
-                        }
-                    }
-                )
-            }
-        }
     }
 }
 

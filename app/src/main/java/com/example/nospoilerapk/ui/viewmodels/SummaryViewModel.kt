@@ -234,7 +234,7 @@ class SummaryViewModel @Inject constructor(
         rangeEnd: Int,
         season: Int,
         isFromBeginning: Boolean
-    ): Pair<String, List<String>> {
+    ): String {
         val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
         val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
         
@@ -248,7 +248,7 @@ class SummaryViewModel @Inject constructor(
         val jsonResponse = response.choices.firstOrNull()?.message?.content
             ?: throw Exception("No summary generated")
 
-        val summary = try {
+        return try {
             val cleanJson = jsonResponse
                 .replace("```json", "")
                 .replace("```", "")
@@ -273,8 +273,6 @@ class SummaryViewModel @Inject constructor(
                 throw Exception("Could not extract summary from response")
             }
         }
-
-        return Pair(summary, response.citations ?: emptyList())
     }
 
     fun loadSummary(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false) {
@@ -289,12 +287,11 @@ class SummaryViewModel @Inject constructor(
                 Log.d("SummaryViewModel", "season: $season")
                 Log.d("SummaryViewModel", "==================================")
                 
-                val (summary, citations) = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
+                val summary = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
 
                 _state.value = _state.value.copy(
                     mediaDetails = omdbService.getMediaDetails(imdbId = mediaId),
                     summary = summary,
-                    citations = citations,
                     isLoading = false
                 )
             } catch (e: Exception) {
@@ -324,12 +321,11 @@ class SummaryViewModel @Inject constructor(
                 )
                 
                 val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
-                val (summary, citations) = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
+                val summary = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
 
                 _state.value = _state.value.copy(
                     mediaDetails = mediaDetails,
                     summary = summary,
-                    citations = citations,
                     isLoading = false
                 )
             } catch (e: Exception) {
@@ -344,7 +340,6 @@ class SummaryViewModel @Inject constructor(
     data class SummaryScreenState(
         val mediaDetails: DetailedMediaItem? = null,
         val summary: String = "",
-        val citations: List<String> = emptyList(),
         val isLoading: Boolean = true,
         val error: String? = null,
         val rangeStart: Int = 0,
