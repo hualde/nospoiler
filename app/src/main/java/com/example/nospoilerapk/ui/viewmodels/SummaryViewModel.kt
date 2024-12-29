@@ -368,17 +368,20 @@ class SummaryViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             try {
+                // Primero cargamos los detalles del media
+                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
+                
+                // Actualizamos el estado con los detalles básicos
                 _state.value = _state.value.copy(
+                    mediaDetails = mediaDetails,
                     isLoading = true,
                     rangeStart = rangeStart,
                     rangeEnd = rangeEnd,
                     season = season
                 )
-                
-                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
-                val summary = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
 
-                // Obtener imágenes de los actores en paralelo
+                // Luego cargamos el resumen y las imágenes de actores
+                val summary = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
                 val actorImages = coroutineScope {
                     mediaDetails.Actors.split(",")
                         .map { it.trim() }
@@ -395,8 +398,8 @@ class SummaryViewModel @Inject constructor(
                         .toMap()
                 }
 
+                // Actualizamos el estado con toda la información
                 _state.value = _state.value.copy(
-                    mediaDetails = mediaDetails,
                     summary = summary,
                     actorImages = actorImages,
                     isLoading = false

@@ -56,42 +56,45 @@ fun SummaryScreen(
         viewModel.loadContent(mediaId, season, rangeStart, rangeEnd, isFromBeginning)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        // Header con poster e información básica - siempre visible
-        MediaHeader(state.mediaDetails)
-        
-        // Información del rango de episodios - siempre visible si hay detalles
-        if (state.mediaDetails != null) {
-            EpisodeRangeInfo(
-                season = state.season,
-                rangeStart = state.rangeStart,
-                rangeEnd = state.rangeEnd,
-                totalEpisodes = state.mediaDetails?.Episodes?.toIntOrNull() ?: 0
-            )
-        }
-        
-        // Contenido que depende del estado de carga
-        Box(modifier = Modifier.weight(1f)) {
+    Scaffold { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+        ) {
+            // Header con poster e información básica - siempre visible
+            MediaHeader(state.mediaDetails)
+            
+            // Información del rango de episodios - siempre visible si hay detalles
+            if (state.mediaDetails != null) {
+                EpisodeRangeInfo(
+                    season = state.season,
+                    rangeStart = state.rangeStart,
+                    rangeEnd = state.rangeEnd,
+                    totalEpisodes = state.mediaDetails?.Episodes?.toIntOrNull() ?: 0
+                )
+            }
+            
+            // Contenido que depende del estado de carga
             when {
                 state.isLoading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
                 state.error != null -> ErrorContent(state.error!!)
                 else -> {
-                    // Resumen y información adicional
-                    Column {
-                        SummaryCard(state.summary)
-                        AdditionalInfo(
-                            mediaDetails = state.mediaDetails,
-                            actorImages = state.actorImages
-                        )
-                    }
+                    SummaryCard(state.summary)
+                    AdditionalInfo(
+                        mediaDetails = state.mediaDetails,
+                        actorImages = state.actorImages
+                    )
                 }
             }
         }
