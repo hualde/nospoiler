@@ -15,6 +15,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.example.nospoilerapk.data.LanguageService
 import com.example.nospoilerapk.data.network.OmdbService
+import kotlinx.coroutines.async
+import com.example.nospoilerapk.data.network.DetailedMediaItem
+import kotlinx.coroutines.flow.asStateFlow
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
@@ -25,8 +28,8 @@ class SummaryViewModel @Inject constructor(
 
     private val gson = Gson()
 
-    private val _summaryState = MutableStateFlow<SummaryState>(SummaryState.Loading)
-    val summaryState: StateFlow<SummaryState> = _summaryState
+    private val _state = MutableStateFlow(SummaryScreenState())
+    val state = _state.asStateFlow()
 
     private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false): String {
         val languageCode = languageService.getCurrentLanguageCode()
@@ -225,10 +228,59 @@ class SummaryViewModel @Inject constructor(
         }
     }
 
-    fun getSummary(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false) {
+    private suspend fun fetchSummaryFromApi(
+        mediaId: String,
+        rangeStart: Int,
+        rangeEnd: Int,
+        season: Int,
+        isFromBeginning: Boolean
+    ): Pair<String, List<String>> {
+        val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
+        val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
+        
+        val response = perplexityService.getMediaInfo(
+            PerplexityRequest(
+                model = "llama-3.1-sonar-large-128k-online",
+                messages = listOf(Message("user", prompt))
+            )
+        )
+
+        val jsonResponse = response.choices.firstOrNull()?.message?.content
+            ?: throw Exception("No summary generated")
+
+        val summary = try {
+            val cleanJson = jsonResponse
+                .replace("```json", "")
+                .replace("```", "")
+                .trim()
+            
+            val escapedJson = cleanJson
+                .replace("""\n""", " ")
+                .replace("\"", "'")
+                .replace("'", "\"")
+            
+            val jsonObject = gson.fromJson(escapedJson, JsonObject::class.java)
+            jsonObject.get("summary")?.asString ?: throw Exception("Summary field is null")
+        } catch (e: Exception) {
+            Log.e("SummaryViewModel", "First parsing attempt failed", e)
+            
+            try {
+                val pattern = "\"summary\"\\s*:\\s*\"(.*?)\"".toRegex(RegexOption.DOT_MATCHES_ALL)
+                val matchResult = pattern.find(jsonResponse)
+                matchResult?.groupValues?.get(1) ?: throw Exception("No summary found in response")
+            } catch (e: Exception) {
+                Log.e("SummaryViewModel", "Second parsing attempt failed", e)
+                throw Exception("Could not extract summary from response")
+            }
+        }
+
+        return Pair(summary, response.citations ?: emptyList())
+    }
+
+    fun loadSummary(mediaId: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false) {
         viewModelScope.launch {
             try {
-                _summaryState.value = SummaryState.Loading
+                _state.value = _state.value.copy(isLoading = true)
                 
                 Log.d("SummaryViewModel", "==================================")
                 Log.d("SummaryViewModel", "isFromBeginning: $isFromBeginning")
@@ -237,71 +289,66 @@ class SummaryViewModel @Inject constructor(
                 Log.d("SummaryViewModel", "season: $season")
                 Log.d("SummaryViewModel", "==================================")
                 
-                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
-                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
-                
-                Log.d("SummaryViewModel", "Generated prompt: $prompt")
-                
-                val response = perplexityService.getMediaInfo(
-                    PerplexityRequest(
-                        model = "llama-3.1-sonar-large-128k-online",
-                        messages = listOf(Message("user", prompt))
-                    )
-                )
+                val (summary, citations) = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
 
-                val jsonResponse = response.choices.firstOrNull()?.message?.content
-                    ?: throw Exception("No summary generated")
-
-                Log.d("SummaryViewModel", "API Response: $jsonResponse")
-
-                val summary = try {
-                    val cleanJson = jsonResponse
-                        .replace("```json", "")
-                        .replace("```", "")
-                        .trim()
-                    
-                    // Escapar caracteres problemáticos
-                    val escapedJson = cleanJson
-                        .replace("""\n""", " ")
-                        .replace("\"", "'")
-                        .replace("'", "\"") // Volver a poner comillas dobles para el JSON
-                    
-                    val jsonObject = gson.fromJson(escapedJson, JsonObject::class.java)
-                    jsonObject.get("summary")?.asString ?: throw Exception("Summary field is null")
-                } catch (e: Exception) {
-                    Log.e("SummaryViewModel", "First parsing attempt failed", e)
-                    
-                    // Segundo intento: buscar el contenido entre comillas después de "summary":
-                    try {
-                        val pattern = "\"summary\"\\s*:\\s*\"(.*?)\"".toRegex(RegexOption.DOT_MATCHES_ALL)
-                        val matchResult = pattern.find(jsonResponse)
-                        matchResult?.groupValues?.get(1) ?: throw Exception("No summary found in response")
-                    } catch (e: Exception) {
-                        Log.e("SummaryViewModel", "Second parsing attempt failed", e)
-                        throw Exception("Could not extract summary from response")
-                    }
-                }
-
-                // Extraer las citas de la respuesta
-                val citations = response.citations ?: emptyList()
-
-                _summaryState.value = SummaryState.Success(
+                _state.value = _state.value.copy(
+                    mediaDetails = omdbService.getMediaDetails(imdbId = mediaId),
                     summary = summary,
-                    citations = citations
+                    citations = citations,
+                    isLoading = false
                 )
             } catch (e: Exception) {
                 Log.e("SummaryViewModel", "Error getting summary", e)
-                _summaryState.value = SummaryState.Error(e.message ?: "Unknown error occurred")
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    error = e.message
+                )
             }
         }
     }
 
-    sealed class SummaryState {
-        object Loading : SummaryState()
-        data class Success(
-            val summary: String,
-            val citations: List<String> = emptyList()
-        ) : SummaryState()
-        data class Error(val message: String) : SummaryState()
+    fun loadContent(
+        mediaId: String,
+        season: Int,
+        rangeStart: Int,
+        rangeEnd: Int,
+        isFromBeginning: Boolean
+    ) {
+        viewModelScope.launch {
+            try {
+                _state.value = _state.value.copy(
+                    isLoading = true,
+                    rangeStart = rangeStart,
+                    rangeEnd = rangeEnd,
+                    season = season
+                )
+                
+                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
+                val (summary, citations) = fetchSummaryFromApi(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
+
+                _state.value = _state.value.copy(
+                    mediaDetails = mediaDetails,
+                    summary = summary,
+                    citations = citations,
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    error = e.message
+                )
+            }
+        }
     }
+
+    data class SummaryScreenState(
+        val mediaDetails: DetailedMediaItem? = null,
+        val summary: String = "",
+        val citations: List<String> = emptyList(),
+        val isLoading: Boolean = true,
+        val error: String? = null,
+        val rangeStart: Int = 0,
+        val rangeEnd: Int = 0,
+        val season: Int = 1
+    )
 } 

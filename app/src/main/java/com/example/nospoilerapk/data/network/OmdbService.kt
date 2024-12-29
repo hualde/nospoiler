@@ -57,7 +57,8 @@ data class DetailedMediaItem(
     val Type: String,
     val totalSeasons: String?,
     val Response: String,
-    val Error: String? = null
+    val Season: String?,
+    val Episodes: String?
 )
 
 data class Rating(

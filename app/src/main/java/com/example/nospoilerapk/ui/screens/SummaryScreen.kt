@@ -1,88 +1,53 @@
 package com.example.nospoilerapk.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.nospoilerapk.ui.viewmodels.SummaryViewModel
-import androidx.compose.ui.res.stringResource
-import com.example.nospoilerapk.R
-import android.util.Log
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import android.util.Log
+import com.example.nospoilerapk.R
+import com.example.nospoilerapk.data.network.DetailedMediaItem
+import com.example.nospoilerapk.ui.viewmodels.SummaryViewModel
+import com.example.nospoilerapk.ui.viewmodels.SummaryViewModel.SummaryScreenState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SummaryScreen(
-    navController: NavController,
+    viewModel: SummaryViewModel = hiltViewModel(),
     mediaId: String,
+    season: Int,
     rangeStart: Int,
     rangeEnd: Int,
-    season: Int,
-    isFromBeginning: Boolean = false,
-    viewModel: SummaryViewModel = hiltViewModel()
+    isFromBeginning: Boolean
 ) {
-    val summaryState by viewModel.summaryState.collectAsState()
-
-    LaunchedEffect(mediaId, rangeStart, rangeEnd, season) {
-        viewModel.getSummary(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
+    val state by viewModel.state.collectAsState()
+    
+    LaunchedEffect(mediaId, season, rangeStart, rangeEnd) {
+        viewModel.loadContent(mediaId, season, rangeStart, rangeEnd, isFromBeginning)
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Summary") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Go back"
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            when (val state = summaryState) {
-                is SummaryViewModel.SummaryState.Loading -> {
-                    LoadingContent()
-                }
-                is SummaryViewModel.SummaryState.Success -> {
-                    SummaryContent(
-                        summary = state.summary,
-                        citations = state.citations,
-                        rangeStart = rangeStart,
-                        rangeEnd = rangeEnd,
-                        season = season,
-                        isFromBeginning = isFromBeginning
-                    )
-                }
-                is SummaryViewModel.SummaryState.Error -> {
-                    ErrorContent(
-                        message = state.message,
-                        onRetry = { viewModel.getSummary(mediaId, rangeStart, rangeEnd, season, isFromBeginning) }
-                    )
-                }
-            }
-        }
+    when {
+        state.isLoading -> LoadingContent()
+        state.error != null -> ErrorContent(state.error!!)
+        else -> SummaryContent(state)
     }
 }
 
@@ -97,60 +62,108 @@ private fun LoadingContent() {
 }
 
 @Composable
-private fun SummaryContent(
-    summary: String,
-    citations: List<String>,
-    rangeStart: Int,
-    rangeEnd: Int,
-    season: Int,
-    isFromBeginning: Boolean
-) {
+private fun SummaryContent(state: SummaryScreenState) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        SummaryHeader(rangeStart, rangeEnd, season, isFromBeginning)
-        SummaryCard(summary)
+        // Header con poster e información básica
+        MediaHeader(state.mediaDetails)
         
-        if (citations.isNotEmpty()) {
-            CitationsCard(citations)
+        // Información del rango de episodios
+        EpisodeRangeInfo(
+            season = state.season,
+            rangeStart = state.rangeStart,
+            rangeEnd = state.rangeEnd,
+            totalEpisodes = state.mediaDetails?.Episodes?.toIntOrNull() ?: 0
+        )
+        
+        // Resumen
+        SummaryCard(state.summary)
+        
+        // Mantenemos la sección de citations si hay alguna
+        if (state.citations.isNotEmpty()) {
+            CitationsCard(state.citations)
         }
+        
+        AdditionalInfo(state.mediaDetails)
     }
 }
 
 @Composable
-private fun SummaryHeader(rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
+private fun MediaHeader(mediaDetails: DetailedMediaItem?) {
+    if (mediaDetails == null) return
+    
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
     ) {
-        Text(
-            text = if (isFromBeginning) {
-                stringResource(
-                    R.string.from_beginning_range_format,
-                    season,
-                    rangeEnd
-                )
-            } else {
-                stringResource(
-                    R.string.season_episode_range_format,
-                    season,
-                    rangeStart,
-                    rangeEnd
-                )
-            },
-            style = MaterialTheme.typography.titleLarge,
+        // Fondo con el poster
+        AsyncImage(
+            model = mediaDetails.Poster,
+            contentDescription = null,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+                .fillMaxSize()
+                .blur(radius = 8.dp),
+            contentScale = ContentScale.Crop
         )
+        
+        // Overlay oscuro
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.6f))
+        )
+        
+        // Contenido del header
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            // Poster
+            Card(
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            ) {
+                AsyncImage(
+                    model = mediaDetails.Poster,
+                    contentDescription = null,
+                    modifier = Modifier.size(width = 120.dp, height = 180.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            
+            Spacer(modifier = Modifier.width(16.dp))
+            
+            // Información
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = mediaDetails.Title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = Color.White
+                )
+                Text(
+                    text = mediaDetails.Year,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White.copy(alpha = 0.8f)
+                )
+                Text(
+                    text = "IMDb: ${mediaDetails.imdbRating}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.8f)
+                )
+                Text(
+                    text = mediaDetails.Genre,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.7f)
+                )
+            }
+        }
     }
 }
 
@@ -219,10 +232,7 @@ private fun CitationsCard(citations: List<String>) {
 }
 
 @Composable
-private fun ErrorContent(
-    message: String,
-    onRetry: () -> Unit
-) {
+private fun ErrorContent(message: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -236,9 +246,81 @@ private fun ErrorContent(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = onRetry) {
-            Text("Retry")
+    }
+}
+
+@Composable
+private fun EpisodeRangeInfo(
+    season: Int,
+    rangeStart: Int,
+    rangeEnd: Int,
+    totalEpisodes: Int
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Temporada $season",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+            Text(
+                text = if (totalEpisodes > 0) {
+                    "Episodios $rangeStart a $rangeEnd de $totalEpisodes"
+                } else {
+                    "Episodios $rangeStart a $rangeEnd"
+                },
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        }
+    }
+}
+
+@Composable
+private fun AdditionalInfo(mediaDetails: DetailedMediaItem?) {
+    if (mediaDetails == null) return
+    
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "Información Adicional",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = "Director: ${mediaDetails.Director}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = "Actores: ${mediaDetails.Actors}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            if (mediaDetails.Awards.isNotBlank()) {
+                Text(
+                    text = "Premios: ${mediaDetails.Awards}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }

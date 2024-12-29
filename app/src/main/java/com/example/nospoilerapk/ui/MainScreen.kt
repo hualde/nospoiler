@@ -20,12 +20,11 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    
+fun MainScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -35,7 +34,7 @@ fun MainScreen() {
                             append("NoSpoiler")
                             withStyle(
                                 style = SpanStyle(
-                                    color = Color(0xFF0D47A1) // Material Blue 900 (más oscuro)
+                                    color = Color(0xFF0D47A1)
                                 )
                             ) {
                                 append("AI")
@@ -60,7 +59,7 @@ fun MainScreen() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screen.Home.route) { 
-                HomeScreen(navController)
+                HomeScreen(navController = navController)
             }
             composable(
                 route = Screen.RangeSelector.route,
@@ -100,7 +99,6 @@ fun MainScreen() {
                 val isFromBeginning = backStackEntry.arguments?.getBoolean(Screen.Summary.IS_FROM_BEGINNING) ?: false
                 
                 SummaryScreen(
-                    navController = navController,
                     mediaId = mediaId,
                     rangeStart = rangeStart,
                     rangeEnd = rangeEnd,
