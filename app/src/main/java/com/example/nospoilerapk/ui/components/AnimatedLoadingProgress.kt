@@ -27,8 +27,8 @@ fun AnimatedLoadingProgress(
             // Si no está completo, incrementar gradualmente hasta 0.85
             progress = initialProgress
             while (progress < 0.85f && !isComplete) {
-                delay(100)  // Pequeña pausa entre incrementos
-                progress += 0.01f  // Incremento pequeño
+                delay(150)  // Aumentamos el delay de 100 a 150ms
+                progress += 0.005f  // Reducimos el incremento de 0.01f a 0.005f
                 if (progress > 0.85f) progress = 0.85f
             }
         }
