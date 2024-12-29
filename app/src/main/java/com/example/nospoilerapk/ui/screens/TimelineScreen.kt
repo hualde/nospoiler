@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.background
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import com.example.nospoilerapk.ui.components.MediaHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +35,7 @@ fun TimelineScreen(
     viewModel: TimelineViewModel = hiltViewModel()
 ) {
     val timelineState by viewModel.timelineState.collectAsState()
+    val mediaDetails by viewModel.mediaDetails.collectAsState()
 
     LaunchedEffect(mediaId, rangeStart, rangeEnd, season) {
         viewModel.getTimeline(mediaId, rangeStart, rangeEnd, season, isFromBeginning)
@@ -54,25 +56,31 @@ fun TimelineScreen(
             )
         }
     ) { paddingValues ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            when (val state = timelineState) {
-                is TimelineViewModel.TimelineState.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                is TimelineViewModel.TimelineState.Success -> {
-                    TimelineContent(state.events)
-                }
-                is TimelineViewModel.TimelineState.Error -> {
-                    ErrorContent(
-                        message = state.message,
-                        onRetry = { viewModel.getTimeline(mediaId, rangeStart, rangeEnd, season, isFromBeginning) }
-                    )
+            // Mostrar el MediaHeader
+            MediaHeader(mediaDetails = mediaDetails)
+            
+            // Contenido de la timeline
+            Box(modifier = Modifier.weight(1f)) {
+                when (val state = timelineState) {
+                    is TimelineViewModel.TimelineState.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    is TimelineViewModel.TimelineState.Success -> {
+                        TimelineContent(state.events)
+                    }
+                    is TimelineViewModel.TimelineState.Error -> {
+                        ErrorContent(
+                            message = state.message,
+                            onRetry = { viewModel.getTimeline(mediaId, rangeStart, rangeEnd, season, isFromBeginning) }
+                        )
+                    }
                 }
             }
         }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.example.nospoilerapk.data.network.DetailedMediaItem
 
 @HiltViewModel
 class TimelineViewModel @Inject constructor(
@@ -27,6 +28,9 @@ class TimelineViewModel @Inject constructor(
 
     private val _timelineState = MutableStateFlow<TimelineState>(TimelineState.Loading)
     val timelineState: StateFlow<TimelineState> = _timelineState
+
+    private val _mediaDetails = MutableStateFlow<DetailedMediaItem?>(null)
+    val mediaDetails: StateFlow<DetailedMediaItem?> = _mediaDetails
 
     private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false): String {
         val languageCode = languageService.getCurrentLanguageCode()
@@ -248,8 +252,10 @@ class TimelineViewModel @Inject constructor(
             try {
                 _timelineState.value = TimelineState.Loading
                 
-                val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
-                val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
+                val details = omdbService.getMediaDetails(imdbId = mediaId)
+                _mediaDetails.value = details
+                
+                val prompt = getPromptForLanguage(details.Title, rangeStart, rangeEnd, season, isFromBeginning)
                 
                 val response = perplexityService.getMediaInfo(
                     PerplexityRequest(
@@ -269,28 +275,20 @@ class TimelineViewModel @Inject constructor(
                         .replace("```", "")
                         .trim()
                     
-                    // Simplificar el proceso de limpieza
                     val jsonObject = gson.fromJson(cleanJson, JsonObject::class.java)
                     jsonObject.getAsJsonArray("events")
                         .map { it.asString.trim() }
-                        // Filtrar eventos vacíos o que solo contengan espacios
                         .filter { it.isNotBlank() }
-                        // Eliminar comillas extras si las hay
                         .map { it.trim('"') }
-                        // Eliminar cualquier numeración al inicio si existe
                         .map { it.replace(Regex("^\\d+\\.?\\s*"), "") }
-                        // Unir fragmentos que puedan haber sido separados incorrectamente
                         .joinToString(" ")
-                        // Volver a dividir por puntos finales para tener eventos separados
                         .split(".")
                         .map { it.trim() }
                         .filter { it.isNotBlank() }
-                        // Asegurarse de que cada evento termine con punto
                         .map { if (it.endsWith(".")) it else "$it." }
 
                 } catch (e: Exception) {
                     Log.e("TimelineViewModel", "Error en el primer intento de parsing", e)
-                    // Intento alternativo más simple si el primer método falla
                     jsonResponse
                         .replace(Regex("[\"\\[\\]{}]"), "")
                         .split("events:")

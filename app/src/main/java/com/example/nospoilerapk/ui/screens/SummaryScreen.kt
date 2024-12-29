@@ -39,6 +39,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
+import com.example.nospoilerapk.ui.components.MediaHeader
 
 @Composable
 fun SummaryScreen(
@@ -55,123 +56,43 @@ fun SummaryScreen(
         viewModel.loadContent(mediaId, season, rangeStart, rangeEnd, isFromBeginning)
     }
 
-    when {
-        state.isLoading -> LoadingContent()
-        state.error != null -> ErrorContent(state.error!!)
-        else -> SummaryContent(state)
-    }
-}
-
-@Composable
-private fun LoadingContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-private fun SummaryContent(state: SummaryScreenState) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        // Header con poster e información básica
+        // Header con poster e información básica - siempre visible
         MediaHeader(state.mediaDetails)
         
-        // Información del rango de episodios
-        EpisodeRangeInfo(
-            season = state.season,
-            rangeStart = state.rangeStart,
-            rangeEnd = state.rangeEnd,
-            totalEpisodes = state.mediaDetails?.Episodes?.toIntOrNull() ?: 0
-        )
+        // Información del rango de episodios - siempre visible si hay detalles
+        if (state.mediaDetails != null) {
+            EpisodeRangeInfo(
+                season = state.season,
+                rangeStart = state.rangeStart,
+                rangeEnd = state.rangeEnd,
+                totalEpisodes = state.mediaDetails?.Episodes?.toIntOrNull() ?: 0
+            )
+        }
         
-        // Resumen
-        SummaryCard(state.summary)
-        
-        // Información adicional con imágenes de actores
-        AdditionalInfo(
-            mediaDetails = state.mediaDetails,
-            actorImages = state.actorImages
-        )
-    }
-}
-
-@Composable
-private fun MediaHeader(mediaDetails: DetailedMediaItem?) {
-    if (mediaDetails == null) return
-    
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-    ) {
-        // Fondo con el poster
-        AsyncImage(
-            model = mediaDetails.Poster,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .blur(radius = 8.dp),
-            contentScale = ContentScale.Crop
-        )
-        
-        // Overlay oscuro
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.6f))
-        )
-        
-        // Contenido del header
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            // Poster
-            Card(
-                shape = RoundedCornerShape(8.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-            ) {
-                AsyncImage(
-                    model = mediaDetails.Poster,
-                    contentDescription = null,
-                    modifier = Modifier.size(width = 120.dp, height = 180.dp),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            
-            Spacer(modifier = Modifier.width(16.dp))
-            
-            // Información
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = mediaDetails.Title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.White
-                )
-                Text(
-                    text = mediaDetails.Year,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
-                Text(
-                    text = "IMDb: ${mediaDetails.imdbRating}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
-                Text(
-                    text = mediaDetails.Genre,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White.copy(alpha = 0.7f)
-                )
+        // Contenido que depende del estado de carga
+        Box(modifier = Modifier.weight(1f)) {
+            when {
+                state.isLoading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                state.error != null -> ErrorContent(state.error!!)
+                else -> {
+                    // Resumen y información adicional
+                    Column {
+                        SummaryCard(state.summary)
+                        AdditionalInfo(
+                            mediaDetails = state.mediaDetails,
+                            actorImages = state.actorImages
+                        )
+                    }
+                }
             }
         }
     }
