@@ -145,4 +145,5 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="episodes_range">Episodes %1$d to %2$d</string>
     <string name="generating_summary">Generating summary...</string>
     <string name="generating_timeline">Generating timeline...</string>
+    <string name="wikimedia_attribution">This product uses Wikimedia Commons API for actor images.</string>
 </resources>

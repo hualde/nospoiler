@@ -130,4 +130,5 @@ Bei Fragen zu diesen Bedingungen kontaktieren Sie: javhualde@gmail.com</string>
     <string name="episodes_range">Folgen %1$d bis %2$d</string>
     <string name="generating_summary">Zusammenfassung wird generiert...</string>
     <string name="generating_timeline">Zeitachse wird generiert...</string>
+    <string name="wikimedia_attribution">Dieses Produkt verwendet die Wikimedia Commons API für Schauspielerbilder.</string>
 </resources> 

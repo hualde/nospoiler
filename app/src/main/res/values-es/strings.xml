@@ -102,4 +102,5 @@
     <string name="episodes_range">Episodios %1$d a %2$d</string>
     <string name="generating_summary">Generando resumen...</string>
     <string name="generating_timeline">Generando línea temporal...</string>
+    <string name="wikimedia_attribution">Este producto utiliza la API de Wikimedia Commons para las imágenes de actores.</string>
 </resources> 

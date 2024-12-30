@@ -17,6 +17,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,43 +44,33 @@ fun AboutScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // App Description
-            Card {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.app_description),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-            }
-
+            Text(
+                text = stringResource(R.string.app_description),
+                style = MaterialTheme.typography.bodyLarge
+            )
+            
             // Developer Info
             Card {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.developer),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleMedium
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Javier Hualde",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Text(text = "Javier Hualde")
+                    Text(text = "javhualde@gmail.com")
                 }
             }
-
+            
             // Version Info
             Card {
                 Column(
@@ -88,86 +80,27 @@ fun AboutScreen(navController: NavController) {
                 ) {
                     Text(
                         text = stringResource(R.string.version),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleMedium
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "v1.01",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Text(text = "1.0.0")
                 }
             }
-
-            // Licenses
+            
+            // Licenses and Attributions
             Card {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.licenses),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleMedium
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    // OMDb Attribution
-                    Text(
-                        text = stringResource(R.string.omdb_attribution),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    val omdbLink = buildAnnotatedString {
-                        pushStringAnnotation(
-                            tag = "URL",
-                            annotation = "https://www.omdbapi.com/legal.htm"
-                        )
-                        append("www.omdbapi.com/legal.htm")
-                        pop()
-                    }
-                    ClickableText(
-                        text = omdbLink,
-                        onClick = { offset ->
-                            omdbLink.getStringAnnotations(tag = "URL", start = offset, end = offset)
-                                .firstOrNull()?.let { annotation ->
-                                    uriHandler.openUri(annotation.item)
-                                }
-                        },
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline
-                        )
-                    )
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    // Perplexity Attribution
-                    Text(
-                        text = stringResource(R.string.perplexity_attribution),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    val perplexityLink = buildAnnotatedString {
-                        pushStringAnnotation(
-                            tag = "URL",
-                            annotation = "https://www.perplexity.ai/hub/legal/perplexity-api-terms-of-service"
-                        )
-                        append("www.perplexity.ai/hub/legal/perplexity-api-terms-of-service")
-                        pop()
-                    }
-                    ClickableText(
-                        text = perplexityLink,
-                        onClick = { offset ->
-                            perplexityLink.getStringAnnotations(tag = "URL", start = offset, end = offset)
-                                .firstOrNull()?.let { annotation ->
-                                    uriHandler.openUri(annotation.item)
-                                }
-                        },
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline
-                        )
-                    )
+                    Text(text = stringResource(R.string.omdb_attribution))
+                    Text(text = stringResource(R.string.perplexity_attribution))
+                    Text(text = stringResource(R.string.wikimedia_attribution))
                 }
             }
         }

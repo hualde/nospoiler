@@ -130,4 +130,5 @@ Pour toute question concernant ces conditions, contactez : javhualde@gmail.com</
     <string name="episodes_range">Épisodes %1$d à %2$d</string>
     <string name="generating_summary">Génération du résumé...</string>
     <string name="generating_timeline">Génération de la chronologie...</string>
+    <string name="wikimedia_attribution">Ce produit utilise l\'API Wikimedia Commons pour les images des acteurs.</string>
 </resources> 
