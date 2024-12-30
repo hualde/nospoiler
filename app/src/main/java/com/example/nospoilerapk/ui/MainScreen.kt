@@ -149,6 +149,9 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                     showBackButton = true
                 )
             }
+            composable(Screen.Privacy.route) {
+                PrivacyPolicyScreen(navController)
+            }
         }
     }
 } 

@@ -138,4 +138,45 @@
     9. Contacto\n
     Para preguntas sobre estos términos, contacta: javhualde@gmail.com</string>
     <string name="terms_and_conditions">Condiciones Generales</string>
+    <string name="privacy_policy">Política de Privacidad</string>
+    <string name="privacy_policy_content">Política de Privacidad de NoSpoilerAI\n\n
+    Última actualización: 30 de diciembre de 2024\n\n
+
+    1. Recopilación de Información\n
+    - Solo recopilamos datos técnicos mínimos necesarios para el funcionamiento de la app\n
+    - No recopilamos ni almacenamos información personal identificable\n
+    - Las preferencias de la app se almacenan localmente en tu dispositivo\n
+    - Recopilamos datos básicos de uso (ej., interacciones con la app, registros de errores)\n\n
+
+    2. Servicios de Terceros\n
+    - Utilizamos la API de OMDb para información de películas y series\n
+    - Utilizamos la API de Perplexity para generar resúmenes\n
+    - Utilizamos la API de Wikimedia Commons para imágenes de actores\n
+    - Estos servicios reciben solo la información necesaria para su funcionamiento\n
+    - No compartimos datos personales con estos servicios\n\n
+
+    3. Almacenamiento y Seguridad de Datos\n
+    - Todas las preferencias de la app se almacenan localmente en tu dispositivo\n
+    - No mantenemos ninguna base de datos de usuarios\n
+    - No utilizamos cookies ni tecnologías de seguimiento\n
+    - La transmisión de datos está asegurada según estándares de la industria\n\n
+
+    4. Privacidad de Menores\n
+    - La app no está destinada a usuarios menores de 13 años\n
+    - No recopilamos datos de menores de 13 años a sabiendas\n
+    - Si eres menor de 13 años, por favor no uses la app\n\n
+
+    5. Tus Derechos\n
+    - Puedes borrar todos los datos de la app desde la configuración de tu dispositivo\n
+    - Puedes desactivar el acceso a Internet para la app en cualquier momento\n
+    - Puedes solicitar información sobre el uso de tus datos\n\n
+
+    6. Cambios en la Política de Privacidad\n
+    - Podemos actualizar esta política ocasionalmente\n
+    - Los cambios significativos se notificarán dentro de la app\n
+    - El uso continuado de la app implica la aceptación de los cambios\n\n
+
+    7. Contacto\n
+    Para preguntas relacionadas con la privacidad:\n
+    Email: javhualde@gmail.com</string>
 </resources> 

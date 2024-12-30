@@ -132,4 +132,45 @@
     <string name="generating_summary">Zusammenfassung wird generiert...</string>
     <string name="generating_timeline">Zeitachse wird generiert...</string>
     <string name="wikimedia_attribution">Dieses Produkt verwendet die Wikimedia Commons API für Schauspielerbilder.</string>
+    <string name="privacy_policy">Datenschutzerklärung</string>
+    <string name="privacy_policy_content">Datenschutzerklärung für NoSpoilerAI\n\n
+    Letzte Aktualisierung: 30. Dezember 2024\n\n
+
+    1. Datenerhebung\n
+    - Wir erheben nur die technischen Mindestdaten, die für die App-Funktionalität erforderlich sind\n
+    - Wir erheben oder speichern keine personenbezogenen Daten\n
+    - App-Einstellungen werden lokal auf Ihrem Gerät gespeichert\n
+    - Wir erfassen grundlegende Nutzungsdaten (z.B. App-Interaktionen, Fehlerprotokolle)\n\n
+
+    2. Drittanbieterdienste\n
+    - Wir nutzen die OMDb-API für Film- und Serieninformationen\n
+    - Wir nutzen die Perplexity-API zur Generierung von Zusammenfassungen\n
+    - Wir nutzen die Wikimedia Commons-API für Schauspielerbilder\n
+    - Diese Dienste erhalten nur die für ihre Funktion notwendigen Informationen\n
+    - Wir teilen keine persönlichen Daten mit diesen Diensten\n\n
+
+    3. Datenspeicherung und Sicherheit\n
+    - Alle App-Einstellungen werden lokal auf Ihrem Gerät gespeichert\n
+    - Wir führen keine Benutzerdatenbank\n
+    - Wir verwenden keine Cookies oder Tracking-Technologien\n
+    - Die Datenübertragung ist nach Industriestandards gesichert\n\n
+
+    4. Jugendschutz\n
+    - Die App ist nicht für Benutzer unter 13 Jahren bestimmt\n
+    - Wir erheben wissentlich keine Daten von Kindern unter 13 Jahren\n
+    - Wenn Sie unter 13 Jahre alt sind, nutzen Sie die App bitte nicht\n\n
+
+    5. Ihre Rechte\n
+    - Sie können alle App-Daten über Ihre Geräteeinstellungen löschen\n
+    - Sie können den Internetzugang für die App jederzeit deaktivieren\n
+    - Sie können Auskunft über Ihre Datennutzung anfordern\n\n
+
+    6. Änderungen der Datenschutzerklärung\n
+    - Wir können diese Richtlinie gelegentlich aktualisieren\n
+    - Wichtige Änderungen werden in der App mitgeteilt\n
+    - Die weitere Nutzung der App bedeutet die Akzeptanz der Änderungen\n\n
+
+    7. Kontakt\n
+    Für datenschutzbezogene Fragen:\n
+    E-Mail: javhualde@gmail.com</string>
 </resources> 

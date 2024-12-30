@@ -132,4 +132,45 @@
     <string name="generating_summary">Génération du résumé...</string>
     <string name="generating_timeline">Génération de la chronologie...</string>
     <string name="wikimedia_attribution">Ce produit utilise l\'API Wikimedia Commons pour les images des acteurs.</string>
+    <string name="privacy_policy">Politique de Confidentialité</string>
+    <string name="privacy_policy_content">Politique de Confidentialité de NoSpoilerAI\n\n
+    Dernière mise à jour : 30 décembre 2024\n\n
+
+    1. Collecte d\'Informations\n
+    - Nous collectons uniquement les données techniques minimales nécessaires au fonctionnement de l\'app\n
+    - Nous ne collectons ni ne stockons aucune information personnelle identifiable\n
+    - Les préférences de l\'app sont stockées localement sur votre appareil\n
+    - Nous collectons des données d\'utilisation basiques (ex., interactions avec l\'app, journaux d\'erreurs)\n\n
+
+    2. Services Tiers\n
+    - Nous utilisons l\'API OMDb pour les informations sur les films et séries\n
+    - Nous utilisons l\'API Perplexity pour générer des résumés\n
+    - Nous utilisons l\'API Wikimedia Commons pour les images des acteurs\n
+    - Ces services reçoivent uniquement les informations nécessaires à leur fonctionnement\n
+    - Nous ne partageons pas de données personnelles avec ces services\n\n
+
+    3. Stockage et Sécurité des Données\n
+    - Toutes les préférences de l\'app sont stockées localement sur votre appareil\n
+    - Nous ne maintenons aucune base de données utilisateur\n
+    - Nous n\'utilisons pas de cookies ni de technologies de suivi\n
+    - La transmission des données est sécurisée selon les standards de l\'industrie\n\n
+
+    4. Protection des Mineurs\n
+    - L\'app n\'est pas destinée aux utilisateurs de moins de 13 ans\n
+    - Nous ne collectons pas sciemment de données d\'enfants de moins de 13 ans\n
+    - Si vous avez moins de 13 ans, veuillez ne pas utiliser l\'app\n\n
+
+    5. Vos Droits\n
+    - Vous pouvez effacer toutes les données de l\'app via les paramètres de votre appareil\n
+    - Vous pouvez désactiver l\'accès Internet pour l\'app à tout moment\n
+    - Vous pouvez demander des informations sur l\'utilisation de vos données\n\n
+
+    6. Modifications de la Politique\n
+    - Nous pouvons mettre à jour cette politique occasionnellement\n
+    - Les changements importants seront notifiés dans l\'app\n
+    - L\'utilisation continue de l\'app implique l\'acceptation des modifications\n\n
+
+    7. Contact\n
+    Pour les questions relatives à la confidentialité :\n
+    Email : javhualde@gmail.com</string>
 </resources> 

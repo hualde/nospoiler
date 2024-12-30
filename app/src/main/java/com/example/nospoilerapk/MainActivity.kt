@@ -1,23 +1,20 @@
 package com.example.nospoilerapk
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.*
+import androidx.navigation.compose.rememberNavController
 import com.example.nospoilerapk.ui.BaseActivity
 import com.example.nospoilerapk.ui.MainScreen
-import androidx.activity.compose.setContent
-import dagger.hilt.android.AndroidEntryPoint
-import com.example.nospoilerapk.ui.theme.NoSpoilerApkTheme
-import androidx.activity.viewModels
-import com.example.nospoilerapk.ui.viewmodels.ThemeViewModel
-import com.example.nospoilerapk.ui.viewmodels.TermsViewModel
-import androidx.compose.runtime.collectAsState
-import androidx.navigation.compose.rememberNavController
-import com.example.nospoilerapk.ui.screens.TermsScreen
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import com.example.nospoilerapk.ui.screens.PrivacyPolicyScreen
 import com.example.nospoilerapk.ui.screens.SplashScreen
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.nospoilerapk.ui.screens.TermsScreen
+import com.example.nospoilerapk.ui.theme.NoSpoilerApkTheme
+import com.example.nospoilerapk.ui.viewmodels.TermsViewModel
+import com.example.nospoilerapk.ui.viewmodels.ThemeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -46,13 +43,23 @@ private fun MainContent(
     
     NoSpoilerApkTheme(themeViewModel = themeViewModel) {
         if (termsAccepted == false) {
-            val navController = rememberNavController()
-            TermsScreen(
-                navController = navController,
-                showBackButton = false
-            )
+            InitialTermsAndPrivacy()
         } else {
             MainScreen()
         }
+    }
+}
+
+@Composable
+private fun InitialTermsAndPrivacy() {
+    val navController = rememberNavController()
+    Column {
+        TermsScreen(
+            navController = navController,
+            showBackButton = false
+        )
+        PrivacyPolicyScreen(
+            navController = navController
+        )
     }
 }

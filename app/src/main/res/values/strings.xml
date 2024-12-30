@@ -148,31 +148,44 @@
     <string name="generating_timeline">Generating timeline...</string>
     <string name="wikimedia_attribution">This product uses Wikimedia Commons API for actor images.</string>
     <string name="privacy_policy">Política de Privacidad</string>
-    <string name="privacy_policy_content">Política de Privacidad de NoSpoilerAI\n\n
+    <string name="privacy_policy_content">Privacy Policy for NoSpoilerAI\n\n
+    Last updated: December 30, 2024\n\n
 
-1. Recopilación de Información\n
-- Solo recopilamos la información mínima necesaria para el funcionamiento de la aplicación\n
-- No recopilamos información personal identificable\n
-- Las preferencias del usuario se almacenan localmente en el dispositivo\n\n
+    1. Information Collection\n
+    - We only collect minimal technical data necessary for app functionality\n
+    - We do not collect or store any personally identifiable information\n
+    - App preferences are stored locally on your device\n
+    - We collect basic usage data (e.g., app interactions, error logs)\n\n
 
-2. Uso de APIs de Terceros\n
-- Utilizamos la API de OMDb para obtener información sobre películas y series\n
-- Utilizamos la API de Perplexity para generar resúmenes\n
-- Las consultas a estas APIs no contienen información personal\n\n
+    2. Third-Party Services\n
+    - We use the OMDb API for movie and series information\n
+    - We use the Perplexity API for generating summaries\n
+    - We use Wikimedia Commons API for actor images\n
+    - These services receive only the necessary information for their functionality\n
+    - We do not share personal data with these services\n\n
 
-3. Almacenamiento de Datos\n
-- Los datos del usuario se almacenan localmente en el dispositivo\n
-- No compartimos datos con terceros\n
-- No utilizamos cookies ni tecnologías de seguimiento\n\n
+    3. Data Storage and Security\n
+    - All app preferences are stored locally on your device\n
+    - We do not maintain any user database\n
+    - We do not use cookies or tracking technologies\n
+    - Data transmission is secured using industry standards\n\n
 
-4. Permisos de la Aplicación\n
-- Solo requerimos permiso de acceso a Internet para las funciones básicas\n
-- No solicitamos acceso a otros recursos del dispositivo\n\n
+    4. Children\'s Privacy\n
+    - The app is not intended for users under 13 years of age\n
+    - We do not knowingly collect data from children under 13\n
+    - If you are under 13, please do not use the app\n\n
 
-5. Cambios en la Política\n
-- Nos reservamos el derecho de modificar esta política\n
-- Los usuarios serán notificados de cambios significativos\n\n
+    5. Your Rights\n
+    - You can clear all app data through your device settings\n
+    - You can disable internet access for the app at any time\n
+    - You can request information about your data usage\n\n
 
-6. Contacto\n
-Para preguntas sobre privacidad: javhualde@gmail.com</string>
+    6. Changes to Privacy Policy\n
+    - We may update this policy occasionally\n
+    - Significant changes will be notified within the app\n
+    - Continued use of the app implies acceptance of changes\n\n
+
+    7. Contact\n
+    For privacy-related questions:\n
+    Email: javhualde@gmail.com</string>
 </resources>

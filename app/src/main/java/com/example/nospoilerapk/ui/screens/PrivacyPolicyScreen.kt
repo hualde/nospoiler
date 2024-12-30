@@ -18,6 +18,8 @@ import com.example.nospoilerapk.R
 fun PrivacyPolicyScreen(
     navController: NavController
 ) {
+    val scrollState = rememberScrollState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -37,9 +39,8 @@ fun PrivacyPolicyScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(16.dp)
+                .verticalScroll(scrollState)
         ) {
             Text(
                 text = stringResource(R.string.privacy_policy_content),
