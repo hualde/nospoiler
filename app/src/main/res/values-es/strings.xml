@@ -103,4 +103,39 @@
     <string name="generating_summary">Generando resumen...</string>
     <string name="generating_timeline">Generando línea temporal...</string>
     <string name="wikimedia_attribution">Este producto utiliza la API de Wikimedia Commons para las imágenes de actores.</string>
+    <string name="terms_content">Términos y Condiciones de NoSpoilerAI\n\n
+    1. Aceptación de los Términos\n
+    Al acceder y usar NoSpoilerAI, aceptas estar sujeto a estos Términos y Condiciones.\n\n
+
+    2. Descripción del Servicio\n
+    NoSpoilerAI proporciona resúmenes y líneas de tiempo generadas por IA de series y películas. El contenido se genera utilizando APIs de terceros y puede no ser completamente preciso.\n\n
+
+    3. Obligaciones del Usuario\n
+    - Debes tener al menos 13 años para usar este servicio\n
+    - Aceptas usar el servicio solo para fines legales\n
+    - Aceptas que los resúmenes pueden contener inexactitudes menores\n\n
+
+    4. Privacidad y Datos\n
+    - Recopilamos datos mínimos necesarios para la funcionalidad de la app\n
+    - Utilizamos APIs de terceros (OMDb, Perplexity y Wikimedia Commons) para generar contenido\n
+    - No compartimos información personal con terceros\n\n
+
+    5. Contenido y Derechos de Autor\n
+    - Los resúmenes generados son solo para uso personal\n
+    - El contenido original sigue siendo propiedad de sus respectivos titulares\n
+    - El uso de las APIs está sujeto a sus respectivos términos de servicio\n
+    - Las imágenes de actores se obtienen a través de Wikimedia Commons y están sujetas a sus respectivas licencias\n\n
+
+    6. Descargo de Responsabilidad\n
+    La aplicación se proporciona "tal cual" sin garantías de ningún tipo. No somos responsables de ninguna inexactitud en el contenido generado.\n\n
+
+    7. Cambios en los Términos\n
+    Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de la aplicación constituye la aceptación de los términos modificados.\n\n
+
+    8. Terminación\n
+    Nos reservamos el derecho de terminar el acceso por violaciones de estos términos.\n\n
+
+    9. Contacto\n
+    Para preguntas sobre estos términos, contacta: javhualde@gmail.com</string>
+    <string name="terms_and_conditions">Condiciones Generales</string>
 </resources> 

@@ -65,38 +65,39 @@
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="terms_content">Terms and Conditions for NoSpoilerAI\n\n
-1. Acceptance of Terms\n
-By accessing and using NoSpoilerAI, you agree to be bound by these Terms and Conditions.\n\n
+    1. Acceptance of Terms\n
+    By accessing and using NoSpoilerAI, you agree to be bound by these Terms and Conditions.\n\n
 
-2. Service Description\n
-NoSpoilerAI provides AI-generated summaries and timelines of TV shows and movies. The content is generated using third-party APIs and may not be completely accurate.\n\n
+    2. Service Description\n
+    NoSpoilerAI provides AI-generated summaries and timelines of TV shows and movies. The content is generated using third-party APIs and may not be completely accurate.\n\n
 
-3. User Obligations\n
-- You must be at least 13 years old to use this service\n
-- You agree to use the service only for lawful purposes\n
-- You accept that summaries may contain minor inaccuracies\n\n
+    3. User Obligations\n
+    - You must be at least 13 years old to use this service\n
+    - You agree to use the service only for lawful purposes\n
+    - You accept that summaries may contain minor inaccuracies\n\n
 
-4. Privacy and Data\n
-- We collect minimal user data necessary for app functionality\n
-- We use third-party APIs (OMDb and Perplexity) to generate content\n
-- We do not share personal information with third parties\n\n
+    4. Privacy and Data\n
+    - We collect minimal user data necessary for app functionality\n
+    - We use third-party APIs (OMDb, Perplexity, and Wikimedia Commons) to generate content\n
+    - We do not share personal information with third parties\n\n
 
-5. Content and Copyright\n
-- Generated summaries are for personal use only\n
-- Original content remains property of respective rights holders\n
-- API usage is subject to their respective terms of service\n\n
+    5. Content and Copyright\n
+    - Generated summaries are for personal use only\n
+    - Original content remains property of respective rights holders\n
+    - API usage is subject to their respective terms of service\n
+    - Actor images are obtained through Wikimedia Commons and are subject to their respective licenses\n\n
 
-6. Disclaimer\n
-The app is provided "as is" without warranties of any kind. We are not responsible for any inaccuracies in the generated content.\n\n
+    6. Disclaimer\n
+    The app is provided "as is" without warranties of any kind. We are not responsible for any inaccuracies in the generated content.\n\n
 
-7. Changes to Terms\n
-We reserve the right to modify these terms at any time. Continued use of the app constitutes acceptance of modified terms.\n\n
+    7. Changes to Terms\n
+    We reserve the right to modify these terms at any time. Continued use of the app constitutes acceptance of modified terms.\n\n
 
-8. Termination\n
-We reserve the right to terminate access for violations of these terms.\n\n
+    8. Termination\n
+    We reserve the right to terminate access for violations of these terms.\n\n
 
-9. Contact\n
-For questions about these terms, contact: javhualde@gmail.com</string>
+    9. Contact\n
+    For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="terms_decline_message">You must accept the Terms and Conditions to use NoSpoilerAI</string>
     <string name="terms_required">Terms and Conditions acceptance is required</string>
     <string name="welcome_message">What would you like to watch today?</string>

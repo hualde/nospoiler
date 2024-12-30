@@ -67,47 +67,49 @@ fun TermsScreen(
                 )
             }
 
-            // Buttons
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Button(
-                    onClick = {
-                        scope.launch {
-                            viewModel.acceptTerms()
-                            if (showBackButton) {
-                                navController.navigateUp()
-                            }
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
+            // Solo mostrar los botones si no estamos en modo visualización (showBackButton = false)
+            if (!showBackButton) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(stringResource(R.string.accept))
-                }
+                    Button(
+                        onClick = {
+                            scope.launch {
+                                viewModel.acceptTerms()
+                                if (showBackButton) {
+                                    navController.navigateUp()
+                                }
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.accept))
+                    }
 
-                OutlinedButton(
-                    onClick = {
-                        scope.launch {
-                            viewModel.declineTerms()
-                            if (!showBackButton) {
-                                (context as? Activity)?.finishAffinity()
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.terms_decline_message),
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                navController.popBackStack()
+                    OutlinedButton(
+                        onClick = {
+                            scope.launch {
+                                viewModel.declineTerms()
+                                if (!showBackButton) {
+                                    (context as? Activity)?.finishAffinity()
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.terms_decline_message),
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    navController.popBackStack()
+                                }
                             }
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(stringResource(R.string.decline))
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.decline))
+                    }
                 }
             }
         }
