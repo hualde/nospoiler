@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.nospoilerapk"
+    namespace = "com.javhualde.nospoilerapk"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.nospoilerapk"
+        applicationId = "com.javhualde.nospoilerapk"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
