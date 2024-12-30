@@ -146,4 +146,32 @@ For questions about these terms, contact: javhualde@gmail.com</string>
     <string name="generating_summary">Generating summary...</string>
     <string name="generating_timeline">Generating timeline...</string>
     <string name="wikimedia_attribution">This product uses Wikimedia Commons API for actor images.</string>
+    <string name="privacy_policy">Política de Privacidad</string>
+    <string name="privacy_policy_content">Política de Privacidad de NoSpoilerAI\n\n
+
+1. Recopilación de Información\n
+- Solo recopilamos la información mínima necesaria para el funcionamiento de la aplicación\n
+- No recopilamos información personal identificable\n
+- Las preferencias del usuario se almacenan localmente en el dispositivo\n\n
+
+2. Uso de APIs de Terceros\n
+- Utilizamos la API de OMDb para obtener información sobre películas y series\n
+- Utilizamos la API de Perplexity para generar resúmenes\n
+- Las consultas a estas APIs no contienen información personal\n\n
+
+3. Almacenamiento de Datos\n
+- Los datos del usuario se almacenan localmente en el dispositivo\n
+- No compartimos datos con terceros\n
+- No utilizamos cookies ni tecnologías de seguimiento\n\n
+
+4. Permisos de la Aplicación\n
+- Solo requerimos permiso de acceso a Internet para las funciones básicas\n
+- No solicitamos acceso a otros recursos del dispositivo\n\n
+
+5. Cambios en la Política\n
+- Nos reservamos el derecho de modificar esta política\n
+- Los usuarios serán notificados de cambios significativos\n\n
+
+6. Contacto\n
+Para preguntas sobre privacidad: javhualde@gmail.com</string>
 </resources>
