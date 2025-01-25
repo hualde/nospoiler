@@ -13,7 +13,7 @@ interface PerplexityService {
 }
 
 data class PerplexityRequest(
-    val model: String = "llama-3.1-sonar-small-128k-online",
+    val model: String = "sonar",
     val messages: List<Message>,
     val max_tokens: Int = 1024
 ) 
