@@ -21,5 +21,5 @@ interface XAIService {
 data class PerplexityRequest(
     val model: String,
     val messages: List<Message>,
-    val max_tokens: Int = 6000
+    val max_tokens: Int = 3000
 ) 

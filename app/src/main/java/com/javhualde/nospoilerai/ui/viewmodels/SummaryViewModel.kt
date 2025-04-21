@@ -45,8 +45,8 @@ class SummaryViewModel @Inject constructor(
         val languageCode = languageService.getCurrentLanguageCode()
         val episodeCount = if (isFromBeginning) rangeEnd else rangeEnd - rangeStart + 1
         val minWords = when {
-            episodeCount > 5 -> 1000
-            episodeCount > 1 -> 500
+            episodeCount > 5 -> 500
+            episodeCount > 1 -> 100
             else -> 300
         }
         
