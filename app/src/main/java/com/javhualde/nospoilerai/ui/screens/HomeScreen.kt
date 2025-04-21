@@ -151,22 +151,30 @@ private fun FeaturesSection() {
 
 @Composable
 private fun QuickAccessSection(navController: NavController) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp),
+        onClick = { navController.navigate(Screen.Help.route) }
     ) {
-        QuickAccessCard(
-            modifier = Modifier.weight(1f),
-            icon = Icons.Default.Help,
-            text = stringResource(R.string.help),
-            onClick = { navController.navigate(Screen.Help.route) }
-        )
-        QuickAccessCard(
-            modifier = Modifier.weight(1f),
-            icon = Icons.Default.Settings,
-            text = stringResource(R.string.settings),
-            onClick = { navController.navigate(Screen.Settings.route) }
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                imageVector = Icons.Default.Help,
+                contentDescription = null,
+                modifier = Modifier.size(32.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.help),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
@@ -211,37 +219,6 @@ private fun FeatureItem(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
-
-@Composable
-private fun QuickAccessCard(
-    modifier: Modifier = Modifier,
-    icon: ImageVector,
-    text: String,
-    onClick: () -> Unit
-) {
-    Card(
-        modifier = modifier.clickable(onClick = onClick)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = text,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
             )
         }
     }

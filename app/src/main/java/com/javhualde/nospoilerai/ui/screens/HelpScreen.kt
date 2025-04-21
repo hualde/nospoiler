@@ -2,6 +2,7 @@ package com.javhualde.nospoilerapk.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -19,16 +20,9 @@ import com.javhualde.nospoilerapk.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HelpScreen(navController: NavController) {
-    val faqItems = listOf(
-        Pair(R.string.faq_modes_title, R.string.faq_modes_content),
-        Pair(R.string.faq_when_use_title, R.string.faq_when_use_content),
-        Pair(R.string.faq_search_title, R.string.faq_search_content),
-        Pair(R.string.faq_range_title, R.string.faq_range_content),
-        Pair(R.string.faq_summary_title, R.string.faq_summary_content),
-        Pair(R.string.faq_timeline_title, R.string.faq_timeline_content)
-    )
-
+fun HelpScreen(
+    navController: NavController
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -37,7 +31,7 @@ fun HelpScreen(navController: NavController) {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
+                            contentDescription = stringResource(R.string.go_back)
                         )
                     }
                 }
@@ -48,27 +42,56 @@ fun HelpScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(faqItems.size) { index ->
-                val (titleRes, contentRes) = faqItems[index]
-                FaqItem(
-                    title = stringResource(titleRes),
-                    content = stringResource(contentRes)
+            item {
+                ExpandableFAQItem(
+                    title = stringResource(R.string.faq_modes_title),
+                    content = stringResource(R.string.faq_modes_content)
                 )
             }
             
             item {
-                Spacer(modifier = Modifier.height(16.dp))
+                ExpandableFAQItem(
+                    title = stringResource(R.string.faq_when_use_title),
+                    content = stringResource(R.string.faq_when_use_content)
+                )
+            }
+
+            item {
+                ExpandableFAQItem(
+                    title = stringResource(R.string.faq_search_title),
+                    content = stringResource(R.string.faq_search_content)
+                )
+            }
+
+            item {
+                ExpandableFAQItem(
+                    title = stringResource(R.string.faq_range_title),
+                    content = stringResource(R.string.faq_range_content)
+                )
+            }
+
+            item {
+                ExpandableFAQItem(
+                    title = stringResource(R.string.faq_summary_title),
+                    content = stringResource(R.string.faq_summary_content)
+                )
+            }
+
+            item {
+                ExpandableFAQItem(
+                    title = stringResource(R.string.faq_timeline_title),
+                    content = stringResource(R.string.faq_timeline_content)
+                )
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FaqItem(
+private fun ExpandableFAQItem(
     title: String,
     content: String
 ) {
@@ -80,13 +103,12 @@ fun FaqItem(
 
     Card(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .animateContentSize(),
         onClick = { expanded = !expanded }
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -105,11 +127,11 @@ fun FaqItem(
                 )
             }
 
-            AnimatedVisibility(visible = expanded) {
+            if (expanded) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = content,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 8.dp)
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
