@@ -4,16 +4,16 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-interface PerplexityService {
-    @POST("chat/completions")
+interface XAIService {
+    @POST("v1/chat/completions")
     suspend fun getMediaInfo(
         @Body request: PerplexityRequest,
-        @Header("Authorization") authorization: String = "Bearer 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"
+        @Header("Authorization") authorization: String = "Bearer xai-L5VzxjJWJINDeNShmAtpJursKzLWuvlIFARfQtPt5SlUCR2Ea1JKFKS0kQuSKexBScVK6vWyenkuTuPy"
     ): PerplexityResponse
 }
 
 data class PerplexityRequest(
-    val model: String = "sonar",
+    val model: String = "grok-3-mini-beta",
     val messages: List<Message>,
     val max_tokens: Int = 1024
 ) 

@@ -3,7 +3,7 @@ package com.javhualde.nospoilerapk.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.javhualde.nospoilerapk.data.network.PerplexityService
+import com.javhualde.nospoilerapk.data.network.XAIService
 import com.javhualde.nospoilerapk.data.network.Message
 import com.javhualde.nospoilerapk.data.network.PerplexityRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ import kotlinx.coroutines.Job
 
 @HiltViewModel
 class SummaryViewModel @Inject constructor(
-    private val perplexityService: PerplexityService,
+    private val xaiService: XAIService,
     private val omdbService: OmdbService,
     private val languageService: LanguageService,
     private val httpClient: OkHttpClient
@@ -248,10 +248,19 @@ class SummaryViewModel @Inject constructor(
         val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
         val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
         
-        val response = perplexityService.getMediaInfo(
+        val response = xaiService.getMediaInfo(
             PerplexityRequest(
-                model = "llama-3.1-sonar-large-128k-online",
-                messages = listOf(Message("user", prompt))
+                model = "grok-3-mini-beta",
+                messages = listOf(
+                    Message(
+                        role = "system",
+                        content = "You are a helpful assistant that provides information about movies and TV shows. Respond only with the requested JSON format, no additional text."
+                    ),
+                    Message(
+                        role = "user",
+                        content = prompt
+                    )
+                )
             )
         )
 

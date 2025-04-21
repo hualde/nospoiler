@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RangeSelectorViewModel @Inject constructor(
     private val omdbService: OmdbService,
-    private val perplexityService: PerplexityService
+    private val xaiService: XAIService
 ) : ViewModel() {
 
     private val _mediaState = MutableStateFlow<MediaState>(MediaState.Loading)
@@ -151,22 +151,22 @@ class RangeSelectorViewModel @Inject constructor(
                 )
                 
                 val episodeInfo = try {
-                    val response = perplexityService.getMediaInfo(perplexityRequest)
+                    val response = xaiService.getMediaInfo(perplexityRequest)
                         .choices.firstOrNull()?.message?.content
                         ?.replace("```json", "")
                         ?.replace("```", "")
                         ?.trim()
                     
-                    println("Perplexity response: $response") // Debug log
+                    println("XAI response: $response") // Debug log
                     
                     if (response != null) {
                         response
                     } else {
-                        println("Perplexity response was null") // Debug log
+                        println("XAI response was null") // Debug log
                         null
                     }
                 } catch (e: Exception) {
-                    println("Error getting Perplexity info: ${e.message}") // Debug log
+                    println("Error getting XAI info: ${e.message}") // Debug log
                     e.printStackTrace()
                     null
                 }

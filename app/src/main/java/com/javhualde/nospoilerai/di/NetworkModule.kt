@@ -1,7 +1,7 @@
 package com.javhualde.nospoilerapk.di
 
 import com.javhualde.nospoilerapk.data.network.OmdbService
-import com.javhualde.nospoilerapk.data.network.PerplexityService
+import com.javhualde.nospoilerapk.data.network.XAIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,10 +41,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Named("perplexity")
-    fun providePerplexityRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    @Named("xai")
+    fun provideXAIRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.perplexity.ai/")
+            .baseUrl("https://api.x.ai/")
             .client(okHttpClient.newBuilder()
                 .addInterceptor { chain ->
                     val request = chain.request().newBuilder()
@@ -69,7 +69,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providePerplexityService(@Named("perplexity") retrofit: Retrofit): PerplexityService {
-        return retrofit.create(PerplexityService::class.java)
+    fun provideXAIService(@Named("xai") retrofit: Retrofit): XAIService {
+        return retrofit.create(XAIService::class.java)
     }
 } 
