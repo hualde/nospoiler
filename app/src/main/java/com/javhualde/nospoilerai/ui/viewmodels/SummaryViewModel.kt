@@ -63,7 +63,7 @@ class SummaryViewModel @Inject constructor(
                     - Mantén un tono neutral
                     - Evita spoilers importantes sobre muertes o giros dramáticos
                     - Usa tiempo presente
-                    - Mínimo 500 palabras
+                    - Mínimo 100 palabras
                     
                     IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
                 """.trimIndent()
@@ -86,7 +86,7 @@ class SummaryViewModel @Inject constructor(
                     - Mantén un tono neutral
                     - Evita spoilers importantes sobre muertes o giros dramáticos
                     - Usa tiempo presente
-                    - Mínimo 500 palabras
+                    - Mínimo 1000 palabras
                     
                     IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
                 """.trimIndent()
@@ -111,7 +111,7 @@ class SummaryViewModel @Inject constructor(
                     - Maintiens un ton neutre
                     - Évite les spoilers importants concernant les morts ou les rebondissements majeurs
                     - Utilise le présent
-                    - Minimum 500 mots
+                    - Minimum 1000 mots
                     
                     IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
@@ -134,7 +134,7 @@ class SummaryViewModel @Inject constructor(
                     - Maintiens un ton neutre
                     - Évite les spoilers importants concernant les morts ou les rebondissements majeurs
                     - Utilise le présent
-                    - Minimum 500 mots
+                    - Minimum 1000 mots
                     
                     IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
@@ -159,7 +159,7 @@ class SummaryViewModel @Inject constructor(
                     - Behalte einen neutralen Ton
                     - Vermeide wichtige Spoiler zu Todesfällen oder dramatischen Wendungen
                     - Verwende Präsens
-                    - Mindestens 500 Wörter
+                    - Mindestens 1000 Wörter
                     
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
@@ -182,7 +182,7 @@ class SummaryViewModel @Inject constructor(
                     - Behalte einen neutralen Ton
                     - Vermeide wichtige Spoiler zu Todesfällen oder dramatischen Wendungen
                     - Verwende Präsens
-                    - Mindestens 500 Wörter
+                    - Mindestens 1000 Wörter
                     
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
@@ -207,7 +207,7 @@ class SummaryViewModel @Inject constructor(
                     - Keep a neutral tone
                     - Avoid major spoilers about deaths or dramatic twists
                     - Use present tense
-                    - Minimum 500 words
+                    - Minimum 1000 words
                     
                     IMPORTANT: Return ONLY the JSON, no additional text.
                 """.trimIndent()
@@ -230,7 +230,7 @@ class SummaryViewModel @Inject constructor(
                     - Keep a neutral tone
                     - Avoid major spoilers about deaths or dramatic twists
                     - Use present tense
-                    - Minimum 500 words
+                    - Minimum 1000 words
                     
                     IMPORTANT: Return ONLY the JSON, no additional text.
                 """.trimIndent()
