@@ -43,195 +43,223 @@ class SummaryViewModel @Inject constructor(
 
     private fun getPromptForLanguage(title: String, rangeStart: Int, rangeEnd: Int, season: Int, isFromBeginning: Boolean = false): String {
         val languageCode = languageService.getCurrentLanguageCode()
+        val episodeCount = if (isFromBeginning) rangeEnd else rangeEnd - rangeStart + 1
+        val minWords = when {
+            episodeCount > 5 -> 1000
+            episodeCount > 1 -> 500
+            else -> 300
+        }
+        
         return when (languageCode) {
             "es" -> if (isFromBeginning) {
                 """
-                    Eres una API JSON que genera resúmenes detallados y extensos.
-                    Para la serie llamada "$title", desde el episodio 1 de la temporada 1 hasta el episodio $rangeEnd de la temporada $season,
-                    devuelve un JSON con esta estructura:
+                    Eres una API JSON que genera resúmenes detallados y extensos de series de televisión.
+                    Para la serie "$title", proporciona un resumen que cubra desde el episodio 1 de la temporada 1 hasta el episodio $rangeEnd de la temporada $season.
+                    Devuelve un JSON con esta estructura:
                     {
                         "summary": "el resumen aquí"
                     }
-                    
+
                     Pautas para el resumen:
-                    - Escribe en español
-                    - Proporciona un resumen extenso y detallado
-                    - Incluye desarrollo de personajes y arcos argumentales
-                    - Describe las subtramas importantes
-                    - Menciona el contexto y las motivaciones de los personajes
-                    - Explica las relaciones entre personajes
-                    - Mantén un tono neutral
-                    - Evita spoilers importantes sobre muertes o giros dramáticos
-                    - Usa tiempo presente
-                    - Mínimo 100 palabras
-                    
+                    - Escribe en español, adaptándote al estilo narrativo natural del idioma.
+                    - Proporciona un resumen extenso, detallado y cohesionado, integrando los eventos en una narrativa fluida en lugar de listar episodios.
+                    - Destaca los momentos clave de la trama, las interacciones significativas entre personajes y los desarrollos importantes de la historia.
+                    - Describe las transformaciones o evoluciones de los personajes principales, con ejemplos concretos de sus decisiones o acciones.
+                    - Menciona las subtramas relevantes y explica cómo se conectan con la trama principal o los personajes clave.
+                    - Incluye el contexto y las motivaciones de los personajes, ilustrándolas con ejemplos específicos.
+                    - Explica las relaciones entre personajes, detallando dinámicas de poder, alianzas, conflictos o vínculos románticos, según corresponda.
+                    - Si es la primera mención de un personaje principal, incluye una breve descripción (ejemplo: "Ana, una detective astuta y reservada").
+                    - Mantén un tono neutral, evitando lenguaje sensacionalista o emotivo.
+                    - Evita spoilers importantes, como muertes de personajes principales o giros que alteren fundamentalmente la trama.
+                    - Usa el tiempo presente.
+                    - El resumen debe tener al menos $minWords palabras, ajustándose a la cantidad de episodios cubiertos.
+                    - Concluye con una frase o pregunta intrigante que invite a ver los siguientes episodios, sin revelar spoilers.
+
                     IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
                 """.trimIndent()
             } else {
                 """
-                    Eres una API JSON que genera resúmenes detallados y extensos.
-                    Para la serie llamada "$title", temporada $season, episodios $rangeStart a $rangeEnd,
-                    devuelve un JSON con esta estructura:
+                    Eres una API JSON que genera resúmenes detallados y extensos de series de televisión.
+                    Para la serie "$title", proporciona un resumen que cubra la temporada $season, episodios $rangeStart a $rangeEnd.
+                    Devuelve un JSON con esta estructura:
                     {
                         "summary": "el resumen aquí"
                     }
-                    
+
                     Pautas para el resumen:
-                    - Escribe en español
-                    - Proporciona un resumen extenso y detallado
-                    - Incluye desarrollo de personajes y arcos argumentales
-                    - Describe las subtramas importantes
-                    - Menciona el contexto y las motivaciones de los personajes
-                    - Explica las relaciones entre personajes
-                    - Mantén un tono neutral
-                    - Evita spoilers importantes sobre muertes o giros dramáticos
-                    - Usa tiempo presente
-                    - Mínimo 1000 palabras
-                    
+                    - Escribe en español, adaptándote al estilo narrativo natural del idioma.
+                    - Proporciona un resumen extenso, detallado y cohesionado, integrando los eventos en una narrativa fluida en lugar de listar episodios.
+                    - Destaca los momentos clave de la trama, las interacciones significativas entre personajes y los desarrollos importantes de la historia.
+                    - Describe las transformaciones o evoluciones de los personajes principales, con ejemplos concretos de sus decisiones o acciones.
+                    - Menciona las subtramas relevantes y explica cómo se conectan con la trama principal o los personajes clave.
+                    - Incluye el contexto y las motivaciones de los personajes, ilustrándolas con ejemplos específicos.
+                    - Explica las relaciones entre personajes, detallando dinámicas de poder, alianzas, conflictos o vínculos románticos, según corresponda.
+                    - Si es la primera mención de un personaje principal, incluye una breve descripción (ejemplo: "Ana, una detective astuta y reservada").
+                    - Mantén un tono neutral, evitando lenguaje sensacionalista o emotivo.
+                    - Evita spoilers importantes, como muertes de personajes principales o giros que alteren fundamentalmente la trama.
+                    - Usa el tiempo presente.
+                    - El resumen debe tener al menos $minWords palabras, ajustándose a la cantidad de episodios cubiertos.
+                    - Concluye con una frase o pregunta intrigante que invite a ver los siguientes episodios, sin revelar spoilers.
+
                     IMPORTANTE: Devuelve SOLO el JSON, sin texto adicional.
                 """.trimIndent()
             }
-            
             "fr" -> if (isFromBeginning) {
                 """
-                    Tu es une API JSON qui génère des résumés détaillés et approfondis.
-                    Pour la série intitulée "$title", depuis l'épisode 1 de la saison 1 jusqu'à l'épisode $rangeEnd de la saison $season,
-                    renvoie un JSON avec cette structure:
+                    Tu es une API JSON qui génère des résumés détaillés et approfondis de séries télévisées.
+                    Pour la série "$title", fournis un résumé couvrant de l'épisode 1 de la saison 1 à l'épisode $rangeEnd de la saison $season.
+                    Retourne un JSON avec cette structure:
                     {
                         "summary": "le résumé ici"
                     }
-                    
+
                     Directives pour le résumé:
-                    - Écris en français
-                    - Fournis un résumé détaillé et approfondi
-                    - Inclus le développement des personnages et les arcs narratifs
-                    - Décris les intrigues secondaires importantes
-                    - Mentionne le contexte et les motivations des personnages
-                    - Explique les relations entre les personnages
-                    - Maintiens un ton neutre
-                    - Évite les spoilers importants concernant les morts ou les rebondissements majeurs
-                    - Utilise le présent
-                    - Minimum 1000 mots
-                    
-                    IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
+                    - Écris en français, en t'adaptant au style narratif naturel de la langue.
+                    - Fournis un résumé détaillé, approfondi et cohérent, intégrant les événements dans une narration fluide plutôt que de lister les épisodes.
+                    - Mets en avant les moments clés de l'intrigue, les interactions significatives entre personnages et les développements importants de l'histoire.
+                    - Décris les transformations ou évolutions des personnages principaux, avec des exemples concrets de leurs décisions ou actions.
+                    - Mentionne les sous-intrigues pertinentes et explique comment elles se connectent à l'intrigue principale ou aux personnages clés.
+                    - Inclut le contexte et les motivations des personnages, illustrés par des exemples spécifiques.
+                    - Explique les relations entre personnages, en détaillant les dynamiques de pouvoir, alliances, conflits ou liens romantiques, selon le cas.
+                    - Pour la première mention d'un personnage principal, inclut une brève description (exemple : "Ana, une détective rusée et réservée").
+                    - Maintiens un ton neutre, en évitant un langage sensationnaliste ou émotionnel.
+                    - Évite les spoilers importants, comme les morts de personnages principaux ou les rebondissements qui altèrent fondamentalement l'intrigue.
+                    - Utilise le présent.
+                    - Le résumé doit comporter au moins $minWords mots, ajustés au nombre d'épisodes couverts.
+                    - Conclus par une phrase ou une question intrigante qui incite à regarder les épisodes suivants, sans révéler de spoilers.
+
+                    IMPORTANT: Retourne UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
             } else {
                 """
-                    Tu es une API JSON qui génère des résumés détaillés et approfondis.
-                    Pour la série intitulée "$title", saison $season, épisodes $rangeStart à $rangeEnd,
-                    renvoie un JSON avec cette structure:
+                    Tu es une API JSON qui génère des résumés détaillés et approfondis de séries télévisées.
+                    Pour la série "$title", fournis un résumé couvrant la saison $season, épisodes $rangeStart à $rangeEnd.
+                    Retourne un JSON avec cette structure:
                     {
                         "summary": "le résumé ici"
                     }
-                    
+
                     Directives pour le résumé:
-                    - Écris en français
-                    - Fournis un résumé détaillé et approfondi
-                    - Inclus le développement des personnages et les arcs narratifs
-                    - Décris les intrigues secondaires importantes
-                    - Mentionne le contexte et les motivations des personnages
-                    - Explique les relations entre les personnages
-                    - Maintiens un ton neutre
-                    - Évite les spoilers importants concernant les morts ou les rebondissements majeurs
-                    - Utilise le présent
-                    - Minimum 1000 mots
-                    
-                    IMPORTANT: Renvoie UNIQUEMENT le JSON, sans texte supplémentaire.
+                    - Écris en français, en t'adaptant au style narratif naturel de la langue.
+                    - Fournis un résumé détaillé, approfondi et cohérent, intégrant les événements dans une narration fluide plutôt que de lister les épisodes.
+                    - Mets en avant les moments clés de l'intrigue, les interactions significatives entre personnages et les développements importants de l'histoire.
+                    - Décris les transformations ou évolutions des personnages principaux, avec des exemples concrets de leurs décisions ou actions.
+                    - Mentionne les sous-intrigues pertinentes et explique comment elles se connectent à l'intrigue principale ou aux personnages clés.
+                    - Inclut le contexte et les motivations des personnages, illustrés par des exemples spécifiques.
+                    - Explique les relations entre personnages, en détaillant les dynamiques de pouvoir, alliances, conflits ou liens romantiques, selon le cas.
+                    - Pour la première mention d'un personnage principal, inclut une brève description (exemple : "Ana, une détective rusée et réservée").
+                    - Maintiens un ton neutre, en évitant un langage sensationnaliste ou émotionnel.
+                    - Évite les spoilers importants, comme les morts de personnages principaux ou les rebondissements qui altèrent fondamentalement l'intrigue.
+                    - Utilise le présent.
+                    - Le résumé doit comporter au moins $minWords mots, ajustés au nombre d'épisodes couverts.
+                    - Conclus par une phrase ou une question intrigante qui incite à regarder les épisodes suivants, sans révéler de spoilers.
+
+                    IMPORTANT: Retourne UNIQUEMENT le JSON, sans texte supplémentaire.
                 """.trimIndent()
             }
-            
             "de" -> if (isFromBeginning) {
                 """
-                    Du bist eine JSON-API, die detaillierte und umfassende Zusammenfassungen generiert.
-                    Für die Serie mit dem Titel "$title", von Episode 1 der Staffel 1 bis Episode $rangeEnd der Staffel $season,
-                    gib ein JSON mit dieser Struktur zurück:
+                    Du bist eine JSON-API, die detaillierte und umfassende Zusammenfassungen von Fernsehserien generiert.
+                    Für die Serie "$title" erstelle eine Zusammenfassung, die von Episode 1 der Staffel 1 bis Episode $rangeEnd der Staffel $season reicht.
+                    Gib ein JSON mit dieser Struktur zurück:
                     {
                         "summary": "die Zusammenfassung hier"
                     }
-                    
+
                     Richtlinien für die Zusammenfassung:
-                    - Schreibe auf Deutsch
-                    - Liefere eine detaillierte und umfassende Zusammenfassung
-                    - Berücksichtige Charakterentwicklung und Handlungsbögen
-                    - Beschreibe wichtige Nebenhandlungen
-                    - Erwähne Kontext und Motivationen der Charaktere
-                    - Erkläre die Beziehungen zwischen den Charakteren
-                    - Behalte einen neutralen Ton
-                    - Vermeide wichtige Spoiler zu Todesfällen oder dramatischen Wendungen
-                    - Verwende Präsens
-                    - Mindestens 1000 Wörter
-                    
+                    - Schreibe auf Deutsch und passe dich dem natürlichen Erzählstil der Sprache an.
+                    - Liefere eine detaillierte, umfassende und kohärente Zusammenfassung, die die Ereignisse in eine fließende Erzählung einbettet, anstatt Episoden aufzulisten.
+                    - Hebe Schlüsselmomente der Handlung, signifikante Interaktionen zwischen Charakteren und wichtige Entwicklungen der Geschichte hervor.
+                    - Beschreibe die Transformationen oder Entwicklungen der Hauptcharaktere mit konkreten Beispielen für ihre Entscheidungen oder Handlungen.
+                    - Erwähne relevante Nebenhandlungen und erkläre, wie sie mit der Haupthandlung oder den Schlüsselfiguren verbunden sind.
+                    - Füge den Kontext und die Motivationen der Charaktere hinzu, illustriert durch spezifische Beispiele.
+                    - Erkläre die Beziehungen zwischen den Charakteren und gehe auf Machtdynamiken, Allianzen, Konflikte oder romantische Bindungen ein, falls zutreffend.
+                    - Bei der ersten Erwähnung eines Hauptcharakters füge eine kurze Beschreibung hinzu (z. B. "Ana, eine schlaue und zurückhaltende Detektivin").
+                    - Halte einen neutralen Ton bei und vermeide sensationalistische oder emotionale Sprache.
+                    - Vermeide wichtige Spoiler, wie den Tod von Hauptcharakteren oder Wendungen, die die Handlung grundlegend verändern.
+                    - Verwende die Gegenwart.
+                    - Die Zusammenfassung muss mindestens $minWords Wörter umfassen, angepasst an die Anzahl der abgedeckten Episoden.
+                    - Schließe mit einem fesselnden Satz oder einer Frage ab, die zum Anschauen der nächsten Episoden anregt, ohne Spoiler zu enthüllen.
+
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
             } else {
                 """
-                    Du bist eine JSON-API, die detaillierte und umfassende Zusammenfassungen generiert.
-                    Für die Serie mit dem Titel "$title", Staffel $season, Episoden $rangeStart bis $rangeEnd,
-                    gib ein JSON mit dieser Struktur zurück:
+                    Du bist eine JSON-API, die detaillierte und umfassende Zusammenfassungen von Fernsehserien generiert.
+                    Für die Serie "$title" erstelle eine Zusammenfassung, die Staffel $season, Episoden $rangeStart bis $rangeEnd abdeckt.
+                    Gib ein JSON mit dieser Struktur zurück:
                     {
                         "summary": "die Zusammenfassung hier"
                     }
-                    
+
                     Richtlinien für die Zusammenfassung:
-                    - Schreibe auf Deutsch
-                    - Liefere eine detaillierte und umfassende Zusammenfassung
-                    - Berücksichtige Charakterentwicklung und Handlungsbögen
-                    - Beschreibe wichtige Nebenhandlungen
-                    - Erwähne Kontext und Motivationen der Charaktere
-                    - Erkläre die Beziehungen zwischen den Charakteren
-                    - Behalte einen neutralen Ton
-                    - Vermeide wichtige Spoiler zu Todesfällen oder dramatischen Wendungen
-                    - Verwende Präsens
-                    - Mindestens 1000 Wörter
-                    
+                    - Schreibe auf Deutsch und passe dich dem natürlichen Erzählstil der Sprache an.
+                    - Liefere eine detaillierte, umfassende und kohärente Zusammenfassung, die die Ereignisse in eine fließende Erzählung einbettet, anstatt Episoden aufzulisten.
+                    - Hebe Schlüsselmomente der Handlung, signifikante Interaktionen zwischen Charakteren und wichtige Entwicklungen der Geschichte hervor.
+                    - Beschreibe die Transformationen oder Entwicklungen der Hauptcharaktere mit konkreten Beispielen für ihre Entscheidungen oder Handlungen.
+                    - Erwähne relevante Nebenhandlungen und erkläre, wie sie mit der Haupthandlung oder den Schlüsselfiguren verbunden sind.
+                    - Füge den Kontext und die Motivationen der Charaktere hinzu, illustriert durch spezifische Beispiele.
+                    - Erkläre die Beziehungen zwischen den Charakteren und gehe auf Machtdynamiken, Allianzen, Konflikte oder romantische Bindungen ein, falls zutreffend.
+                    - Bei der ersten Erwähnung eines Hauptcharakters füge eine kurze Beschreibung hinzu (z. B. "Ana, eine schlaue und zurückhaltende Detektivin").
+                    - Halte einen neutralen Ton bei und vermeide sensationalistische oder emotionale Sprache.
+                    - Vermeide wichtige Spoiler, wie den Tod von Hauptcharakteren oder Wendungen, die die Handlung grundlegend verändern.
+                    - Verwende die Gegenwart.
+                    - Die Zusammenfassung muss mindestens $minWords Wörter umfassen, angepasst an die Anzahl der abgedeckten Episoden.
+                    - Schließe mit einem fesselnden Satz oder einer Frage ab, die zum Anschauen der nächsten Episoden anregt, ohne Spoiler zu enthüllen.
+
                     WICHTIG: Gib NUR das JSON zurück, ohne zusätzlichen Text.
                 """.trimIndent()
             }
-            
             else -> if (isFromBeginning) {
                 """
-                    You are a JSON API that generates detailed and comprehensive summaries.
-                    For the series titled "$title", from episode 1 of season 1 to episode $rangeEnd of season $season,
-                    return a JSON with this structure:
+                    You are a JSON API that generates detailed and comprehensive summaries of TV series.
+                    For the series "$title", provide a summary covering from episode 1 of season 1 to episode $rangeEnd of season $season.
+                    Return a JSON with this structure:
                     {
                         "summary": "the summary here"
                     }
-                    
+
                     Guidelines for the summary:
-                    - Write in English
-                    - Provide a detailed and comprehensive summary
-                    - Include character development and story arcs
-                    - Describe important subplots
-                    - Mention context and character motivations
-                    - Explain relationships between characters
-                    - Keep a neutral tone
-                    - Avoid major spoilers about deaths or dramatic twists
-                    - Use present tense
-                    - Minimum 1000 words
-                    
+                    - Write in English, adapting to the natural narrative style of the language.
+                    - Provide a comprehensive, detailed, and cohesive summary, weaving events into a fluid narrative rather than listing episodes.
+                    - Highlight key plot moments, significant character interactions, and major story developments.
+                    - Describe the transformations or evolutions of main characters, with specific examples of their decisions or actions.
+                    - Mention relevant subplots and explain how they connect to the main plot or key characters.
+                    - Include context and character motivations, illustrated with specific examples.
+                    - Explain character relationships, detailing power dynamics, alliances, conflicts, or romantic bonds as applicable.
+                    - For the first mention of a main character, include a brief description (e.g., "Ana, a cunning and reserved detective").
+                    - Maintain a neutral tone, avoiding sensationalist or emotional language.
+                    - Avoid major spoilers, such as deaths of main characters or twists that fundamentally alter the plot.
+                    - Use present tense.
+                    - The summary must be at least $minWords words, adjusted to the number of episodes covered.
+                    - Conclude with an intriguing statement or question that encourages viewing the next episodes, without spoilers.
+
                     IMPORTANT: Return ONLY the JSON, no additional text.
                 """.trimIndent()
             } else {
                 """
-                    You are a JSON API that generates detailed and comprehensive summaries.
-                    For the series titled "$title", season $season, episodes $rangeStart to $rangeEnd,
-                    return a JSON with this structure:
+                    You are a JSON API that generates detailed and comprehensive summaries of TV series.
+                    For the series "$title", provide a summary covering season $season, episodes $rangeStart to $rangeEnd.
+                    Return a JSON with this structure:
                     {
                         "summary": "the summary here"
                     }
-                    
+
                     Guidelines for the summary:
-                    - Write in English
-                    - Provide a detailed and comprehensive summary
-                    - Include character development and story arcs
-                    - Describe important subplots
-                    - Mention context and character motivations
-                    - Explain relationships between characters
-                    - Keep a neutral tone
-                    - Avoid major spoilers about deaths or dramatic twists
-                    - Use present tense
-                    - Minimum 1000 words
-                    
+                    - Write in English, adapting to the natural narrative style of the language.
+                    - Provide a comprehensive, detailed, and cohesive summary, weaving events into a fluid narrative rather than listing episodes.
+                    - Highlight key plot moments, significant character interactions, and major story developments.
+                    - Describe the transformations or evolutions of main characters, with specific examples of their decisions or actions.
+                    - Mention relevant subplots and explain how they connect to the main plot or key characters.
+                    - Include context and character motivations, illustrated with specific examples.
+                    - Explain character relationships, detailing power dynamics, alliances, conflicts, or romantic bonds as applicable.
+                    - For the first mention of a main character, include a brief description (e.g., "Ana, a cunning and reserved detective").
+                    - Maintain a neutral tone, avoiding sensationalist or emotional language.
+                    - Avoid major spoilers, such as deaths of main characters or twists that fundamentally alter the plot.
+                    - Use present tense.
+                    - The summary must be at least $minWords words, adjusted to the number of episodes covered.
+                    - Conclude with an intriguing statement or question that encourages viewing the next episodes, without spoilers.
+
                     IMPORTANT: Return ONLY the JSON, no additional text.
                 """.trimIndent()
             }
