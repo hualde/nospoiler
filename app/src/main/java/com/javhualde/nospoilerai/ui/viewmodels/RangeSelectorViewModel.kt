@@ -109,6 +109,7 @@ class RangeSelectorViewModel @Inject constructor(
                 cachedMediaDetails = mediaDetails
 
                 val perplexityRequest = PerplexityRequest(
+                    model = "grok-3-mini-beta",
                     messages = listOf(
                         Message(
                             role = "system",

@@ -10,10 +10,16 @@ interface XAIService {
         @Body request: PerplexityRequest,
         @Header("Authorization") authorization: String = "Bearer xai-L5VzxjJWJINDeNShmAtpJursKzLWuvlIFARfQtPt5SlUCR2Ea1JKFKS0kQuSKexBScVK6vWyenkuTuPy"
     ): PerplexityResponse
+
+    @POST("v1/chat/completions")
+    suspend fun getMediaSummary(
+        @Body request: PerplexityRequest,
+        @Header("Authorization") authorization: String = "Bearer xai-L5VzxjJWJINDeNShmAtpJursKzLWuvlIFARfQtPt5SlUCR2Ea1JKFKS0kQuSKexBScVK6vWyenkuTuPy"
+    ): PerplexityResponse
 }
 
 data class PerplexityRequest(
-    val model: String = "grok-3-mini-beta",
+    val model: String,
     val messages: List<Message>,
     val max_tokens: Int = 1024
 ) 

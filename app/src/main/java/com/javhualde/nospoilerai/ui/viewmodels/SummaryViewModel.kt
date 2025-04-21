@@ -244,13 +244,13 @@ class SummaryViewModel @Inject constructor(
         rangeEnd: Int,
         season: Int,
         isFromBeginning: Boolean
-    ): String = withContext(Dispatchers.IO) {
+    ): String {
         val mediaDetails = omdbService.getMediaDetails(imdbId = mediaId)
         val prompt = getPromptForLanguage(mediaDetails.Title, rangeStart, rangeEnd, season, isFromBeginning)
         
-        val response = xaiService.getMediaInfo(
+        val response = xaiService.getMediaSummary(
             PerplexityRequest(
-                model = "grok-3-mini-beta",
+                model = "grok-3-beta",
                 messages = listOf(
                     Message(
                         role = "system",
@@ -271,7 +271,7 @@ class SummaryViewModel @Inject constructor(
         val summaryPattern = "\"summary\"\\s*:\\s*\"(.*?)(?:\"|$)".toRegex(RegexOption.DOT_MATCHES_ALL)
         val matchResult = summaryPattern.find(jsonResponse)
         
-        matchResult?.groupValues?.get(1)?.let { summary ->
+        return matchResult?.groupValues?.get(1)?.let { summary ->
             // Limpiar el resumen de caracteres de escape
             summary
                 .replace("\\n", "\n")
