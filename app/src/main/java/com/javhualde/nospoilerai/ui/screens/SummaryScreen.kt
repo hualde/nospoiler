@@ -29,7 +29,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import com.javhualde.nospoilerapk.ui.components.MediaHeader
-import com.javhualde.nospoilerapk.ui.components.AnimatedLoadingProgress
+import com.javhualde.nospoilerapk.ui.components.LoadingDialog
 
 @Composable
 fun SummaryScreen(
@@ -69,17 +69,7 @@ fun SummaryScreen(
             // Contenido que depende del estado de carga
             when {
                 state.isLoading -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        AnimatedLoadingProgress(
-                            isTimeline = false,
-                            isComplete = state.summary.isNotEmpty()
-                        )
-                    }
+                    LoadingDialog(isTimeline = false)
                 }
                 state.error != null -> ErrorContent(state.error!!)
                 else -> {
