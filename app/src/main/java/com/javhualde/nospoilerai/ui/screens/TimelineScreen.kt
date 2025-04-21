@@ -82,14 +82,33 @@ fun TimelineScreen(
 }
 
 @Composable
-private fun TimelineContent(events: List<String>) {
+private fun TimelineContent(events: Map<String, List<String>>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        events.forEach { (title, sectionEvents) ->
+            TimelineSection(title, sectionEvents)
+        }
+    }
+}
+
+@Composable
+private fun TimelineSection(title: String, events: List<String>) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        
         events.forEach { event ->
             TimelineEvent(event)
         }
