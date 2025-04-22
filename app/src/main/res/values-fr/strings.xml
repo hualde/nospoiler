@@ -39,7 +39,7 @@
     <string name="version">Version</string>
     <string name="licenses">Licences</string>
     <string name="omdb_attribution">Ce produit utilise l\'API OMDb mais n\'est ni approuvé ni certifié par OMDb.</string>
-    <string name="perplexity_attribution">Ce produit utilise l\'API Perplexity pour les résumés générés par IA.</string>
+    <string name="perplexity_attribution">Ce produit utilise l\'API Grok pour les résumés générés par IA.</string>
     <string name="help">Aide</string>
     <string name="faq_title">Questions Fréquentes</string>
     <string name="faq_search_title">Comment rechercher une série ou un film ?</string>
@@ -67,7 +67,7 @@
 
     4. Confidentialité et Données\n
     - Nous collectons les données minimales nécessaires au fonctionnement de l\'application\n
-    - Nous utilisons des APIs tierces (OMDb, Perplexity et Wikimedia Commons) pour générer du contenu\n
+    - Nous utilisons des APIs tierces (OMDb, Grok et Wikimedia Commons) pour générer du contenu\n
     - Nous ne partageons pas d\'informations personnelles avec des tiers\n\n
 
     5. Contenu et Droits d\'Auteur\n
@@ -153,7 +153,7 @@
 
     2. Services Tiers\n
     - Nous utilisons l\'API OMDb pour les informations sur les films et séries\n
-    - Nous utilisons l\'API Perplexity pour générer des résumés\n
+    - Nous utilisons l\'API Grok pour générer des résumés\n
     - Nous utilisons l\'API Wikimedia Commons pour les images des acteurs\n
     - Ces services reçoivent uniquement les informations nécessaires à leur fonctionnement\n
     - Nous ne partageons pas de données personnelles avec ces services\n\n

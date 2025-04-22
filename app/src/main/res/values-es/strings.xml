@@ -44,7 +44,7 @@
     <string name="version">Versión</string>
     <string name="licenses">Licencias</string>
     <string name="omdb_attribution">Este producto utiliza la API de OMDb pero no está respaldado ni certificado por OMDb.</string>
-    <string name="perplexity_attribution">Este producto utiliza la API de Perplexity para resúmenes generados por IA.</string>
+    <string name="perplexity_attribution">Este producto utiliza la API de Grok para resúmenes generados por IA.</string>
     <string name="help">Ayuda</string>
     <string name="faq_title">Preguntas Frecuentes</string>
     <!-- FAQ Questions -->
@@ -126,7 +126,7 @@
 
     4. Privacidad y Datos\n
     - Recopilamos datos mínimos necesarios para la funcionalidad de la app\n
-    - Utilizamos APIs de terceros (OMDb, Perplexity y Wikimedia Commons) para generar contenido\n
+    - Utilizamos APIs de terceros (OMDb, Grok y Wikimedia Commons) para generar contenido\n
     - No compartimos información personal con terceros\n\n
 
     5. Contenido y Derechos de Autor\n
@@ -159,7 +159,7 @@
 
     2. Servicios de Terceros\n
     - Utilizamos la API de OMDb para información de películas y series\n
-    - Utilizamos la API de Perplexity para generar resúmenes\n
+    - Utilizamos la API de Grok para generar resúmenes\n
     - Utilizamos la API de Wikimedia Commons para imágenes de actores\n
     - Estos servicios reciben solo la información necesaria para su funcionamiento\n
     - No compartimos datos personales con estos servicios\n\n
