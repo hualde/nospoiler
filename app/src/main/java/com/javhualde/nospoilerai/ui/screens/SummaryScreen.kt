@@ -14,13 +14,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import coil.compose.AsyncImage
 import com.javhualde.nospoilerapk.R
 import com.javhualde.nospoilerapk.data.network.DetailedMediaItem
 import com.javhualde.nospoilerapk.ui.viewmodels.SummaryViewModel
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,9 +32,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import com.javhualde.nospoilerapk.ui.components.MediaHeader
 import com.javhualde.nospoilerapk.ui.components.LoadingDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SummaryScreen(
+    navController: NavController,
     viewModel: SummaryViewModel = hiltViewModel(),
     mediaId: String,
     season: Int,
@@ -46,7 +51,21 @@ fun SummaryScreen(
         viewModel.loadContent(mediaId, season, rangeStart, rangeEnd, isFromBeginning)
     }
 
-    Scaffold { paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.summary)) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.go_back)
+                        )
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

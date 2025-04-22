@@ -98,6 +98,7 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                 val isFromBeginning = backStackEntry.arguments?.getBoolean(Screen.Summary.IS_FROM_BEGINNING) ?: false
                 
                 SummaryScreen(
+                    navController = navController,
                     mediaId = mediaId,
                     rangeStart = rangeStart,
                     rangeEnd = rangeEnd,
