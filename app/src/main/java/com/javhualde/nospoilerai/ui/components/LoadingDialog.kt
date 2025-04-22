@@ -40,10 +40,10 @@ fun LoadingDialog(
     // Seleccionar los mensajes según el tipo
     val messages = if (isTimeline) timelineMessages else summaryMessages
     
-    // Efecto para cambiar los mensajes cada 3 segundos
+    // Efecto para cambiar los mensajes cada 5 segundos
     LaunchedEffect(Unit) {
         while (true) {
-            delay(3000)
+            delay(5000)
             currentMessageIndex = (currentMessageIndex + 1) % messages.size
         }
     }
