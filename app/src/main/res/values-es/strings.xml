@@ -101,7 +101,16 @@
     <string name="episodes_range_with_total">Episodios %1$d a %2$d de %3$d</string>
     <string name="episodes_range">Episodios %1$d a %2$d</string>
     <string name="generating_summary">Generando resumen...</string>
-    <string name="generating_timeline">Generando línea temporal...</string>
+    <string name="analyzing_episodes">Analizando los episodios...</string>
+    <string name="identifying_key_moments">Identificando momentos clave...</string>
+    <string name="writing_story">Redactando la historia...</string>
+    <string name="avoiding_spoilers">Evitando spoilers...</string>
+    <string name="almost_ready">¡Casi listo!...</string>
+    <string name="generating_timeline">Generando timeline...</string>
+    <string name="organizing_events">Organizando los eventos...</string>
+    <string name="creating_sections">Creando las secciones...</string>
+    <string name="connecting_key_points">Conectando los puntos clave...</string>
+    <string name="final_touches">Dando los últimos toques...</string>
     <string name="wikimedia_attribution">Este producto utiliza la API de Wikimedia Commons para las imágenes de actores.</string>
     <string name="terms_content">Términos y Condiciones de NoSpoilerAI\n\n
     1. Aceptación de los Términos\n

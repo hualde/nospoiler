@@ -130,7 +130,16 @@
     <string name="episodes_range_with_total">Folgen %1$d bis %2$d von %3$d</string>
     <string name="episodes_range">Folgen %1$d bis %2$d</string>
     <string name="generating_summary">Zusammenfassung wird generiert...</string>
-    <string name="generating_timeline">Zeitachse wird generiert...</string>
+    <string name="analyzing_episodes">Episoden werden analysiert...</string>
+    <string name="identifying_key_moments">Wichtige Momente werden identifiziert...</string>
+    <string name="writing_story">Geschichte wird geschrieben...</string>
+    <string name="avoiding_spoilers">Spoiler werden vermieden...</string>
+    <string name="almost_ready">Fast fertig...</string>
+    <string name="generating_timeline">Zeitlinie wird generiert...</string>
+    <string name="organizing_events">Ereignisse werden organisiert...</string>
+    <string name="creating_sections">Abschnitte werden erstellt...</string>
+    <string name="connecting_key_points">Wichtige Punkte werden verbunden...</string>
+    <string name="final_touches">Letzte Feinarbeiten...</string>
     <string name="wikimedia_attribution">Dieses Produkt verwendet die Wikimedia Commons API für Schauspielerbilder.</string>
     <string name="privacy_policy">Datenschutzerklärung</string>
     <string name="privacy_policy_content">Datenschutzerklärung für NoSpoilerAI\n\n
